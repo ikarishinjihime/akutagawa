@@ -77,8 +77,6 @@ const withFallback = (state: SiteContentState, fallback: HomeContent): SiteConte
     eyebrow: state.data.eyebrow || fallback.eyebrow,
     title: state.data.title || fallback.title,
     body: state.data.body || fallback.body,
-    // 공지는 비어 있으면 숨기므로 || fallback 대신 문자열만 허용
-    notice: typeof state.data.notice === "string" ? state.data.notice : fallback.notice,
   },
   error: state.error,
 });

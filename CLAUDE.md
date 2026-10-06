@@ -63,3 +63,26 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+---
+
+## Design Language (de-slop / kill-ai-slop 실행 시 필독)
+
+이 사이트는 **기밀문서·문서고(檔案) 콘셉트**를 일부러 만든 디자인입니다. 아래는 브랜드 선택이지 AI slop이 아니므로 절대 "정리" 대상으로 삼지 마세요:
+
+- 모노크롬(니어블랙) + 붉은 인주 단일 액센트 팔레트
+- 고무도장·봉인 띠·결재란 등 서류 장치 (`.dossier-*`, `.case-file-*`)
+- 글리치 텍스트·텍스트 손상 연출 (`GlitchedText`, `TextGlitch`, `TextCorruptorProvider`, `.glitch-*`)
+- 한자 병기·세로쓰기(`writing-mode`)·명조(Zen Old Mincho)·모노스페이스 라벨, 아주 작은 서식 라벨 크기
+- 종이 질감: 모눈·괘선·바코드·천공·워터마크·마이크로프린트 (`.paper-ink` 등)
+- 페이지 넘김 전환 (`page-turn.css`)
+
+de-slop 스캔이 유효한 표적: 관리자 화면(`app/admin`, `components/admin`, `admin.css`)의 일반적인 웹 UI, 안내문·에러 메시지 등 카피 톤, 콘셉트와 무관한 Tailwind 기본값. 스캔 시 `--exclude` 예:
+
+```
+node .agents/skills/kill-ai-slop/scripts/scan.mjs . --exclude=character.css --exclude=overrides.css --exclude=page-turn.css --exclude=shell.css --exclude=forms.css --exclude=base.css
+```
+
+(`--exclude`는 경로 부분 문자열 매칭인데 Windows 에선 구분자가 `\`라 디렉터리 경로 대신 파일명으로 거는 것이 안전합니다.)
+
+확인된 의도적 히트는 일괄 제외 대신 `deslop-ignore-next-line <id>` 주석으로 개별 고정하는 것을 선호합니다.

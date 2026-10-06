@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { StoryFormattedText } from "@/components/StoryFormattedText";
-import { DocumentSheet } from "@/components/home/DocumentSheet";
 import { playPageTurnSound } from "@/lib/page-turn-sound";
 import { cn } from "@/utils/cn";
 import { ThumbnailImage } from "@/components/ThumbnailImage";
@@ -30,21 +29,24 @@ export function ReaderModal({ item, onClose, onOpenGallery, className }: ReaderM
 
   return (
     <div
-      className={cn("desk-backdrop fixed inset-0 z-50 grid place-items-center p-4", className)}
+      className={cn(
+        "fixed inset-0 z-50 grid place-items-center bg-black p-4",
+        className,
+      )}
       role="dialog"
       aria-modal="true"
       aria-label={`${item.work.title} 이북 보기`}
       onClick={handleClose}
     >
-      <DocumentSheet
-        tabLabel="BOOK"
-        className="ebook-reader story-viewer flex h-[92vh] w-full max-w-5xl flex-col"
+      <div
+        className="ebook-reader story-viewer dossier-viewer flex h-[92vh] w-full max-w-3xl flex-col overflow-hidden border !border-stone-700/30 !bg-black !shadow-none"
+        onClick={(event) => event.stopPropagation()}
       >
-        <div className="story-viewer-header flex items-center justify-between gap-3 border-b border-white/15 bg-black p-4">
+        <div className="story-viewer-header flex items-center justify-between gap-3 border-b border-stone-400/15 bg-black p-4">
           <div>
             <p className="archive-kicker">Ebook Reader / {item.character.name}</p>
-            <h3 className="archive-title mt-1 text-3xl">{item.work.title}</h3>
-            <p className="mt-1 text-xs text-white/45">
+            <h3 className="archive-title mt-1 text-2xl">{item.work.title}</h3>
+            <p className="mt-1 text-xs text-emerald-100/45">
               {item.work.kind} / {item.work.date}
             </p>
           </div>
@@ -58,7 +60,7 @@ export function ReaderModal({ item, onClose, onOpenGallery, className }: ReaderM
         </div>
 
         <article className="story-viewer-body min-h-0 flex-1 overflow-y-auto overscroll-contain !bg-black">
-          <div className="story-viewer-content px-6 py-8 md:px-10 md:py-10">
+          <div className="story-viewer-content px-7 py-8 md:px-12 md:py-10">
             {(item.work.images?.length ?? 0) > 0 && (
               <div className="mb-8 grid gap-3 sm:grid-cols-2">
                 {item.work.images?.map((image) => (
@@ -91,7 +93,7 @@ export function ReaderModal({ item, onClose, onOpenGallery, className }: ReaderM
             )}
           </div>
         </article>
-      </DocumentSheet>
+      </div>
     </div>
   );
 }

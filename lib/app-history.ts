@@ -5,13 +5,7 @@ export const APP_HISTORY_VERSION = 1 as const;
 
 const VALID_SECTIONS = new Set<SectionId>(sections.map((entry) => entry.id));
 const VALID_ARCHIVE_SUBS = new Set<ArchiveSubSectionId>(archiveSubSections.map((entry) => entry.id));
-const VALID_TABS = new Set<CharacterDetailTab>([
-  "settings",
-  "relations",
-  "images",
-  "works",
-  "worlds",
-]);
+const VALID_TABS = new Set<CharacterDetailTab>(["settings", "images", "works", "worlds"]);
 
 const DEFAULT_ARCHIVE_SUB: ArchiveSubSectionId = "characters";
 const DEFAULT_TAB: CharacterDetailTab = "settings";

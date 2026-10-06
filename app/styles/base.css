@@ -1,4 +1,4 @@
-/* 전역 폰트와 색상 변수: 사이트 전체의 검정/흰 아카이브 테마 기준값입니다. */
+/* 전역 폰트와 색상 변수: 사이트 전체의 검정/블루 신호 테마 기준값입니다. */
 @font-face {
   font-family: "KbizHanmaumMyungjo";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/KBIZHanmaumMyungjo.woff")
@@ -8,27 +8,23 @@
 }
 
 :root {
-  /* 바탕은 진짜 검정입니다. 니어블랙(#080808·#0c0c0c)을 깔면 화면이 검은 게
-     아니라 「어두운 회색」으로 읽혀서, 흰 괘선과 붉은 잉크가 가진 대비가
-     통째로 눌립니다. 면은 전부 #000 으로 두고 층은 테두리가 나눕니다.
-     --surface-raised 만 살짝 들려 있습니다 — 호버 피드백이 사라지면 안 되니까요. */
-  --background: #000000;
-  --foreground: #eeeeee;
-  --blood: #eeeeee;
-  --blood-dark: #0d0d0d;
-  --signal-blue: #c8c8c8;
-  --signal-yellow-white: #e8e8e8;
-  --surface-base: #000000;
-  --surface-card: #000000;
-  --surface-raised: #101010;
-  --surface-deep: #000000;
-  --character-card-divider: #3a3a3a;
+  --background: #080a10;
+  --foreground: #e8ecf1;
+  --blood: #6f8fd7;
+  --blood-dark: #101a32;
+  --signal-blue: #355fbd;
+  --signal-yellow-white: #f4eecf;
+  --surface-base: #080a10;
+  --surface-card: #0c0f16;
+  --surface-raised: #10141e;
+  --surface-deep: #05060b;
+  --character-card-divider: #455f8a;
   --archive-ink: #000000;
   --archive-panel: rgba(0, 0, 0, 0.96);
-  --archive-line: rgba(255, 255, 255, 0.22);
-  --archive-muted: rgba(200, 200, 200, 0.62);
-  --border-muted: rgba(255, 255, 255, 0.18);
-  --border-accent: rgba(255, 255, 255, 0.28);
+  --archive-line: rgba(111, 143, 215, 0.26);
+  --archive-muted: rgba(214, 208, 188, 0.62);
+  --border-muted: rgba(111, 143, 215, 0.18);
+  --border-accent: rgba(111, 143, 215, 0.22);
   /* 노션식: 본문 폰트에 기호·이모지 폴백을 이어 붙여 □(토후) 대신 시스템 글리프 사용 */
   --font-ui-stack:
     "Noto Sans KR", "Noto Sans Symbols 2", "Segoe UI Symbol", "Apple Symbols", "Malgun Gothic",
@@ -63,7 +59,7 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.45) rgba(0, 0, 0, 0.88);
+  scrollbar-color: rgba(111, 143, 215, 0.58) rgba(0, 0, 0, 0.88);
 }
 
 ::-webkit-scrollbar {
@@ -77,7 +73,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   border: 2px solid rgba(0, 0, 0, 0.94);
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(111, 143, 215, 0.55);
 }
 
 button,
@@ -92,6 +88,5 @@ button {
 }
 
 ::selection {
-  background: rgba(255, 255, 255, 0.35);
-  color: #080808;
+  background: rgba(111, 143, 215, 0.72);
 }

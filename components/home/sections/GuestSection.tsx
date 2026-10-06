@@ -74,16 +74,18 @@ export function GuestSection({
             <p className="archive-kicker">
               No.{guestbook.length - index} {guest.name}
             </p>
-            <p className="mt-3 text-sm leading-7 text-white/70">{guest.body}</p>
+            <p className="mt-3 text-sm leading-7 text-emerald-50/75">{guest.body}</p>
             {guest.reply && (
-              <div className="mt-4 border border-stone-400/15 bg-black/35 p-4 text-sm text-white/70">
+              <div className="mt-4 border border-stone-400/15 bg-black/35 p-4 text-sm text-emerald-50/70">
                 답글: {guest.reply}
               </div>
             )}
           </article>
         ))}
         {guestbook.length === 0 && (
-          <p className="archive-panel p-5 text-sm text-white/55">아직 남겨진 방명록이 없어요.</p>
+          <p className="archive-panel p-5 text-sm text-emerald-50/55">
+            아직 남겨진 방명록이 없어요.
+          </p>
         )}
       </ArchiveMotion>
     </ArchiveMotion>

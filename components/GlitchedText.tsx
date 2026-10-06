@@ -1,28 +1,37 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GlitchZoneMark } from "@/components/GlitchZoneMark";
 import { TextGlitch } from "@/components/TextGlitch";
 import { glitchConfigSignature, reanchorGlitchConfig } from "@/lib/glitch-fields";
-import { mergeGlitchZoneStyles } from "@/lib/glitch-style";
-import { fieldConfigHasScrambleAlternation } from "@/lib/glitch-scramble-options";
 import {
-  getGlitchPulseServerSnapshot,
-  getGlitchPulseSnapshot,
-  subscribeGlitchPulse,
-} from "@/lib/glitch-ticker";
+  DEFAULT_GLITCH_TICK_MS,
+  glitchScramblePhase,
+  mergeGlitchZoneStyles,
+} from "@/lib/glitch-style";
+import {
+  fieldConfigHasScrambleAlternation,
+  resolveZoneScrambleOptions,
+} from "@/lib/glitch-scramble-options";
+import { getGlitchPulseSnapshot, subscribeGlitchPulse } from "@/lib/glitch-ticker";
 import { buildZoneDisplayText, composeTextSegments } from "@/lib/text-scramble";
 import { sanitizePlainText } from "@/lib/glitch-display";
 import type { FieldGlitchConfig, ZoneLinkTarget } from "@/lib/types";
 import { cn } from "@/utils/cn";
 import { resolveZoneLink, type CharacterDetailSection } from "@/lib/zone-links";
 
-function noopGlitchPulseSubscribe() {
-  return () => {};
-}
-
-function staticGlitchPulseSnapshot() {
-  return 0;
+/**
+ * 펄스(100ms)마다 위상이 실제로 바뀌는지 검사하기 위한 서명 —
+ * 구간별 tickMs(기본 800ms)가 넘어갈 때만 값이 달라집니다.
+ */
+function computePhaseSignature(zones: FieldGlitchConfig["zones"], config: FieldGlitchConfig, pulse: number) {
+  let signature = "";
+  for (const zone of zones) {
+    const tickMs =
+      resolveZoneScrambleOptions(zone, config).tickMs ?? config.tickMs ?? DEFAULT_GLITCH_TICK_MS;
+    signature += `${glitchScramblePhase(pulse, tickMs)}|`;
+  }
+  return signature;
 }
 
 interface GlitchedTextProps {
@@ -66,13 +75,32 @@ function GlitchedTextLive({
   linkContext,
 }: GlitchedTextLiveProps) {
   const usesErrorAlternation = fieldConfigHasScrambleAlternation(glitch);
-  const pulse = useSyncExternalStore(
-    animate && usesErrorAlternation ? subscribeGlitchPulse : noopGlitchPulseSubscribe,
-    animate && usesErrorAlternation ? getGlitchPulseSnapshot : staticGlitchPulseSnapshot,
-    getGlitchPulseServerSnapshot,
-  );
-
   const zones = glitch.zones;
+
+  /* 공용 펄스는 100ms마다 오지만, 구간 위상이 넘어갈 때만 setState 합니다 —
+     그 사이 틱은 문자열 비교 한 번으로 끝나 리렌더가 일어나지 않습니다.
+     초기값 0은 서버 스냅숏과 같아 hydration 이 어긋나지 않습니다. */
+  const [pulse, setPulse] = useState(0);
+  const phaseSignatureRef = useRef("");
+
+  useEffect(() => {
+    if (!animate || !usesErrorAlternation) {
+      return;
+    }
+
+    const syncPulse = () => {
+      const nextPulse = getGlitchPulseSnapshot();
+      const nextSignature = computePhaseSignature(zones, glitch, nextPulse);
+      if (nextSignature === phaseSignatureRef.current) {
+        return;
+      }
+      phaseSignatureRef.current = nextSignature;
+      setPulse(nextPulse);
+    };
+
+    syncPulse();
+    return subscribeGlitchPulse(syncPulse);
+  }, [animate, glitch, usesErrorAlternation, zones]);
 
   const displayByZone = useMemo(() => {
     if (!usesErrorAlternation) {

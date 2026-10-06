@@ -49,7 +49,9 @@ export function ExtractSection({ banners, className }: ExtractSectionProps) {
             </a>
           ))
         ) : (
-          <p className="archive-panel p-5 text-sm text-white/60">아직 등록된 배너가 없어요.</p>
+          <p className="archive-panel p-5 text-sm text-emerald-100/60">
+            아직 등록된 배너가 없어요.
+          </p>
         )}
       </ArchiveMotion>
     </ArchiveMotion>

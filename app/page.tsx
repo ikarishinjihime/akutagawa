@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -9,11 +9,7 @@ import { getFirebaseDb } from "@/lib/firebase";
 import { BgmPlayer } from "@/components/BgmPlayer";
 import { SideMenu } from "@/components/home/SideMenu";
 import { CalendarWidget } from "@/components/home/CalendarWidget";
-import {
-  HomeSection,
-  type HomeNavCard,
-  type HomeUpdateItem,
-} from "@/components/home/sections/HomeSection";
+import { HomeSection } from "@/components/home/sections/HomeSection";
 import { CharactersSection } from "@/components/home/sections/CharactersSection";
 import { WorldsSection } from "@/components/home/sections/WorldsSection";
 import { DiarySection } from "@/components/home/sections/DiarySection";
@@ -23,7 +19,6 @@ import { StoryModal } from "@/components/home/modals/StoryModal";
 import { ReaderModal } from "@/components/home/modals/ReaderModal";
 import { GalleryModal } from "@/components/home/modals/GalleryModal";
 import { ExpressionModal } from "@/components/home/modals/ExpressionModal";
-import { ConfidentialAccessModal } from "@/components/home/modals/ConfidentialAccessModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useCharacters } from "@/hooks/useCharacters";
 import { useWorlds } from "@/hooks/useWorlds";
@@ -34,20 +29,8 @@ import { useGuestbook } from "@/hooks/useGuestbook";
 import { useHomeModals } from "@/hooks/useHomeModals";
 import { useWorldUnlock } from "@/hooks/useWorldUnlock";
 import { useAppHistoryNavigation } from "@/hooks/useAppHistoryNavigation";
-import { useSectionTransition } from "@/hooks/useSectionTransition";
 import { createAppHistoryState } from "@/lib/app-history";
-import {
-  resolveClearanceGateSteps,
-  resolveClearanceGrade,
-  type ClearanceGrade,
-} from "@/lib/clearance";
-import {
-  defaultArchiveContent,
-  defaultExtractContent,
-  defaultHomeContent,
-  type ArchiveSubSectionId,
-  type SectionId,
-} from "@/constants/home";
+import { defaultArchiveContent, defaultExtractContent, defaultHomeContent, type ArchiveSubSectionId, type SectionId } from "@/constants/home";
 import type { AppHistoryState, CharacterDetailTab } from "@/types/home.types";
 import { resolveCharacterBgmUrl } from "@/lib/bgm-catalog";
 import { filterCharactersByKind } from "@/lib/character-kind";
@@ -55,14 +38,8 @@ import type { CharacterKind } from "@/lib/types";
 import type { ZoneLinkTarget } from "@/lib/types";
 import { resolveSubPage, subPageToDisplayCharacter } from "@/lib/sub-pages";
 import { characterSectionForId, type CharacterDetailSection } from "@/lib/zone-links";
-import { cn } from "@/utils/cn";
 
 dayjs.locale("ko");
-
-const SECTION_IDS = new Set<string>(["home", "archive", "worlds", "diary", "guest", "extract"]);
-
-const asSectionId = (value: string): SectionId =>
-  SECTION_IDS.has(value) ? (value as SectionId) : "home";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>("home");
@@ -73,27 +50,14 @@ export default function Home() {
   const [activeSubPageId, setActiveSubPageId] = useState("");
   const [activeTab, setActiveTab] = useState<CharacterDetailTab>("settings");
   const [menuOpen, setMenuOpen] = useState(true);
-  const isBackRef = useRef(false);
 
   useEffect(() => {
     if (!window.matchMedia("(min-width: 768px)").matches) {
       setMenuOpen(false);
     }
   }, []);
-
   const [authNotice, setAuthNotice] = useState("");
   const [guestDraft, setGuestDraft] = useState({ name: "", body: "" });
-  const [pendingConfidential, setPendingConfidential] = useState<{
-    characterId: string;
-    characterName: string;
-    /** 열람 결재 창의 문구·잉크·결재 단수가 전부 등급에서 갈립니다 */
-    grade: ClearanceGrade;
-    steps: 1 | 2;
-    kind: "select" | "archive" | "linked" | "zone";
-    tab?: CharacterDetailTab;
-    subPageId?: string;
-    section?: ArchiveSubSectionId;
-  } | null>(null);
 
   const auth = useAuth(setAuthNotice);
   const { data: characters, error: charactersError } = useCharacters();
@@ -129,22 +93,13 @@ export default function Home() {
     activeCharacterParent && activeSubPage
       ? subPageToDisplayCharacter(activeCharacterParent, activeSubPage)
       : activeCharacterParent;
-  const characterBgmUrl = activeCharacter ? resolveCharacterBgmUrl(activeCharacter.bgmUrl) : null;
+  const characterBgmUrl =
+    activeCharacter ? resolveCharacterBgmUrl(activeCharacter.bgmUrl) : null;
 
   // 구독 에러는 사용자 액션 알림(authNotice)이 비어 있을 때만 폴백으로 표시합니다.
   const subscriptionError =
-    charactersError ||
-    worldsError ||
-    homeError ||
-    archiveError ||
-    extractError ||
-    diaryError ||
-    guestbookError;
+    charactersError || worldsError || homeError || archiveError || extractError || diaryError || guestbookError;
   const displayedNotice = authNotice || subscriptionError || "";
-
-  const markBackNavigation = useCallback(() => {
-    isBackRef.current = true;
-  }, []);
 
   const applyAppHistoryState = useCallback((snapshot: AppHistoryState) => {
     setActiveSection(snapshot.section);
@@ -159,17 +114,6 @@ export default function Home() {
     }
   }, []);
 
-  /**
-   * browser history 복원 전용 — applyState 진입 전에 뒤로가기 방향을 표시합니다.
-   * (초기 URL hydrate 는 onBackNavigate 없이 applyState 만 호출합니다)
-   */
-  const applyHistoryRestore = useCallback(
-    (snapshot: AppHistoryState) => {
-      isBackRef.current = true;
-      applyAppHistoryState(snapshot);
-    },
-    [applyAppHistoryState],
-  );
   const appHistoryState = useMemo(
     () =>
       createAppHistoryState({
@@ -195,117 +139,19 @@ export default function Home() {
   const { canGoBack, goBack } = useAppHistoryNavigation({
     state: appHistoryState,
     applyState: applyAppHistoryState,
-    applyHistoryRestore,
-    onBackNavigate: markBackNavigation,
   });
-
-  const transitionKey = `${activeSection}|${activeArchiveSub}|${activeCharacterId}|${activeSubPageId}`;
-  const turn = useSectionTransition({ key: transitionKey, isBackRef });
-
-  const displayedSection = asSectionId(turn.displayedSection);
-  const displayedArchiveSub = turn.displayedArchiveSub as ArchiveSubSectionId;
-  const displayedCharacterId = turn.displayedCharacterId;
-  const displayedSubPageId = turn.displayedSubPageId;
-
-  // 캐릭터 상세 화면 여부 — 레이아웃에서 우측 열을 풀지 판단합니다.
-  const isDetailView = displayedSection === "archive" && Boolean(displayedCharacterId);
-
-  const displayedCharacterParent =
-    displayedSection === "archive"
-      ? characters.find((character) => character.id === displayedCharacterId)
-      : undefined;
-  const openCharacterDirect = useCallback(
-    (
-      characterId: string,
-      options?: {
-        tab?: CharacterDetailTab;
-        subPageId?: string;
-        section?: ArchiveSubSectionId;
-        scrollTop?: boolean;
-      },
-    ) => {
-      setActiveSection("archive");
-      setActiveArchiveSub(options?.section ?? characterSectionForId(characters, characterId));
-      setActiveCharacterId(characterId);
-      setActiveSubPageId(options?.subPageId ?? "");
-      if (options?.tab) {
-        setActiveTab(options.tab);
-      }
-      if (options?.scrollTop && typeof window !== "undefined") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    },
-    [characters],
-  );
-
-  const requestCharacterAccess = useCallback(
-    (
-      characterId: string,
-      kind: "select" | "archive" | "linked" | "zone",
-      options?: {
-        tab?: CharacterDetailTab;
-        subPageId?: string;
-        section?: ArchiveSubSectionId;
-      },
-    ) => {
-      const character = characters.find((entry) => entry.id === characterId);
-      /* 문이 몇 겹인지는 등급이 정합니다 — B·C 는 0 겹이라 바로 펼쳐집니다.
-         등급이 저장돼 있지 않은 기존 자캐는 기밀 체크박스로 S/B 로 갈립니다. */
-      const gateSteps = character ? resolveClearanceGateSteps(character) : 0;
-      if (character && gateSteps !== 0 && activeCharacterId !== characterId) {
-        setPendingConfidential({
-          characterId,
-          characterName: character.name,
-          grade: resolveClearanceGrade(character),
-          steps: gateSteps,
-          kind,
-          tab: options?.tab,
-          subPageId: options?.subPageId,
-          section: options?.section,
-        });
-        return;
-      }
-
-      if (kind === "select") {
-        setActiveCharacterId(characterId);
-        setActiveSubPageId("");
-        return;
-      }
-
-      openCharacterDirect(characterId, {
-        tab: options?.tab,
-        subPageId: options?.subPageId,
-        section: options?.section,
-        scrollTop: kind === "linked" || kind === "zone",
-      });
-    },
-    [activeCharacterId, characters, openCharacterDirect],
-  );
-
-  const confirmPendingConfidential = () => {
-    if (!pendingConfidential) return;
-    const { characterId, kind, tab, subPageId, section } = pendingConfidential;
-    setPendingConfidential(null);
-
-    if (kind === "select") {
-      setActiveCharacterId(characterId);
-      setActiveSubPageId("");
-      return;
-    }
-
-    openCharacterDirect(characterId, {
-      tab,
-      subPageId,
-      section,
-      scrollTop: kind === "linked" || kind === "zone",
-    });
-  };
 
   const navigateToArchiveCharacter = useCallback(
     (characterId: string, options?: { tab?: CharacterDetailTab }) => {
-      requestCharacterAccess(characterId, "archive", { tab: options?.tab });
+      setActiveSection("archive");
+      setActiveArchiveSub(characterSectionForId(characters, characterId));
+      setActiveCharacterId(characterId);
+      setActiveSubPageId("");
+      if (options?.tab) {
+        setActiveTab(options.tab);
+      }
     },
-    [requestCharacterAccess],
+    [characters],
   );
 
   const navigateBackFromDetail = useCallback((): boolean => goBack(), [goBack]);
@@ -319,20 +165,34 @@ export default function Home() {
     worldUnlock.unlockWorldById(event, activeWorld.id);
   };
 
+  const navigateToGuest = () => setActiveSection("guest");
+
   const openAuthForWorldUnlock = () => {
     setAuthNotice("세계관 비밀번호는 회원가입 또는 로그인 후 입력할 수 있어요.");
     auth.setAuthPanelOpen(true);
   };
 
+  const navigateToCharacterWorks = (characterId: string) => {
+    navigateToArchiveCharacter(characterId, { tab: "works" });
+  };
+
+  const navigateToCharacterDetail = (characterId: string) => {
+    navigateToArchiveCharacter(characterId);
+  };
+
   const navigateToLinkedCharacter = (characterId: string, subPageId?: string) => {
-    requestCharacterAccess(characterId, "linked", {
-      tab: "settings",
-      subPageId: subPageId ?? "",
-    });
+    navigateToArchiveCharacter(characterId, { tab: "settings" });
+    if (subPageId) {
+      setActiveSubPageId(subPageId);
+    }
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const handleSelectCharacter = (characterId: string) => {
-    requestCharacterAccess(characterId, "select");
+    setActiveCharacterId(characterId);
+    setActiveSubPageId("");
   };
 
   const handleSelectSection = (section: SectionId) => {
@@ -349,85 +209,15 @@ export default function Home() {
   };
 
   const navigateToZoneLink = (target: ZoneLinkTarget) => {
-    requestCharacterAccess(target.characterId, "zone", {
-      tab: "settings",
-      subPageId: target.subPageId ?? "",
-      section: target.section,
-    });
+    setActiveSection("archive");
+    setActiveArchiveSub(target.section);
+    setActiveCharacterId(target.characterId);
+    setActiveSubPageId(target.subPageId ?? "");
+    setActiveTab("settings");
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
-
-  // 홈 진입 카드 — 사이드 메뉴를 열지 않아도 사이트 구조가 보이도록 개수와 함께 노출합니다.
-  const homeNavCards: HomeNavCard[] = [
-    {
-      id: "characters",
-      label: "OC",
-      kicker: "Archive",
-      count: ocCharacters.length,
-      countUnit: "명",
-      onSelect: () => handleSelectArchiveSub("characters"),
-    },
-    {
-      id: "pairs",
-      label: "Pair",
-      kicker: "Archive",
-      count: pairCharacters.length,
-      countUnit: "쌍",
-      onSelect: () => handleSelectArchiveSub("pairs"),
-    },
-    {
-      id: "others",
-      label: "Another",
-      kicker: "Archive",
-      count: otherCharacters.length,
-      countUnit: "개",
-      onSelect: () => handleSelectArchiveSub("others"),
-    },
-    {
-      id: "worlds",
-      label: "World",
-      kicker: "Section",
-      count: worlds.length,
-      countUnit: "개",
-      onSelect: () => handleSelectSection("worlds"),
-    },
-    {
-      id: "diary",
-      label: "Diary",
-      kicker: "Section",
-      count: diaryEntries.length,
-      countUnit: "편",
-      onSelect: () => handleSelectSection("diary"),
-    },
-    {
-      id: "guest",
-      label: "Guest",
-      kicker: "Section",
-      count: guestbook.length,
-      countUnit: "개",
-      onSelect: () => handleSelectSection("guest"),
-    },
-  ];
-
-  /**
-   * 두 컬렉션의 날짜 형식이 서로 달라(diary 는 문자열 date, guestbook 은 millis)
-   * 하나로 합쳐 정렬하지 않고 각자 최신순 앞에서 잘라 이어 붙입니다.
-   */
-  const homeUpdates: HomeUpdateItem[] = [
-    ...diaryEntries.slice(0, 3).map((entry) => ({
-      id: `diary-${entry.id}`,
-      kind: "Diary",
-      meta: entry.date,
-      title: entry.title || entry.body,
-      onSelect: () => handleSelectSection("diary"),
-    })),
-    ...guestbook.slice(0, 2).map((entry) => ({
-      id: `guest-${entry.id}`,
-      kind: "Guest",
-      meta: entry.name,
-      title: entry.body,
-      onSelect: () => handleSelectSection("guest"),
-    })),
-  ];
 
   const renderArchiveSection = (
     kind: CharacterKind,
@@ -436,15 +226,17 @@ export default function Home() {
     emptyListMessage: string,
   ) => (
     <CharactersSection
-      characters={kind === "oc" ? ocCharacters : kind === "pair" ? pairCharacters : otherCharacters}
+      characters={
+        kind === "oc" ? ocCharacters : kind === "pair" ? pairCharacters : otherCharacters
+      }
       allCharacters={characters}
       sectionIndexTitle={sectionIndexTitle}
       emptyListMessage={emptyListMessage}
-      activeCharacterId={displayedCharacterId}
+      activeCharacterId={activeCharacterId}
       setActiveCharacterId={handleSelectCharacter}
-      activeSubPageId={displayedSubPageId}
+      activeSubPageId={activeSubPageId}
       setActiveSubPageId={setActiveSubPageId}
-      parentCharacter={displayedCharacterParent}
+      parentCharacter={activeCharacterParent}
       detailSection={sectionId}
       onNavigateToLinkedCharacter={navigateToLinkedCharacter}
       onZoneLinkNavigate={navigateToZoneLink}
@@ -503,7 +295,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-transparent text-neutral-100">
+    <main className="min-h-screen overflow-x-hidden bg-transparent text-emerald-50">
       <style jsx global>{`
         @font-face {
           font-family: "KbizHanmaumMyungjo";
@@ -517,11 +309,11 @@ export default function Home() {
         body
           *:not(i):not([class*="icon"]):not(.material-icons):not(.fa):not(.fas):not(.far):not(
             .fab
-          ):not(.auth-input):not(.case-file-plate-sign):not(.glitch-zone-has-custom-font) {
+          ):not(.auth-input):not(.case-file-hero-mark):not(.glitch-zone-has-custom-font) {
           font-family: "KbizHanmaumMyungjo", "Zen Old Mincho", serif !important;
         }
       `}</style>
-      <div className="fixed inset-0 z-0 bg-[#080808]" aria-hidden="true" />
+      <div className="fixed inset-0 z-0" aria-hidden="true" />
       <div className="noise-layer" aria-hidden="true" />
 
       <SideMenu
@@ -537,117 +329,90 @@ export default function Home() {
         authNotice={displayedNotice}
       />
 
-      <div className="page-stage relative z-10 mx-auto w-full max-w-[1500px] px-5 pt-5 pb-12 md:px-8 md:pl-64">
-        <div className={cn("page-sheet", turn.className)}>
-          <section
-            className={cn(
-              "flex min-h-screen w-full flex-col gap-4",
-              // 캐릭터 상세는 기록·이미지가 많아 폭이 필요합니다. 상세일 때만 우측 열을 풀고
-              // 달력/BGM 을 본문 아래로 내려 본문이 전체 폭을 쓰게 합니다.
-              !isDetailView &&
-                "xl:grid xl:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_360px]",
+      <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col gap-4 px-5 pt-5 pb-12 md:px-8 md:pl-64 xl:grid xl:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="space-y-4">
+          {activeSection === "home" && (
+            <HomeSection
+              homeContent={homeContent}
+              characters={ocCharacters}
+              guestbook={guestbook}
+              onNavigateToGuest={navigateToGuest}
+              onNavigateToCharacterWorks={navigateToCharacterWorks}
+              onNavigateToCharacterDetail={navigateToCharacterDetail}
+            />
+          )}
+
+          {activeSection === "archive" && activeArchiveSub === "characters" &&
+            renderArchiveSection(
+              "oc",
+              "characters",
+              "OC Files",
+              "아직 등록된 자캐가 없어요. 관리자 로그인 후 OC에서 첫 카드를 추가해주세요.",
             )}
-          >
-            <div className="space-y-4">
-              {displayedSection === "home" && (
-                <HomeSection
-                  homeContent={homeContent}
-                  navCards={homeNavCards}
-                  updates={homeUpdates}
-                />
-              )}
 
-              {displayedSection === "archive" &&
-                displayedArchiveSub === "characters" &&
-                renderArchiveSection(
-                  "oc",
-                  "characters",
-                  "OC Files",
-                  "아직 등록된 자캐가 없어요. 관리자 로그인 후 OC에서 첫 카드를 추가해주세요.",
-                )}
-
-              {displayedSection === "archive" &&
-                displayedArchiveSub === "pairs" &&
-                renderArchiveSection(
-                  "pair",
-                  "pairs",
-                  "Pair Files",
-                  "아직 등록된 페어가 없어요. 관리자 로그인 후 Pair에서 첫 카드를 추가해주세요.",
-                )}
-
-              {displayedSection === "archive" &&
-                displayedArchiveSub === "others" &&
-                renderArchiveSection(
-                  "other",
-                  "others",
-                  "Another Files",
-                  "아직 등록된 어나더 항목이 없어요. 관리자 로그인 후 어나더에서 첫 카드를 추가해주세요.",
-                )}
-
-              {displayedSection === "worlds" && (
-                <WorldsSection
-                  worlds={worlds}
-                  activeWorldId={effectiveActiveWorldId}
-                  setActiveWorldId={setActiveWorldId}
-                  characters={characters}
-                  worldPasswordDrafts={worldUnlock.worldPasswordDrafts}
-                  onWorldPasswordChange={handleWorldPasswordChange}
-                  unlockedWorldIds={worldUnlock.unlockedWorldIds}
-                  canUnlockWorlds={Boolean(auth.authUser)}
-                  onUnlockWorld={handleUnlockActiveWorld}
-                  onRequireAuth={openAuthForWorldUnlock}
-                  onViewParticipant={viewParticipantInCharacterTab}
-                  onOpenGallery={modals.openGalleryModal}
-                  onOpenExpression={modals.setExpressionModalItem}
-                  onOpenReader={modals.setReaderModalItem}
-                  onZoneLinkNavigate={navigateToZoneLink}
-                />
-              )}
-
-              {displayedSection === "diary" && <DiarySection entries={diaryEntries} />}
-
-              {displayedSection === "guest" && (
-                <GuestSection
-                  guestbook={guestbook}
-                  guestDraft={guestDraft}
-                  onDraftChange={setGuestDraft}
-                  authUser={auth.authUser}
-                  onSubmit={submitGuest}
-                />
-              )}
-
-              {displayedSection === "extract" && (
-                <ExtractSection banners={extractContent.banners} />
-              )}
-            </div>
-
-            {/* 상세에서는 우측 열을 통째로 비워 도씨에가 폭과 높이를 모두 씁니다. */}
-            {!isDetailView && (
-              <aside className="space-y-3">
-                <CalendarWidget />
-              </aside>
+          {activeSection === "archive" && activeArchiveSub === "pairs" &&
+            renderArchiveSection(
+              "pair",
+              "pairs",
+              "Pair Files",
+              "아직 등록된 페어가 없어요. 관리자 로그인 후 Pair에서 첫 카드를 추가해주세요.",
             )}
-          </section>
+
+          {activeSection === "archive" && activeArchiveSub === "others" &&
+            renderArchiveSection(
+              "other",
+              "others",
+              "Another Files",
+              "아직 등록된 어나더 항목이 없어요. 관리자 로그인 후 어나더에서 첫 카드를 추가해주세요.",
+            )}
+
+          {activeSection === "worlds" && (
+            <WorldsSection
+              worlds={worlds}
+              activeWorldId={effectiveActiveWorldId}
+              setActiveWorldId={setActiveWorldId}
+              characters={characters}
+              worldPasswordDrafts={worldUnlock.worldPasswordDrafts}
+              onWorldPasswordChange={handleWorldPasswordChange}
+              unlockedWorldIds={worldUnlock.unlockedWorldIds}
+              canUnlockWorlds={Boolean(auth.authUser)}
+              onUnlockWorld={handleUnlockActiveWorld}
+              onRequireAuth={openAuthForWorldUnlock}
+              onViewParticipant={viewParticipantInCharacterTab}
+              onOpenGallery={modals.openGalleryModal}
+              onOpenExpression={modals.setExpressionModalItem}
+              onOpenReader={modals.setReaderModalItem}
+              onZoneLinkNavigate={navigateToZoneLink}
+            />
+          )}
+
+          {activeSection === "diary" && <DiarySection entries={diaryEntries} />}
+
+          {activeSection === "guest" && (
+            <GuestSection
+              guestbook={guestbook}
+              guestDraft={guestDraft}
+              onDraftChange={setGuestDraft}
+              authUser={auth.authUser}
+              onSubmit={submitGuest}
+            />
+          )}
+
+          {activeSection === "extract" && <ExtractSection banners={extractContent.banners} />}
         </div>
-      </div>
 
-      {/* BGM 은 레이아웃에서 빼내 우하단에 띄웁니다 — 어느 화면에서도 본문 폭을 먹지 않습니다. */}
-      <div className="bgm-dock">
-        <BgmPlayer characterBgmUrl={characterBgmUrl} />
-      </div>
+        <aside className="space-y-3">
+          <CalendarWidget />
 
-      {pendingConfidential && (
-        <ConfidentialAccessModal
-          characterName={pendingConfidential.characterName}
-          grade={pendingConfidential.grade}
-          steps={pendingConfidential.steps}
-          onCancel={() => setPendingConfidential(null)}
-          onConfirm={confirmPendingConfidential}
-        />
-      )}
+          <BgmPlayer characterBgmUrl={characterBgmUrl} />
+        </aside>
+      </section>
 
       {modals.storyModalItem && (
-        <StoryModal item={modals.storyModalItem} onClose={() => modals.setStoryModalItem(null)} />
+        <StoryModal
+          item={modals.storyModalItem}
+          onClose={() => modals.setStoryModalItem(null)}
+        />
       )}
 
       {modals.readerModalItem && (

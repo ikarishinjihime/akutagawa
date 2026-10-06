@@ -18,14 +18,14 @@ export const CASE_FILE_THEME_FIELDS = [
 }>;
 
 export const DEFAULT_CASE_FILE_DETAIL_THEME: Required<CaseFileDetailTheme> = {
-  introLabel: "rgba(180, 180, 180, 0.55)",
-  introText: "rgba(236, 236, 236, 0.88)",
+  introLabel: "rgba(168, 184, 214, 0.5)",
+  introText: "rgba(236, 240, 245, 0.86)",
   introBackground: "rgba(0, 0, 0, 0.38)",
-  introBorder: "rgba(255, 255, 255, 0.12)",
+  introBorder: "rgba(255, 255, 255, 0.09)",
   voiceLabel: "rgba(160, 160, 160, 0.62)",
-  voiceText: "rgba(210, 210, 210, 0.88)",
+  voiceText: "rgba(210, 206, 200, 0.88)",
   voiceBackground: "rgba(12, 12, 12, 0.82)",
-  voiceBorder: "rgba(255, 255, 255, 0.12)",
+  voiceBorder: "rgba(255, 255, 255, 0.1)",
 };
 
 const CSS_VAR_BY_KEY: Record<keyof CaseFileDetailTheme, string> = {

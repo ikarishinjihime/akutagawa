@@ -1,8 +1,5 @@
 import type { CSSProperties } from "react";
-import {
-  normalizeGlitchFontPreset,
-  resolveGlitchFontFamily,
-} from "@/constants/glitch-font-presets";
+import { normalizeGlitchFontPreset, resolveGlitchFontFamily } from "@/constants/glitch-font-presets";
 import type { FieldGlitchConfig, GlitchMarkdown, GlitchZoneStyle } from "@/lib/types";
 import { fieldConfigHasScrambleAlternation } from "@/lib/glitch-scramble-options";
 import { fieldGlitchHasLinks } from "@/lib/zone-links";
@@ -73,26 +70,12 @@ export function formatDecorationThicknessPx(value: number) {
   return Number.isInteger(value) ? `${value}px` : `${value.toFixed(1)}px`;
 }
 
-export function clampGlitchFontSizePercent(value: unknown) {
-  let numeric: number | undefined;
-
-  if (typeof value === "number") {
-    numeric = value;
-  } else if (typeof value === "string") {
-    const trimmed = value.trim();
-    if (!trimmed) {
-      return undefined;
-    }
-
-    numeric = Number(trimmed);
-  }
-
-  if (typeof numeric !== "number" || Number.isNaN(numeric)) {
+export function clampGlitchFontSizePercent(value: number | undefined) {
+  if (typeof value !== "number" || Number.isNaN(value)) {
     return undefined;
   }
 
-  const stepped =
-    Math.round(numeric / GLITCH_FONT_SIZE_STEP_PERCENT) * GLITCH_FONT_SIZE_STEP_PERCENT;
+  const stepped = Math.round(value / GLITCH_FONT_SIZE_STEP_PERCENT) * GLITCH_FONT_SIZE_STEP_PERCENT;
 
   return Math.min(MAX_GLITCH_FONT_SIZE_PERCENT, Math.max(MIN_GLITCH_FONT_SIZE_PERCENT, stepped));
 }
@@ -254,12 +237,7 @@ export function resolveGlitchZonePresentation(
 
   if (normalized?.fontSize) {
     const fontSizeValue = formatGlitchFontSizePercent(normalized.fontSize);
-    inlineStyle.fontSize = fontSizeValue;
     inlineStyle["--glitch-font-size"] = fontSizeValue;
-    // 부모 leading-* 이 rem 고정값이라 상속되면 글자만 커지고 줄간격은 그대로라
-    // 크기 변경이 거의 안 보입니다. unitless로 두면 font-size에 비례합니다.
-    inlineStyle.lineHeight = 1.75;
-    inlineStyle["--glitch-line-height"] = "1.75";
   }
 
   const fontFamily = resolveGlitchFontFamily(normalized?.fontPreset);

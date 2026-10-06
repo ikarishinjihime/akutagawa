@@ -50,7 +50,7 @@ export const useHomeContentAdmin = ({ isAdmin }: UseHomeContentAdminOptions) => 
 
     try {
       setIsSaving(true);
-      const noticeText = homeContent.notice.trim().slice(0, 1000);
+      const noticeText = (homeContent.notice ?? "").trim().slice(0, 1000);
       const next: HomeContent = {
         eyebrow: homeContent.eyebrow.trim() || emptyHomeContent.eyebrow,
         title: homeContent.title.trim() || emptyHomeContent.title,

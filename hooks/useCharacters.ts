@@ -6,7 +6,6 @@ import { getFirebaseDb } from "@/lib/firebase";
 import type { Character } from "@/lib/types";
 import { resolveCharacterBgmUrl } from "@/lib/bgm-catalog";
 import { normalizeCharacterKind } from "@/lib/character-kind";
-import { isClearanceGrade } from "@/lib/clearance";
 import { normalizeTextGlitch } from "@/lib/normalize-text-glitch";
 import { normalizeProfileFields } from "@/lib/profile-fields";
 import { normalizeRelationshipEntries } from "@/lib/relationship-entries";
@@ -42,53 +41,40 @@ const start = () => {
     unsubscribe = onSnapshot(
       collection(db, "characters"),
       (snapshot) => {
-        const nextData = snapshot.docs.map((characterDoc) => {
-          const data = characterDoc.data() as Character & {
-            profile?: { age?: string; height?: string; role?: string; keyword?: string };
-          };
-          const resolvedBgmUrl = resolveCharacterBgmUrl(data.bgmUrl);
-          const normalizedDetailTheme = normalizeCaseFileDetailTheme(data.detailTheme);
-          const metaFields = resolveMetaFields(data);
-          const {
-            bgmUrl: _bgmUrl,
-            profile: legacyProfile,
-            detailTheme: _detailTheme,
-            ...rest
-          } = data;
-          return {
-            ...rest,
-            id: data.id || characterDoc.id,
-            kind: normalizeCharacterKind(data.kind),
-            metaFields,
-            profileFields: normalizeProfileFields(data.profileFields, legacyProfile),
-            works: normalizeWorks(data.works),
-            settings: Array.isArray(data.settings) ? data.settings : [],
-            settingSections: Array.isArray(data.settingSections) ? data.settingSections : [],
-            relationships: Array.isArray(data.relationships) ? data.relationships : [],
-            relationshipEntries: normalizeRelationshipEntries(
-              data.relationshipEntries,
-              data.relationships,
-            ),
-            images: Array.isArray(data.images) ? data.images : [],
-            worldEntries: normalizeWorldEntries(data.worldEntries),
-            subPages: normalizeSubPages(data.subPages),
-            pairMemberIds: normalizePairMemberIds(data.pairMemberIds),
-            textGlitch: migrateLegacyMetaFieldGlitch(
-              normalizeTextGlitch(data.textGlitch),
-              metaFields,
-            ),
-            ...(resolvedBgmUrl ? { bgmUrl: resolvedBgmUrl } : {}),
-            ...(normalizedDetailTheme ? { detailTheme: normalizedDetailTheme } : {}),
-            ...(data.confidential ? { confidential: true } : {}),
-            ...(isClearanceGrade(data.clearance) ? { clearance: data.clearance } : {}),
-          };
-        });
-        emit({ data: nextData, error: null });
-      },
-      (firestoreError) => {
-        emit({ data: state.data, error: `Firestore 불러오기 실패: ${firestoreError.message}` });
-      },
-    );
+      const nextData = snapshot.docs.map((characterDoc) => {
+        const data = characterDoc.data() as Character & {
+          profile?: { age?: string; height?: string; role?: string; keyword?: string };
+        };
+        const resolvedBgmUrl = resolveCharacterBgmUrl(data.bgmUrl);
+        const normalizedDetailTheme = normalizeCaseFileDetailTheme(data.detailTheme);
+        const metaFields = resolveMetaFields(data);
+        const { bgmUrl: _bgmUrl, profile: legacyProfile, detailTheme: _detailTheme, ...rest } = data;
+        return {
+          ...rest,
+          id: data.id || characterDoc.id,
+          kind: normalizeCharacterKind(data.kind),
+          metaFields,
+          profileFields: normalizeProfileFields(data.profileFields, legacyProfile),
+          works: normalizeWorks(data.works),
+          settings: Array.isArray(data.settings) ? data.settings : [],
+          settingSections: Array.isArray(data.settingSections) ? data.settingSections : [],
+          relationships: Array.isArray(data.relationships) ? data.relationships : [],
+          relationshipEntries: normalizeRelationshipEntries(data.relationshipEntries, data.relationships),
+          images: Array.isArray(data.images) ? data.images : [],
+          worldEntries: normalizeWorldEntries(data.worldEntries),
+          subPages: normalizeSubPages(data.subPages),
+          pairMemberIds: normalizePairMemberIds(data.pairMemberIds),
+          textGlitch: migrateLegacyMetaFieldGlitch(normalizeTextGlitch(data.textGlitch), metaFields),
+          ...(resolvedBgmUrl ? { bgmUrl: resolvedBgmUrl } : {}),
+          ...(normalizedDetailTheme ? { detailTheme: normalizedDetailTheme } : {}),
+        };
+      });
+      emit({ data: nextData, error: null });
+    },
+    (firestoreError) => {
+      emit({ data: state.data, error: `Firestore 불러오기 실패: ${firestoreError.message}` });
+    },
+  );
   } catch (error) {
     emit({
       data: [],

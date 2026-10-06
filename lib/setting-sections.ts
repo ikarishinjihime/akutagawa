@@ -1,13 +1,8 @@
 import type { SettingSection } from "@/lib/types";
 
-/* 예전 저장본에 남아 있는 키들 — 읽을 때 흘려보냅니다.
-   kind/excerpt 는 story 모드를 걷어내면서 쓰지 않게 됐고,
-   content/text 는 body 이전 이름입니다. */
 type RawSettingSection = SettingSection & {
   content?: string;
   text?: string;
-  kind?: string;
-  excerpt?: string;
 };
 
 export function normalizeSettingSections(sections: SettingSection[] | undefined): SettingSection[] {
@@ -18,6 +13,17 @@ export function normalizeSettingSections(sections: SettingSection[] | undefined)
   return sections
     .map((section, index) => {
       const raw = section as RawSettingSection;
+      const kind = raw.kind === "story" ? "story" : "record";
+
+      if (kind === "story") {
+        return {
+          id: raw.id || `setting-section-${index}`,
+          title: raw.title?.trim() ?? "",
+          body: (raw.body ?? raw.content ?? raw.text ?? "").trim(),
+          kind: "story" as const,
+          excerpt: raw.excerpt?.trim() ?? "",
+        };
+      }
 
       return {
         id: raw.id || `setting-section-${index}`,
@@ -25,7 +31,12 @@ export function normalizeSettingSections(sections: SettingSection[] | undefined)
         body: (raw.body ?? raw.content ?? raw.text ?? "").trim(),
       };
     })
-    .filter((section) => section.title || section.body);
+    .filter(
+      (section) =>
+        section.title ||
+        section.body ||
+        (section.kind === "story" && Boolean(section.excerpt?.trim())),
+    );
 }
 
 export function moveSettingSection(

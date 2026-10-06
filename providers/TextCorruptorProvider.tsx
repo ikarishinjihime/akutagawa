@@ -103,6 +103,12 @@ function isCorruptableElement(element: Element) {
     return false;
   }
 
+  /* checkVisibility 는 getComputedStyle 객체 생성 + getClientRects 강제 레이아웃보다
+     훨씬 싸게 같은 판정을 내립니다 — 이 함수는 페이지의 모든 텍스트 노드마다 불립니다. */
+  if (typeof element.checkVisibility === "function") {
+    return element.checkVisibility({ checkVisibilityCSS: true });
+  }
+
   const style = window.getComputedStyle(element);
   return (
     style.display !== "none" && style.visibility !== "hidden" && element.getClientRects().length > 0
@@ -176,24 +182,43 @@ export function TextCorruptorProvider({ children }: TextCorruptorProviderProps) 
 
     let corruptTimer: number | undefined;
     let clearTimer: number | undefined;
+    let idleHandle: number | undefined;
 
     const restoreTexts = () => {
       restoreActionsRef.current.forEach((restore) => restore());
       restoreActionsRef.current = [];
     };
 
+    /* DOM 전체 순회는 프레임 사이 여유 시간에 돌립니다 — 페이지 넘김 같은
+       애니메이션 프레임과 겹치면 그 한 프레임이 통째로 밀립니다. */
+    const runWhenIdle = (work: () => void) => {
+      if ("requestIdleCallback" in window) {
+        idleHandle = window.requestIdleCallback(() => work(), { timeout: 1500 });
+        return;
+      }
+      work();
+    };
+
     const scheduleNextCorruption = () => {
       corruptTimer = window.setTimeout(() => {
-        restoreTexts();
-
-        const candidates = collectCorruptCandidates();
-        const selectedCandidates = pickRandomSample(candidates, CORRUPT_COUNT);
-
-        restoreActionsRef.current = applyCorruption(selectedCandidates);
-        clearTimer = window.setTimeout(() => {
-          restoreTexts();
+        // 안 보이는 탭에서는 손상을 걸지 않고 다음 차례로 넘어갑니다.
+        if (document.hidden) {
           scheduleNextCorruption();
-        }, CORRUPT_VISIBLE_MS);
+          return;
+        }
+
+        runWhenIdle(() => {
+          restoreTexts();
+
+          const candidates = collectCorruptCandidates();
+          const selectedCandidates = pickRandomSample(candidates, CORRUPT_COUNT);
+
+          restoreActionsRef.current = applyCorruption(selectedCandidates);
+          clearTimer = window.setTimeout(() => {
+            restoreTexts();
+            scheduleNextCorruption();
+          }, CORRUPT_VISIBLE_MS);
+        });
       }, getRandomItem(CORRUPT_INTERVALS_MS));
     };
 
@@ -202,6 +227,9 @@ export function TextCorruptorProvider({ children }: TextCorruptorProviderProps) 
     return () => {
       if (corruptTimer) window.clearTimeout(corruptTimer);
       if (clearTimer) window.clearTimeout(clearTimer);
+      if (idleHandle !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleHandle);
+      }
       restoreTexts();
     };
   }, [enabled]);

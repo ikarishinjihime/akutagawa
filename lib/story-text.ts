@@ -113,11 +113,7 @@ function findEarliestMarkup(source: string, from = 0): MarkupMatch | null {
       }
     }
 
-    if (
-      isDollarChar(source[index]) &&
-      !source.startsWith("**$", index) &&
-      !source.startsWith("$**", index)
-    ) {
+    if (isDollarChar(source[index]) && !source.startsWith("**$", index) && !source.startsWith("$**", index)) {
       for (let close = index + 1; close < source.length; close += 1) {
         if (!isDollarChar(source[close])) {
           continue;
@@ -230,10 +226,21 @@ export function stripStoryMarkup(text: string): string {
     .trim();
 }
 
-/* resolveStoryExcerpt() 가 있던 자리.
-   레코드 박스 발췌는 lib/record-excerpt.ts 의 excerptForPlate() 가 본문에서 문단 단위로
-   뽑습니다. 이 함수는 그 이전 방식(section.excerpt 우선 + 글자 수로 자르기)이라
-   호출부가 하나도 남아 있지 않았습니다. */
+export function resolveStoryExcerpt(section: Pick<SettingSection, "body" | "excerpt">, maxLength = 148): string {
+  const custom = section.excerpt?.trim();
+  const source = custom || section.body.trim().replace(/\n+/g, " ");
+  const plain = stripStoryMarkup(source);
+
+  if (plain.length <= maxLength) {
+    return plain;
+  }
+
+  const clipped = plain.slice(0, maxLength).trimEnd();
+  const lastSpace = clipped.lastIndexOf(" ");
+  const safeClip = lastSpace > maxLength * 0.55 ? clipped.slice(0, lastSpace) : clipped;
+
+  return `${safeClip}…`;
+}
 
 export function stripStoryMarkupPreserveLayout(text: string): string {
   return parseStoryMarkup(text)

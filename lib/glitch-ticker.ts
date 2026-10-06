@@ -11,6 +11,11 @@ function touchPulseSnapshot() {
 }
 
 function runPulse() {
+  // 백그라운드 탭에서는 글리치 위상을 돌릴 필요가 없습니다 — 깨어나면 다음 틱에 따라잡습니다.
+  if (typeof document !== "undefined" && document.hidden) {
+    return;
+  }
+
   touchPulseSnapshot();
   listeners.forEach((listener) => {
     listener();

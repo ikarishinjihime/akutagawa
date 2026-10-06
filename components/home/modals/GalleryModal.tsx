@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import { DocumentSheet } from "@/components/home/DocumentSheet";
 import type { GalleryModalItem } from "@/types/home.types";
 
 interface GalleryModalProps {
@@ -15,16 +14,24 @@ interface GalleryModalProps {
 export function GalleryModal({ item, zoom, onZoomChange, onClose, className }: GalleryModalProps) {
   return (
     <div
-      className={cn("desk-backdrop fixed inset-0 z-50 grid place-items-center p-4", className)}
+      className={cn(
+        "fixed inset-0 z-50 grid place-items-center bg-black/82 p-4 backdrop-blur-sm",
+        className,
+      )}
       role="dialog"
       aria-modal="true"
       aria-label={`${item.character.name} 이미지 확대 보기`}
       onClick={onClose}
     >
-      <DocumentSheet tabLabel="IMG" className="max-h-[92vh] w-full max-w-5xl">
-        <div className="flex items-center justify-between gap-3 border-b border-white/15 p-4">
+      <div
+        className="dossier-viewer max-h-[92vh] w-full max-w-5xl overflow-hidden"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="flex items-center justify-between gap-3 border-b border-stone-400/15 p-4">
           <div>
-            <p className="archive-kicker">{item.character.name}</p>
+            <p className="archive-kicker">
+              {item.character.name}
+            </p>
             <h3 className="archive-title mt-1 text-2xl">이미지 확대 보기</h3>
           </div>
           <button
@@ -61,31 +68,31 @@ export function GalleryModal({ item, zoom, onZoomChange, onClose, className }: G
             draggable={false}
           />
         </div>
-        <div className="flex flex-wrap items-center justify-end gap-2 border-t border-white/15 p-4 text-xs text-white/55">
-          <span className="mr-auto text-white/45">휠로 확대/축소 가능</span>
+        <div className="flex flex-wrap items-center justify-end gap-2 border-t border-stone-400/15 p-4 text-xs text-emerald-100/60">
+          <span className="mr-auto text-emerald-100/50">휠로 확대/축소 가능</span>
           <button
             type="button"
             onClick={() => onZoomChange(zoom - 0.2)}
-            className="archive-row px-3 py-2 text-white/90"
+            className="archive-row px-3 py-2 text-emerald-50"
           >
             축소
           </button>
           <button
             type="button"
             onClick={() => onZoomChange(1)}
-            className="archive-row px-3 py-2 text-white/90"
+            className="archive-row px-3 py-2 text-emerald-50"
           >
             {Math.round(zoom * 100)}%
           </button>
           <button
             type="button"
             onClick={() => onZoomChange(zoom + 0.2)}
-            className="archive-row px-3 py-2 text-white/90"
+            className="archive-row px-3 py-2 text-emerald-50"
           >
             확대
           </button>
         </div>
-      </DocumentSheet>
+      </div>
     </div>
   );
 }

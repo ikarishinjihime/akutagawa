@@ -1,7 +1,7 @@
 import { normalizeCharacterPaletteInput } from "@/lib/character-palette";
 import type { Character, CharacterSubPage } from "@/lib/types";
 import type { FieldGlitchConfig, GlitchZone } from "@/lib/types";
-import type { CharacterDraft } from "@/types/character-draft.types";
+import type { CharacterDraft } from "@/lib/character-draft";
 import {
   getMetaFieldBody,
   metaFieldGlitchPath,
@@ -107,6 +107,10 @@ function getSubPageFieldValue(subPage: CharacterSubPage, fieldPath: string) {
         return "";
       }
 
+      if (sectionPath.field === "excerpt") {
+        return section.excerpt ?? "";
+      }
+
       if (sectionPath.field === "title") {
         return section.title;
       }
@@ -175,6 +179,10 @@ function setSubPageFieldValue(
         settingSections: (subPage.settingSections ?? []).map((section) => {
           if (section.id !== sectionPath.sectionId) {
             return section;
+          }
+
+          if (sectionPath.field === "excerpt") {
+            return { ...section, excerpt: value };
           }
 
           if (sectionPath.field === "title") {
@@ -287,6 +295,10 @@ export function getCharacterDraftFieldValue(draft: CharacterDraft, path: string)
         return "";
       }
 
+      if (sectionPath.field === "excerpt") {
+        return section.excerpt ?? "";
+      }
+
       if (sectionPath.field === "title") {
         return section.title;
       }
@@ -330,6 +342,10 @@ export function getCharacterFieldValue(character: Character, path: string) {
       const section = character.settingSections?.find((item) => item.id === sectionPath.sectionId);
       if (!section) {
         return "";
+      }
+
+      if (sectionPath.field === "excerpt") {
+        return section.excerpt ?? "";
       }
 
       if (sectionPath.field === "title") {
@@ -400,6 +416,10 @@ export function setCharacterDraftFieldValue(
         settingSections: draft.settingSections.map((section) => {
           if (section.id !== sectionPath.sectionId) {
             return section;
+          }
+
+          if (sectionPath.field === "excerpt") {
+            return { ...section, excerpt: value };
           }
 
           if (sectionPath.field === "title") {
@@ -872,7 +892,15 @@ function buildRecordBoxGlitchFieldOptions(
       },
     ];
 
-    /* 「· 소개」(excerpt) 항목이 있던 자리 — 스토리 모드와 함께 걷어냈습니다 */
+    if (section.kind === "story") {
+      const excerptPath = settingSectionExcerptGlitchPath(section.id);
+      options.push({
+        path: excerptPath,
+        label: `${baseLabel} · 소개`,
+        hasGlitch: Boolean(textGlitch[excerptPath]),
+      });
+    }
+
     return options;
   });
 }
@@ -928,7 +956,14 @@ function buildSubPageGlitchFieldOptions(subPage: CharacterSubPage): GlitchFieldO
       },
     );
 
-    /* 「· 소개」(excerpt) 항목이 있던 자리 — 스토리 모드와 함께 걷어냈습니다 */
+    if (section.kind === "story") {
+      const excerptFieldPath = settingSectionExcerptGlitchPath(section.id);
+      options.push({
+        path: subPageFieldGlitchPath(subPage.id, excerptFieldPath),
+        label: `${baseLabel} · 소개`,
+        hasGlitch: Boolean(subGlitch[excerptFieldPath]),
+      });
+    }
   });
 
   (subPage.relationshipEntries ?? []).forEach((entry, index) => {

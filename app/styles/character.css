@@ -1,905 +1,88 @@
 /* character.css — 캐릭터 색인·카드·dossier·case-file */
-
-/* ══════════════════════════════════════════════════════════════
-   문서 보관고 — 파일철을 늘어놓은 서가 한 칸
-
-   균일한 회색 판이면 파일이 허공에 떠 있는 것처럼 보입니다. 위에서 떨어지는
-   빛 한 줄기, 옅은 세로 칸선, 바닥 쪽 그늘로 「안쪽」이라는 깊이를 주고,
-   네 귀의 꺾쇠와 출입 제한 띠로 여기가 아무나 못 들어오는 칸임을 밝힙니다.
-
-   바탕은 진짜 검정입니다. 깊이는 색을 밝히는 대신 위에서 떨어지는 빛 한 줄기와
-   아주 옅은 세로 칸선으로만 냅니다 — 니어블랙을 깔면 검은 게 아니라 「어두운
-   회색 판」으로 읽혀서, 흰 괘선과 붉은 잉크의 대비가 통째로 눌립니다.
-
-   overrides 의 `html body main .character-index-panel` (특정도 0,1,3) 이
-   단색을 !important 로 못박아 두어서, 요소 이름을 하나 더 붙여 (0,1,4) 로
-   넘어섭니다.
-   ══════════════════════════════════════════════════════════════ */
-html body main section.character-index-panel {
-  position: relative;
-  isolation: isolate;
-  background:
-    radial-gradient(120% 58% at 50% -14%, rgba(255, 255, 255, 0.055), transparent 62%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 3.5rem),
-    #000000 !important;
-  background-image:
-    radial-gradient(120% 58% at 50% -14%, rgba(255, 255, 255, 0.055), transparent 62%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 3.5rem),
-    linear-gradient(#000000, #000000) !important;
-  border-color: rgba(255, 255, 255, 0.18) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+.character-index-panel {
+  background: linear-gradient(180deg, rgba(12, 0, 2, 0.98), rgba(0, 0, 0, 0.99)), #000;
 }
 
-/* 네 귀의 꺾쇠 — 도면·기밀문서의 재단 표시.
-   overrides 가 `html body main .glass-card::before` 를
-   `display:none; opacity:0; background:none` 으로 전부 !important 로 눌러 둡니다.
-   특정도는 요소 이름(section)을 붙여 넘기지만, 그쪽 `background` 는 단축
-   속성이라 size·position·repeat 까지 !important 로 초기화합니다 —
-   !important 는 특정도와 별개로 이기므로 이쪽도 전부 !important 로 되받습니다. */
-html body main section.character-index-panel::before {
-  --vault-bracket: rgba(255, 255, 255, 0.3);
-  content: "";
-  position: absolute;
-  display: block !important;
-  inset: 0.6rem;
-  z-index: 0;
-  opacity: 1 !important;
-  background-image:
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)),
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)),
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)),
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)),
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)),
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)),
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)),
-    linear-gradient(var(--vault-bracket), var(--vault-bracket)) !important;
-  background-repeat: no-repeat !important;
-  background-size:
-    0.9rem 1px,
-    1px 0.9rem,
-    0.9rem 1px,
-    1px 0.9rem,
-    0.9rem 1px,
-    1px 0.9rem,
-    0.9rem 1px,
-    1px 0.9rem !important;
-  background-position:
-    left top,
-    left top,
-    right top,
-    right top,
-    left bottom,
-    left bottom,
-    right bottom,
-    right bottom !important;
-  pointer-events: none;
-}
-
-/* 표찰과 서가 내용은 꺾쇠 위로 */
-.character-index-header,
-.character-index-grid,
-.archive-vault-rail,
-.archive-vault-foot {
-  position: relative;
-  z-index: 1;
-}
-
-/* ── 문서고 표찰 ───────────────────────────────────────────────
-   예전에는 「OC FILES」 칩 하나와 개수 칩 하나가 양끝에 떠 있을 뿐이라,
-   서가가 아니라 그냥 목록 제목으로 읽혔습니다. */
 .character-index-header {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
-  padding-bottom: 0.85rem;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(111, 143, 215, 0.34);
+  padding-bottom: 0.9rem;
 }
 
-/* 「機密」 각인 — 표찰 맨 앞의 도장자리 */
-.archive-vault-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: 2.1rem;
-  height: 2.1rem;
-  border: 1px solid rgba(226, 72, 62, 0.55);
-  color: rgba(226, 84, 74, 0.9);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.15;
-  text-align: center;
-  /* 두 글자가 세로로 겹쳐 앉습니다 — 좁은 도장자리 */
-  writing-mode: vertical-rl;
-}
-
-.archive-vault-title {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
-}
-
-.archive-vault-jp {
-  color: rgba(238, 238, 242, 0.9);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 1.05rem;
-  letter-spacing: 0.28em;
-  margin-right: -0.28em;
-  line-height: 1.1;
-}
-
-.archive-vault-ko {
-  color: rgba(170, 170, 176, 0.7);
+.character-index-header > p.character-index-blue-text,
+.character-index-header > span.character-index-blue-text {
+  border: 1px solid rgba(111, 143, 215, 0.38);
+  background: rgba(0, 0, 0, 0.56);
+  padding: 0.28rem 0.48rem;
+  color: rgba(168, 176, 188, 0.82);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.28em;
-  margin-right: -0.28em;
-  line-height: 1.1;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.archive-vault-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.24rem;
-  margin-left: auto;
-  text-align: right;
+.character-index-header > p.character-index-blue-text span {
+  border: 0;
+  background: transparent;
+  padding: 0;
 }
 
-.archive-vault-count {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.32rem;
-  padding: 0.24rem 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  color: rgba(238, 238, 242, 0.88);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1;
-}
-
-.archive-vault-count-key {
-  color: rgba(170, 170, 176, 0.6);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.56rem;
-  letter-spacing: 0.06em;
-}
-
-.archive-vault-note {
-  color: rgba(160, 160, 166, 0.5);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.14em;
-}
-
-/* ── 출입 제한 띠 ──────────────────────────────────────────────
-   표찰과 서가 사이를 가로지릅니다 */
-.archive-vault-rail {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-top: 0.85rem;
-}
-
-.archive-vault-rail-tape {
-  flex: 1 1 auto;
-  height: 0.42rem;
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(226, 72, 62, 0.32) 0 4px,
-    rgba(255, 255, 255, 0.05) 4px 8px
-  );
-}
-
-.archive-vault-rail-text {
-  flex: none;
-  color: rgba(180, 180, 186, 0.52);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.2em;
-  white-space: nowrap;
-}
-
-/* ── 서가 바닥 ─────────────────────────────────────────────────
-   이 칸의 편철이 여기서 끝난다는 표시 */
-.archive-vault-foot {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-top: 1.4rem;
-  color: rgba(150, 150, 156, 0.42);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.18em;
-  white-space: nowrap;
-}
-
-.archive-vault-foot-code {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  letter-spacing: 0.24em;
-}
-
-.archive-vault-foot-rule {
-  flex: 1 1 auto;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.05) 60%,
-    transparent
-  );
-}
-
-.archive-vault-foot-end {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  letter-spacing: 0.24em;
-}
-
-@media (max-width: 520px) {
-  .archive-vault-rail-text {
-    display: none;
-  }
-}
-
-/* ══════════════════════════════════════════════════════════════
-   파일철 — 아카이브 색인의 카드 한 장
-
-   실제 서류철은 세로로 긴 카드가 아니라 옆으로 누운 한 부입니다.
-   칸을 가로로 넓게 잡고, 마우스를 올리면 표지가 왼쪽 경첩으로 열립니다.
-
-   색은 이 사이트의 검정 위주 팔레트를 그대로 씁니다 — 표지는 검은 마분지,
-   안에 물린 문서만 밝은 종이색입니다. 화면에서 유일하게 밝은 것이
-   「문서」라야 검은 표지가 무언가를 감추고 있는 것으로 읽힙니다.
-   ══════════════════════════════════════════════════════════════ */
 .character-index-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
-  gap: 1.15rem;
+  gap: 0.85rem;
   margin: 1.25rem auto 0;
   max-width: 900px;
 }
 
 @media (min-width: 640px) {
   .character-index-grid {
-    grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
-    gap: 1.4rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* !important 를 쓰는 이유 — 레이어 밖 전역 규칙이 카드의 테두리·바탕·그림자를
-   특정도와 무관하게 덮습니다. 카드 상자 자체는 파일철을 얹어 두는 자리일 뿐이라
-   아무것도 그리지 않아야 합니다. */
+@media (min-width: 1280px) {
+  .character-index-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .archive-character-card {
   position: relative;
   width: 100%;
-  margin-top: 0;
-  overflow: visible !important;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-/* 연 파일철은 옆 칸 위로 올라옵니다 — 책상에서 파일 하나를 집어 든 모양 */
-.archive-character-card:hover,
-.archive-character-card:focus-visible,
-.archive-character-card.is-active {
-  z-index: 5;
-}
-
-/* 파일철 본체. 여기서 잡은 비율이 곧 서류철 비율이고,
-   perspective 도 여기 걸립니다 — 카드(<button>)에 걸면 버튼의 익명 상자에
-   막혀 자식(표지)까지 전해지지 않습니다. */
-.archive-character-card .archive-folder-flip {
-  /* 견출지가 솟은 높이 — 표지·뒷장·안쪽 문서가 모두 이 값을 기준으로 앉습니다 */
-  --folder-tab-h: 1.45rem;
-  /* 표지가 열리는 각도. 90° 를 넘기면 표지 뒷면이 보이므로 그 앞에서 멈춥니다 —
-     너무 붙여 두면(-85° 쯤) 표지가 사라진 것처럼 보이고, 너무 세우면(-60°)
-     열린 표지가 안쪽 사진을 그대로 가립니다. */
-  --folder-open: -76deg;
-  position: relative;
-  display: block;
-  aspect-ratio: 1.34 / 1;
-  perspective: 1500px;
-  transform-style: preserve-3d;
-}
-
-/* ── 뒷장 ──────────────────────────────────────────────────────
-   문서를 받치는 서류철 뒤쪽 판. 표지가 열리면 이 판의 테두리가 문서 둘레로
-   보여서 「종이가 파일 안에 들어 있다」로 읽힙니다. */
-.archive-character-card .archive-folder-back {
-  position: absolute !important;
-  top: var(--folder-tab-h) !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  z-index: 0;
-  display: block;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--app-radius-md);
-  background: #000000;
-}
-
-/* ── 물려 있는 기밀문서 ────────────────────────────────────────
-   견출지 왼쪽, 표지 윗변 위로 종이 끝이 어긋나게 삐져나옵니다.
-   가운데 장에는 등급 색 띠가 인쇄돼 있어 무엇이 들었는지 표가 납니다. */
-.archive-character-card .archive-folder-papers {
-  position: absolute !important;
-  top: 0 !important;
-  left: 5% !important;
-  right: 52% !important;
-  z-index: 1;
-  display: block;
-  height: var(--folder-tab-h);
-}
-
-.archive-folder-paper {
-  position: absolute !important;
-  bottom: -0.6rem;
-  display: block;
-  border: 1px solid rgba(0, 0, 0, 0.55);
-  border-bottom: 0;
-  transform-origin: bottom center;
-}
-
-/* 뒤장 — 가장 낮게 물려 있어 종이 끝만 보입니다 */
-.archive-folder-paper--back {
-  top: 0.6rem;
-  left: 0;
-  right: 32%;
-  background: linear-gradient(180deg, #d3d3ce 0%, #a7a7a2 100%);
-  transform: rotate(-1.2deg);
-}
-
-/* 가운데 장 — 가장 높이 솟아 있고 등급 띠가 인쇄돼 있습니다 */
-.archive-folder-paper--mid {
-  top: 0.06rem;
-  left: 16%;
-  right: 8%;
+  overflow: hidden;
+  border: 1px solid rgba(111, 143, 215, 0.42);
   background:
-    linear-gradient(
-      180deg,
-      transparent 0 0.34rem,
-      var(--folder-band, #5f5f66) 0.34rem 0.48rem,
-      transparent 0.48rem
-    ),
-    linear-gradient(180deg, #f1f1ec 0%, #d8d8d2 62%, #bcbcb7 100%);
-}
-
-/* 앞장 — 표지 바로 뒤라 살짝만 고개를 내밉니다 */
-.archive-folder-paper--front {
-  top: 0.88rem;
-  left: 44%;
-  right: 0;
-  background: linear-gradient(180deg, #e4e4df 0%, #b4b4af 100%);
-  transform: rotate(1.4deg);
-}
-
-/* ── 안쪽 자료 ─────────────────────────────────────────────────
-   표지를 열면 나오는 인물 자료. 파일철 안쪽에 물려 있으므로 뒷장보다
-   조금 작게, 아래·오른쪽으로 살짝 물러나 앉습니다. */
-.archive-character-card .archive-folder-sheet {
-  position: absolute !important;
-  top: calc(var(--folder-tab-h) + 0.3rem) !important;
-  right: 0.35rem !important;
-  bottom: 0.4rem !important;
-  left: 0.45rem !important;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
-  align-items: stretch;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: calc(var(--app-radius-md) - 2px);
-  background: #000000;
-  /* 닫힐 때는 문서가 먼저 제자리로 내려가고, 표지가 뒤따라 덮입니다 */
-  transition:
-    transform 1000ms cubic-bezier(0.18, 0.82, 0.22, 1),
-    border-color 400ms ease,
-    box-shadow 600ms ease;
-}
-
-/* 표지가 열리면 문서가 파일 밖으로 천천히 들려 나옵니다.
-   표지가 먼저 벌어지고 나서 종이가 올라와야 「꺼내는」 동작으로 읽히므로
-   문서 쪽에만 늦은 시작(delay)을 답니다. */
-.archive-character-card:hover .archive-folder-sheet,
-.archive-character-card:focus-visible .archive-folder-sheet,
-.archive-character-card.is-active .archive-folder-sheet {
-  border-color: rgba(255, 255, 255, 0.44);
-  box-shadow: -8px 10px 26px rgba(0, 0, 0, 0.7);
-  /* 열린 표지가 왼쪽을 조금 가리므로, 문서가 그만큼 오른쪽으로 빠져나옵니다 */
-  transform: translate3d(9%, -7%, 0) rotate(-1.4deg);
-  /* 표지가 먼저 벌어지기 시작한 뒤에 종이가 따라 올라옵니다 */
-  transition-delay: 200ms;
-}
-
-/* ── 표지 ──────────────────────────────────────────────────────
-   왼쪽 경첩으로 열립니다. 표지 위 인쇄물은 저마다 제자리가 있는 서식이라
-   흐름 대신 좌표로 앉힙니다. */
-/* position 에 !important 를 쓰는 이유 — shell.css 의 `main :where(…span…)` 이
-   레이어 밖에서 position:relative 를 못박습니다. 안 걸면 표지가 relative 로
-   남아 카드를 덮지 못하고 아래에 쌓입니다. */
-.archive-character-card .archive-folder-cover {
-  /* 검은 표지 위 잉크 */
-  --folder-ink: rgba(228, 228, 232, 0.8);
-  --folder-ink-quiet: rgba(196, 196, 202, 0.46);
-  --folder-rule: rgba(255, 255, 255, 0.18);
-  /* 고무도장 잉크(검은 표지 위)와 안쪽 문서의 등급 띠(흰 종이 위) —
-     바탕이 반대라 같은 등급이라도 명도를 뒤집어 잡습니다 */
-  --folder-stamp: #d9d9de;
-  --folder-band: #5f5f66;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 3 !important;
-  display: block;
-  color: var(--folder-ink);
-  text-align: left;
-  backface-visibility: hidden;
-  border: 0;
-  transform-origin: left center;
-  transform: rotateY(0deg);
-  /* 표지는 두꺼운 마분지 한 장이라 조금 무겁게 넘어갑니다 — 시작 구간을 살짝
-     눌러 둔 곡선이라 같은 시간이라도 손맛이 남습니다. 다만 너무 눌러 두면
-     (0.38 쯤) 앞부분이 멈춘 것처럼 느껴져 실제보다 훨씬 느리게 읽힙니다.
-     끝의 180ms 는 닫힐 때의 늦은 시작 — 문서가 다 들어간 뒤에 표지가 덮입니다. */
-  transition: transform 1000ms cubic-bezier(0.28, 0.06, 0.2, 1) 180ms;
-  pointer-events: none;
-}
-
-.archive-character-card:hover .archive-folder-cover,
-.archive-character-card:focus-visible .archive-folder-cover,
-.archive-character-card.is-active .archive-folder-cover {
-  transform: rotateY(var(--folder-open));
-  /* 열 때는 표지가 먼저 움직입니다 */
-  transition-delay: 0ms;
-}
-
-/* 표지 앞장 — 견출지 아래쪽 몸통.
-   예전에는 clip-path 로 견출지 모양을 한 번에 오려 냈는데, 그러면 잘린
-   변에는 테두리가 남지 않아 검은 표지가 배경에 그대로 녹아 버립니다.
-   몸통과 견출지를 상자 두 개로 나눠 각자 테두리를 갖게 했습니다. */
-.archive-character-card .archive-folder-cover::before {
-  content: "";
-  position: absolute;
-  top: var(--folder-tab-h);
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 0;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: var(--app-radius-md);
-  background:
-    /* 왼쪽 경첩 — 파일철을 접은 자리 */
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.08) 0 1px,
-      rgba(0, 0, 0, 0.85) 1px 5px,
-      transparent 5px
-    ),
-    /* 마분지 결 — 바탕이 진짜 검정이라, 결은 밝기 차가 아니라 흰 실선 몇 올로 냅니다 */
-    repeating-linear-gradient(-58deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 4px),
-    #000000;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-}
-
-/* 견출지 — 몸통 뒤에서 위로 솟습니다.
-   z-index 를 내려 두면 아랫부분이 몸통에 가려져 한 장으로 이어져 보입니다. */
-.archive-character-card .archive-folder-cover::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 6%;
-  left: 50%;
-  z-index: -1;
-  height: calc(var(--folder-tab-h) + 0.6rem);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-bottom: 0;
-  border-radius: calc(var(--app-radius-md) - 2px) calc(var(--app-radius-md) - 2px) 0 0;
-  /* 견출지만 아주 살짝 들려 있습니다 — 완전히 같은 검정이면 몸통과 한 덩어리로 뭉갭니다 */
-  background: linear-gradient(180deg, #101010 0%, #050505 100%);
-}
-
-/* ── 견출지 기입칸 ─────────────────────────────────────────────
-   실제 파일철처럼 NAME 칸과 No. 칸이 세로 괘선으로 갈려 인쇄돼 있습니다 */
-.archive-character-card .archive-folder-cover > .archive-folder-tab {
-  position: absolute !important;
-  top: 0 !important;
-  left: 50% !important;
-  right: 6% !important;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 2.5rem;
-  align-items: end;
-  height: var(--folder-tab-h);
-  padding: 0 0.4rem 0.18rem;
-  color: var(--folder-ink);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  line-height: 1;
-  /* 견출지 밑에 그은 기입선 */
-  box-shadow: inset 0 -1px 0 var(--folder-rule);
-}
-
-.archive-folder-tab-cell {
-  display: flex;
-  align-items: baseline;
-  gap: 0.24rem;
-  min-width: 0;
-  overflow: hidden;
-}
-
-/* No. 칸은 세로 괘선으로 갈립니다 */
-.archive-folder-tab-cell--no {
-  padding-left: 0.32rem;
-  border-left: 1px solid var(--folder-rule);
-}
-
-.archive-folder-tab-key {
-  flex: none;
-  color: var(--folder-ink-quiet);
-  font-size: 0.42rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.archive-folder-tab-value {
-  overflow: hidden;
-  font-size: 0.5rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* ── 관리표 ────────────────────────────────────────────────────
-   검은 표지에 덧붙인 흰 종이 라벨. 먹칠은 흰 바탕 위에서만 「지운 자국」으로
-   읽힙니다 — 검은 표지에 검은 막대를 그으면 흠집으로 보입니다. */
-.archive-character-card .archive-folder-cover > .archive-folder-plate {
-  position: absolute !important;
-  top: calc(var(--folder-tab-h) + 1.1rem) !important;
-  left: 0.95rem !important;
-  width: 55% !important;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.34rem;
-  padding: 0.42rem 0.5rem 0.36rem;
-  border: 1px solid rgba(16, 16, 18, 0.5);
-  background: linear-gradient(168deg, #eceae4 0%, #dbd9d2 55%, #c9c7c0 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 18%), rgba(2, 0, 0, 0.88);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 4px 12px rgba(0, 0, 0, 0.62);
-  color: #16161a;
-  /* 살짝 비뚤게 붙인 라벨 — 인쇄가 아니라 사람이 손으로 붙인 종이입니다 */
-  transform: rotate(-0.5deg);
-}
-
-/* 라벨 머리 — 「秘」 한 자와 표제 */
-.archive-folder-head {
-  display: flex;
-  align-items: center;
-  gap: 0.34rem;
-  padding-bottom: 0.28rem;
-  border-bottom: 1px solid rgba(20, 20, 24, 0.34);
-}
-
-.archive-folder-head-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: 0.88rem;
-  height: 0.88rem;
-  border: 1px solid currentColor;
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.54rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.archive-folder-head-text {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.64rem;
-  letter-spacing: 0.2em;
-  margin-right: -0.2em;
-}
-
-/* ── 기입란 ────────────────────────────────────────────────────
-   항목 이름은 인쇄돼 있고 기입된 내용만 먹으로 지워져 있습니다.
-   먹이 덮지 못한 오른쪽 끝에 글줄이 조금 남아 있어야 「지워졌다」로 읽힙니다 —
-   빈 칸만 두면 그냥 안 적은 서식으로 보입니다. */
-.archive-folder-redaction {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.28rem;
-}
-
-.archive-folder-redaction-row {
-  display: flex;
-  align-items: center;
-  gap: 0.36rem;
-}
-
-.archive-folder-redaction-key {
-  flex: none;
-  width: 1.5rem;
-  color: rgba(22, 22, 26, 0.6);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.44rem;
-  letter-spacing: 0.08em;
-  line-height: 1;
-}
-
-.archive-folder-redaction-bar {
-  position: relative;
-  display: block;
-  flex: 1 1 auto;
-  height: 0.42rem;
-  /* 먹에 덮이지 않고 남은 글줄 */
-  background: linear-gradient(
-    180deg,
-    transparent 0 34%,
-    rgba(28, 28, 34, 0.32) 34% 66%,
-    transparent 66%
-  );
-}
-
-.archive-folder-redaction-bar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: var(--redact-w, 74%);
-  background: #121216;
-}
-
-.archive-folder-redaction-row:nth-child(2) .archive-folder-redaction-bar {
-  flex: 0 1 74%;
-  --redact-w: 56%;
-}
-
-/* 문서 관리 정보 — 일련번호와 편철 매수.
-   「몇 장이 들어 있는지」까지 적혀 있어야 실제로 뭔가 물린 파일로 보입니다. */
-.archive-folder-slug {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem;
-  padding-top: 0.3rem;
-  border-top: 1px solid rgba(20, 20, 24, 0.3);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.44rem;
-  letter-spacing: 0.06em;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.archive-folder-serial {
-  overflow: hidden;
-  color: rgba(24, 24, 30, 0.6);
-  text-overflow: ellipsis;
-}
-
-.archive-folder-sheets {
-  flex: none;
-  color: rgba(16, 16, 22, 0.9);
-  font-weight: 700;
-}
-
-/* ── 고무도장 ──────────────────────────────────────────────────
-   라벨 오른쪽, 검은 표지 위에 비스듬히 눌러 찍습니다. 겹줄 테두리와
-   고르지 않은 잉크가 「나중에 사람이 찍은 것」으로 읽히게 합니다. */
-.archive-character-card .archive-folder-cover > .archive-folder-label {
-  position: absolute !important;
-  top: 47% !important;
-  right: 1rem !important;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.14rem;
-  width: min(32%, 5.2rem);
-  padding: 0.42rem 0.3rem 0.36rem;
-  color: var(--folder-stamp);
-  text-align: center;
-  opacity: 0.88;
-  transform: translateY(-50%) rotate(-9deg);
-}
-
-/* 겹줄 테두리 — 바깥 굵은 줄과 안쪽 가는 줄 */
-.archive-character-card .archive-folder-cover > .archive-folder-label::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border: 2px solid currentColor;
-  box-shadow: inset 0 0 0 3px currentColor;
-}
-
-/* 잉크가 고르게 묻지 않은 자국 */
-.archive-character-card .archive-folder-cover > .archive-folder-label::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  z-index: 1;
-  background: repeating-linear-gradient(-22deg, rgba(16, 16, 18, 0.4) 0 1px, transparent 1px 7px);
-  pointer-events: none;
-}
-
-.archive-folder-mark {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: clamp(0.85rem, 2.2vw, 1.15rem);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  /* letter-spacing 이 마지막 글자 뒤에도 붙습니다 */
-  margin-right: -0.14em;
-  line-height: 1.1;
-}
-
-.archive-folder-rule {
-  width: 74%;
-  height: 1px;
-  margin: 0.1rem 0 0.12rem;
-  background: currentColor;
-  opacity: 0.66;
-}
-
-.archive-folder-sub {
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.36rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  margin-right: -0.18em;
-  opacity: 0.88;
-}
-
-/* ── 취급 표시 ─────────────────────────────────────────────────
-   표지 아래를 가로지르는 띠. 이 자리가 비어 있으면 표지 절반이 검은 여백으로
-   남아서, 위쪽 라벨만 동동 떠 있는 것처럼 보입니다. */
-.archive-character-card .archive-folder-cover > .archive-folder-foot {
-  position: absolute !important;
-  right: 0.95rem !important;
-  bottom: 0.7rem !important;
-  left: 0.95rem !important;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  overflow: hidden;
-  padding-top: 0.36rem;
-  border-top: 1px solid var(--folder-rule);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.44rem;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.archive-folder-foot-mark {
-  flex: none;
-  padding: 0.18rem 0.3rem;
-  border: 1px solid var(--folder-rule);
-  color: var(--folder-ink);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.44rem;
-  letter-spacing: 0.1em;
-  line-height: 1;
-}
-
-.archive-folder-foot-text {
-  overflow: hidden;
-  color: var(--folder-ink-quiet);
-  text-overflow: ellipsis;
-}
-
-.archive-folder-open {
-  flex: none;
-  margin-left: auto;
-  color: var(--folder-ink-quiet);
-  letter-spacing: 0.14em;
-  opacity: 0.8;
-}
-
-/* 등급별 잉크 — lib/clearance.ts 의 tone 과 짝입니다.
-   기본값을 잡는 `.archive-character-card .archive-folder-cover` 가 특정도
-   (0,2,0) 라, 클래스 하나짜리(0,1,0) 로는 등급 잉크가 한 번도 먹지 않았습니다.
-   같은 자리에 얹어 특정도를 맞춥니다. */
-.archive-character-card .archive-folder-cover.archive-folder-cover--void {
-  --folder-stamp: #f0f0f4;
-  --folder-band: #1e1e22;
-}
-
-.archive-character-card .archive-folder-cover.archive-folder-cover--crimson {
-  --folder-stamp: #e2483e;
-  --folder-band: #a82a22;
-}
-
-.archive-character-card .archive-folder-cover.archive-folder-cover--amber {
-  --folder-stamp: #e0a343;
-  --folder-band: #8c6212;
-}
-
-.archive-character-card .archive-folder-cover.archive-folder-cover--muted {
-  --folder-stamp: #a6a6ac;
-  --folder-band: #5a5a61;
-}
-
-.archive-character-card .archive-folder-cover.archive-folder-cover--plain {
-  --folder-stamp: #d2d2d8;
-  --folder-band: #74747c;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .archive-character-card .archive-folder-cover,
-  .archive-character-card .archive-folder-sheet {
-    transition: none;
-  }
-
-  /* 여는 대신 표지만 걷어 냅니다 */
-  .archive-character-card:hover .archive-folder-cover,
-  .archive-character-card:focus-visible .archive-folder-cover,
-  .archive-character-card.is-active .archive-folder-cover {
-    opacity: 0;
-    transform: none;
-  }
-
-  .archive-character-card:hover .archive-folder-sheet,
-  .archive-character-card:focus-visible .archive-folder-sheet,
-  .archive-character-card.is-active .archive-folder-sheet {
-    transform: none;
-  }
-}
-
-/* FILE 장식 탭 제거 — id는 body 상단 mono로만 표시 */
-.archive-character-card-tab {
-  display: none;
+    inset 0 0 0 1px rgba(0, 0, 0, 0.84),
+    inset 0 0 32px rgba(0, 0, 0, 0.9),
+    0 20px 45px rgba(0, 0, 0, 0.62);
+  transition:
+    border-color 160ms ease,
+    filter 160ms ease,
+    transform 160ms ease;
 }
 
 .archive-character-card::before {
   display: none;
 }
 
+.archive-character-card:hover {
+  border-color: rgba(111, 143, 215, 0.9);
+  transform: translateY(-1px);
+}
+
 .archive-character-card-image {
   position: relative;
   z-index: 2;
   isolation: isolate;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border-bottom: 1px solid var(--character-card-divider);
-  background-color: #000000;
-}
-
-/* ── 안쪽 자료의 두 칸 ─────────────────────────────────────────
-   가로 파일철이라 사진은 왼쪽 칸을 세로로 꽉 채우고 이름은 오른쪽 칸에 섭니다.
-   비율은 .archive-folder-sheet 가 잡으므로 3/4 비율 지정은 풀어야 합니다 —
-   overrides 가 `html body main …` 로 못박아 둔 값이라 특정도를 한 단계 올립니다. */
-html body main .character-index-panel .archive-character-card .archive-character-card-image {
-  aspect-ratio: auto !important;
-  height: 100% !important;
-  border-bottom: 0 !important;
-}
-
-html body main .character-index-panel .archive-character-card .archive-character-card-body {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  border-left: 1px solid var(--character-card-divider) !important;
-}
-
-/* 카드 상자 자체는 파일철을 얹어 두는 자리일 뿐입니다 — 크라프트 표지 둘레에
-   흰 테두리가 한 줄 돌면 파일철이 아니라 액자에 넣은 그림처럼 보입니다. */
-html body main .character-index-panel .archive-character-card,
-html body main .character-index-panel .archive-character-card:hover {
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
+  background-color: #020208;
 }
 
 .archive-character-card-image > :not(.character-palette-backdrop) {
@@ -909,59 +92,62 @@ html body main .character-index-panel .archive-character-card:hover {
 }
 
 .archive-character-card-image::before {
-  display: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(111, 143, 215, 0.14), transparent 32%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px);
+  opacity: 0.22;
 }
 
 .archive-character-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 1;
+  opacity: 0.94;
   filter: none;
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease;
 }
 
 .archive-character-card:hover .archive-character-card-image img {
   opacity: 1;
-  transform: none;
+  transform: scale(1.035);
 }
 
 .archive-character-card-body {
   position: relative;
   z-index: 3;
-  min-height: 0;
-  padding: 0.7rem 0.75rem;
-  background: #000000;
+  min-height: 8rem;
+  padding: 0.95rem;
+  background: var(--surface-base);
 }
 
-/* 파일 메타: 조용한 mono id + 이름 */
 .archive-character-card-id {
-  display: block;
-  margin: 0 0 0.28rem;
-  color: rgba(160, 160, 160, 0.72);
+  color: rgba(111, 143, 215, 0.72);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  line-height: 1.2;
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 .archive-character-card-name {
-  margin: 0;
-  color: rgba(245, 245, 245, 0.96);
-  font-size: 1.12rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
+  margin-top: 0.45rem;
+  color: rgba(236, 240, 245, 0.95);
+  font-size: 1.55rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
 }
 
 .archive-character-card-subtitle {
   display: -webkit-box;
-  margin-top: 0.35rem;
+  margin-top: 0.55rem;
   overflow: hidden;
-  color: rgba(180, 180, 180, 0.6);
-  font-size: 0.78rem;
-  line-height: 1.45;
+  color: rgba(198, 210, 232, 0.6);
+  font-size: 0.82rem;
+  line-height: 1.65;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -978,11 +164,11 @@ html body main .character-index-panel .archive-character-card:hover {
   display: block;
   width: 100%;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(111, 143, 215, 0.46);
   background:
     radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.78), transparent 34%),
-    radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.035), transparent 38%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.99), rgba(8, 8, 8, 0.99));
+    radial-gradient(circle at 100% 100%, rgba(111, 143, 215, 0.035), transparent 38%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.99), rgba(2, 2, 8, 0.99));
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.86),
     inset 0 0 34px rgba(0, 0, 0, 0.86),
@@ -1000,7 +186,7 @@ html body main .character-index-panel .archive-character-card:hover {
 
 .character-card:hover,
 .character-card.is-active {
-  border-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(111, 143, 215, 0.92);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.9),
     inset 0 0 38px rgba(0, 0, 0, 0.88),
@@ -1014,11 +200,11 @@ html body main .character-index-panel .archive-character-card:hover {
   align-self: start;
   height: fit-content;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.44);
+  border: 1px solid rgba(111, 143, 215, 0.44);
   background:
     radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.82), transparent 38%),
-    radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.032), transparent 42%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.99), rgba(8, 8, 8, 0.99));
+    radial-gradient(circle at 100% 100%, rgba(111, 143, 215, 0.032), transparent 42%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.99), rgba(2, 2, 8, 0.99));
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.86),
     inset 0 0 30px rgba(0, 0, 0, 0.82);
@@ -1029,2155 +215,30 @@ html body main .character-index-panel .archive-character-card:hover {
 }
 
 .gallery-tile:hover {
-  border-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(111, 143, 215, 0.9);
 }
 
-/* 캐릭터 상세: 열린 폴더 본체 */
+/* 캐릭터 상세 리뉴얼: 프로필 카드가 아니라 조사 파일/기록실처럼 보이게 만드는 전용 스타일입니다. */
 .case-file-detail {
-  position: relative;
   isolation: isolate;
 }
 
-/* 모달용 대형 서류 시트 */
-.desk-backdrop {
-  background: rgba(0, 0, 0, 0.92);
-}
-
-.document-sheet {
-  position: relative;
-  margin-top: 1.35rem;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.36);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 18%), #000000;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.9),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 24px 64px rgba(0, 0, 0, 0.75);
-}
-
-/* 부모를 붙여 (0,2,0) 으로 올립니다 — span 에 position:relative 를 거는
-   (0,1,1) 규칙에 지면 탭이 서류 전폭으로 늘어난 띠가 됩니다. */
-.document-sheet .document-sheet-tab {
-  position: absolute;
-  top: 0;
-  left: 0.9rem;
-  width: auto;
-  z-index: 3;
-  padding: 0.48rem 0.95rem 0.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-bottom: none;
-  border-radius: var(--app-radius-md) var(--app-radius-md) 0 0;
-  background: linear-gradient(180deg, #131313 0%, #000000 100%);
-  color: rgba(235, 235, 235, 0.95);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  line-height: 1;
-  text-transform: uppercase;
-  transform: translateY(-100%);
-  pointer-events: none;
-}
-
-.story-log-viewer .document-sheet-tab,
-.story-viewer .document-sheet-tab,
-.ebook-reader .document-sheet-tab {
-  padding: 0.55rem 1.15rem 0.45rem;
-  font-size: 0.88rem;
-  letter-spacing: 0.22em;
-}
-
-/* ══════════════════════════════════════════════════════════════
-   기밀 열람 게이트 — 문서고에서 파일 한 부를 꺼내기 전 받는 결재
-
-   예전에는 위에서 피가 흘러내리는 공포물 연출이었습니다. 서가·파일철이
-   전부 「관청 서식」 어휘로 정리됐으므로 여기도 같은 말을 씁니다 —
-   놀래키는 대신, 도장이 쿵 하고 찍히면서 서류가 한 번 들썩입니다.
-   ══════════════════════════════════════════════════════════════ */
-
-.confidential-gate {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  overflow-y: auto;
-  background:
-    radial-gradient(120% 90% at 50% 50%, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.97) 70%), #000;
-  animation: cg-veil-in 260ms ease both;
-}
-
-/* 형광등 아래 복사기에서 막 뽑은 종이 — 아주 옅은 가로 주사선 */
-.confidential-gate::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.022) 0 1px,
-    transparent 1px 3px
-  );
-  pointer-events: none;
-}
-
-.confidential-gate-panel {
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  width: min(100%, 30rem);
-  max-height: calc(100vh - 3rem);
-  overflow: hidden auto;
-  /* 등급 잉크 — 띠·도장·경고 기둥·기록등이 모두 이 한 값을 따릅니다.
-     기본은 S(極秘)의 붉은 잉크이고, 등급 클래스가 갈아 끼웁니다. */
-  --gate-ink: #e2483e;
-  --gate-ink-quiet: rgba(190, 190, 196, 0.5);
-  --gate-rule: rgba(255, 255, 255, 0.22);
-  padding: 2.1rem 1.9rem 1.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  /* 위에서 빛을 얹으면 종이가 아니라 뿌연 회색 판으로 보입니다 —
-     바탕은 거의 순검정으로 두고, 대비는 흰 괘선과 붉은 잉크가 만듭니다. */
-  background: #000000;
-  color: rgba(246, 246, 249, 0.9);
-  text-align: left;
-  opacity: 0;
-}
-
-.confidential-gate-panel * {
-  box-sizing: border-box;
-}
-
-/* 네 귀의 꺾쇠 — 서가 패널과 같은 재단 표시 */
-.confidential-gate-panel::before {
-  --gate-bracket: rgba(255, 255, 255, 0.26);
-  content: "";
-  position: absolute;
-  inset: 0.55rem;
-  z-index: 0;
-  background-image:
-    linear-gradient(var(--gate-bracket), var(--gate-bracket)),
-    linear-gradient(var(--gate-bracket), var(--gate-bracket)),
-    linear-gradient(var(--gate-bracket), var(--gate-bracket)),
-    linear-gradient(var(--gate-bracket), var(--gate-bracket)),
-    linear-gradient(var(--gate-bracket), var(--gate-bracket)),
-    linear-gradient(var(--gate-bracket), var(--gate-bracket)),
-    linear-gradient(var(--gate-bracket), var(--gate-bracket)),
-    linear-gradient(var(--gate-bracket), var(--gate-bracket));
-  background-repeat: no-repeat;
-  background-size:
-    0.85rem 1px,
-    1px 0.85rem,
-    0.85rem 1px,
-    1px 0.85rem,
-    0.85rem 1px,
-    1px 0.85rem,
-    0.85rem 1px,
-    1px 0.85rem;
-  background-position:
-    left top,
-    left top,
-    right top,
-    right top,
-    left bottom,
-    left bottom,
-    right bottom,
-    right bottom;
-  pointer-events: none;
-}
-
-.confidential-gate-panel > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* 서류가 책상에 놓입니다. 예전에는 도장이 찍힐 때 화면 전체가 흔들렸는데,
-   화면을 흔드는 연출은 값싸게 보여서 걷어냈습니다 — 무게는 도장 쪽이 냅니다. */
-.confidential-gate-panel.is-ready {
-  animation: cg-panel-in 420ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
-}
-
-/* 등급별 잉크 — lib/clearance.ts 의 tone 과 짝입니다.
-   X 는 붉은 잉크가 아니라 탈색된 흰 잉크입니다. 등급표 밖의 문서라
-   분류색이 없다는 뜻이고, 붉은 것들 사이에서 오히려 더 눈에 걸립니다. */
-.confidential-gate-panel--void {
-  --gate-ink: #eeeef2;
-}
-
-.confidential-gate-panel--crimson {
-  --gate-ink: #e2483e;
-}
-
-.confidential-gate-panel--amber {
-  --gate-ink: #e0a343;
-}
-
-.confidential-gate-panel--muted {
-  --gate-ink: #a6a6ac;
-}
-
-.confidential-gate-panel--plain {
-  --gate-ink: #d2d2d8;
-}
-
-.confidential-gate-panel.is-final {
-  border-color: color-mix(in srgb, var(--gate-ink) 55%, transparent);
-  background: #050001;
-}
-
-/* 클래스만 바꾸면 애니메이션이 다시 돌지 않으므로 이름을 갈아 끼웁니다 */
-.confidential-gate-panel.is-ready.is-final {
-  animation: cg-panel-in-final 420ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
-}
-
-/* ── 상단 위험 띠 ──────────────────────────────────────────────
-   왼쪽에서 오른쪽으로 훑고 지나갑니다 */
-.confidential-gate-tape {
-  position: absolute !important;
-  top: 0 !important;
-  right: 0 !important;
-  left: 0 !important;
-  z-index: 2;
-  display: block;
-  height: 0.34rem;
-  background: repeating-linear-gradient(
-    -45deg,
-    color-mix(in srgb, var(--gate-ink) 42%, transparent) 0 5px,
-    rgba(255, 255, 255, 0.06) 5px 10px
-  ) !important;
-  transform-origin: left center;
-  animation: cg-tape-wipe 560ms 120ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
-}
-
-/* ── 결재란 ────────────────────────────────────────────────────
-   서류 오른쪽 위. 등급이 요구하는 만큼 칸이 서고, 한 번 누를 때마다
-   해당 칸의 「未決」 자리에 「承認」 이 위에서 쿵 하고 내려찍힙니다.
-   처음부터 極秘 를 찍어 두면 도장이 그냥 장식이 되고, 누른 행동과 아무 관계가
-   없어집니다 — 도장은 결재의 결과라야 무게가 생깁니다. */
-.confidential-gate-approvals {
-  position: absolute !important;
-  top: 1.15rem !important;
-  right: 1.15rem !important;
-  z-index: 3;
-  display: flex;
-  align-items: stretch;
-  border: 1px solid var(--gate-rule, rgba(255, 255, 255, 0.22));
-  pointer-events: none;
-}
-
-/* 칸 — 한 칸이 결재 하나. 사이는 세로 괘선으로 끊깁니다 */
-.confidential-gate-approval {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 4.6rem;
-  padding: 0.22rem 0.22rem 0.34rem;
-}
-
-.confidential-gate-approval + .confidential-gate-approval {
-  border-left: 1px solid var(--gate-rule, rgba(255, 255, 255, 0.22));
-}
-
-/* 아직 차례가 오지 않은 칸은 한 겹 물러나 있습니다 */
-.confidential-gate-approval:not(.is-approved):not(.is-current) {
-  opacity: 0.4;
-}
-
-.confidential-gate-approval-key {
-  color: var(--gate-ink-quiet, rgba(190, 190, 196, 0.5));
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.46rem;
-  letter-spacing: 0.1em;
-  line-height: 1.6;
-}
-
-.confidential-gate-stamp {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
-  width: 3.6rem;
-  padding: 0.34rem 0.2rem 0.28rem;
-  text-align: center;
-  transform-origin: center;
-  pointer-events: none;
-}
-
-/* 미결 — 아직 결재하지 않은 칸 */
-.confidential-gate-stamp--pending {
-  color: rgba(158, 158, 166, 0.42);
-  opacity: 1;
-  transform: rotate(-6deg);
-  animation: cg-stamp-pending-in 420ms 260ms ease both;
-}
-
-/* 승인 — 누른 순간 내려찍힙니다.
-   시간 배분이 전부입니다. 앞 45% 를 낙하에 몰아 주고 접촉 이후를 잔진동으로 쓰면
-   같은 460ms 라도 「쾅」 이 되고, 고르게 나누면 그냥 커졌다 작아지는 도형입니다.
-   가속 구간은 키프레임마다 다른 곡선을 걸어 만듭니다. */
-/* 승인 — 이미 마른 칸은 그냥 찍혀 있습니다 */
-.confidential-gate-stamp--approved {
-  color: var(--gate-ink, #e2483e);
-  opacity: 0.94;
-  transform: rotate(-11deg);
-}
-
-/* 방금 찍힌 칸에만 내려찍는 연출을 겁니다 */
-.confidential-gate-stamp--approved.is-fresh {
-  opacity: 0;
-  animation: cg-stamp-slam 340ms both;
-}
-
-/* 눌린 자국 — 나무가 종이를 파고든 만큼 아래로 그늘이 집니다 */
-.confidential-gate-stamp--approved::before {
-  box-shadow:
-    inset 0 0 0 2px currentColor,
-    0 2px 6px rgba(0, 0, 0, 0.72);
-}
-
-/* 닿는 순간 밖으로 퍼지는 충격 테 */
-.confidential-gate-stamp-hit {
-  position: absolute !important;
-  inset: -0.3rem;
-  z-index: 2;
-  display: block;
-  border: 1px solid currentColor;
-  opacity: 0;
-  pointer-events: none;
-  animation: cg-stamp-ring 240ms 197ms cubic-bezier(0.05, 0.8, 0.3, 1) both;
-}
-
-/* 겹줄 테두리 */
-.confidential-gate-stamp::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border: 2px solid currentColor;
-  box-shadow: inset 0 0 0 3px currentColor;
-}
-
-/* 잉크가 고르게 묻지 않은 자국 */
-.confidential-gate-stamp::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  z-index: 1;
-  background: repeating-linear-gradient(-22deg, rgba(10, 10, 12, 0.42) 0 1px, transparent 1px 7px);
-  pointer-events: none;
-}
-
-.confidential-gate-stamp-main {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin-right: -0.08em;
-  line-height: 1.15;
-}
-
-.confidential-gate-stamp-rule {
-  display: block;
-  width: 74%;
-  height: 1px;
-  margin: 0.1rem 0 0.12rem;
-  background: currentColor !important;
-  opacity: 0.66;
-}
-
-/* 도장 아래 작은 글자는 이제 등급 한자(極秘·封印·厳重)라 명조로 받습니다 */
-.confidential-gate-stamp-sub {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.4rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  margin-right: -0.1em;
-  opacity: 0.88;
-}
-
-/* ── 표제 ──────────────────────────────────────────────────────*/
-.confidential-gate-head {
-  display: flex;
-  flex-direction: column;
-  gap: 0.28rem;
-  /* 도장이 앉을 자리를 비워 둡니다 */
-  padding-right: 6rem;
-  margin-bottom: 1.15rem;
-}
-
-.confidential-gate-head-jp {
-  margin: 0;
-  color: rgba(248, 248, 251, 0.95);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  margin-right: -0.24em;
-  line-height: 1.2;
-}
-
-.confidential-gate-eyebrow {
-  margin: 0;
-  color: color-mix(in srgb, var(--gate-ink) 82%, transparent);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  margin-right: -0.16em;
-}
-
-/* ── 件名 기입칸 ───────────────────────────────────────────────*/
-.confidential-gate-subject {
-  display: flex;
-  align-items: baseline;
-  gap: 0.7rem;
-  padding-bottom: 0.6rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.confidential-gate-subject-key {
-  flex: none;
-  padding: 0.2rem 0.34rem;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  color: rgba(180, 180, 186, 0.72);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.56rem;
-  letter-spacing: 0.1em;
-  line-height: 1;
-}
-
-.confidential-gate-doc-name {
-  margin: 0;
-  min-width: 0;
-  color: rgba(244, 244, 248, 0.96);
-  font-family: var(--font-shippori-mincho), "Shippori Mincho", "Yu Mincho", serif;
-  font-size: clamp(1.2rem, 3.6vw, 1.45rem);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  line-height: 1.3;
-  word-break: keep-all;
-}
-
-/* ── 기재란 ────────────────────────────────────────────────────
-   한 줄씩 차례로 찍혀 나옵니다 */
-.confidential-gate-meta {
-  margin: 0 0 1.15rem;
-  padding: 0.7rem 0.8rem;
-  width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.028);
-}
-
-.confidential-gate-meta-row {
-  display: grid;
-  grid-template-columns: 5.6rem 1fr;
-  gap: 0.55rem;
-  align-items: baseline;
-  animation: cg-row-in 360ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
-}
-
-.confidential-gate-meta-row:nth-child(1) {
-  animation-delay: 260ms;
-}
-
-.confidential-gate-meta-row:nth-child(2) {
-  animation-delay: 360ms;
-}
-
-.confidential-gate-meta-row:nth-child(3) {
-  animation-delay: 460ms;
-}
-
-.confidential-gate-meta-row + .confidential-gate-meta-row {
-  margin-top: 0.4rem;
-  padding-top: 0.4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.confidential-gate-meta dt {
-  display: flex;
-  align-items: baseline;
-  gap: 0.34rem;
-  margin: 0;
-  color: rgba(168, 168, 174, 0.58);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-}
-
-.confidential-gate-meta-jp {
-  color: rgba(200, 200, 206, 0.5);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.56rem;
-  letter-spacing: 0.06em;
-}
-
-.confidential-gate-meta dd {
-  margin: 0;
-  color: rgba(238, 238, 242, 0.9);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.76rem;
-  letter-spacing: 0.06em;
-  word-break: break-all;
-}
-
-/* ── 접수 요약 (2단계) ─────────────────────────────────────────
-   최종 확인에서는 서식을 다시 읽힐 이유가 없습니다. 세 줄짜리 기재란을
-   한 줄로 접고, 비운 자리를 마지막 문장에 내줍니다. */
-.confidential-gate-strip {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 0 0 1.2rem;
-  padding: 0.5rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-}
-
-.confidential-gate-strip-key {
-  flex: none;
-  padding: 0.2rem 0.34rem;
-  border: 1px solid color-mix(in srgb, var(--gate-ink) 50%, transparent);
-  color: var(--gate-ink);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.56rem;
-  letter-spacing: 0.08em;
-  line-height: 1;
-}
-
-.confidential-gate-strip-value {
-  overflow: hidden;
-  color: rgba(246, 246, 249, 0.9);
-  text-overflow: ellipsis;
-}
-
-.confidential-gate-strip-state {
-  flex: none;
-  margin-left: auto;
-  color: color-mix(in srgb, var(--gate-ink) 82%, transparent);
-}
-
-/* ── 마지막 문장 (2단계) ───────────────────────────────────────
-   상자를 두르지 않습니다. 위아래 붉은 괘선 사이에 문장만 남겨 두는 쪽이
-   같은 말이라도 훨씬 무겁게 읽힙니다. */
-.confidential-gate-final {
-  margin: 0 0 1.2rem;
-  padding: 1.05rem 0.3rem;
-  border-top: 1px solid color-mix(in srgb, var(--gate-ink) 45%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--gate-ink) 45%, transparent);
-  text-align: center;
-  animation: cg-row-in 420ms 200ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
-}
-
-.confidential-gate-final-jp {
-  margin: 0 0 0.6rem;
-  color: color-mix(in srgb, var(--gate-ink) 58%, transparent);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  margin-right: -0.3em;
-}
-
-/* 큰 글씨로 외치면 오히려 가벼워집니다 — 문서고 직원이 낮게 이르는 말투 */
-.confidential-gate-final-text {
-  margin: 0;
-  color: rgba(248, 248, 251, 0.94);
-  font-family: var(--font-shippori-mincho), "Shippori Mincho", "Yu Mincho", serif;
-  font-size: clamp(0.82rem, 2.4vw, 0.9rem);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  line-height: 1.95;
-  word-break: keep-all;
-}
-
-/* ── 주의문 (1단계) ────────────────────────────────────────────
-   테두리만 두르면 그냥 문단으로 지나쳐지므로, 왼쪽에 붉은 기둥을 세우고
-   「注意」 각인을 물려 서식의 한 칸으로 만듭니다.
-   글씨는 작게 — 서류에 인쇄된 주의사항이지 외치는 경고가 아닙니다. */
-.confidential-gate-message {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  margin: 0 0 1.05rem;
-  padding: 0.62rem 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--gate-ink) 28%, transparent);
-  border-left-width: 3px;
-  background: color-mix(in srgb, var(--gate-ink) 6%, transparent);
-  color: rgba(240, 240, 244, 0.86);
-  font-size: 0.76rem;
-  font-weight: 400;
-  line-height: 1.85;
-}
-
-.confidential-gate-message-mark {
-  flex: none;
-  margin-top: 0.12rem;
-  padding: 0.2rem 0.3rem;
-  border: 1px solid color-mix(in srgb, var(--gate-ink) 55%, transparent);
-  color: var(--gate-ink);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.56rem;
-  letter-spacing: 0.08em;
-  line-height: 1;
-}
-
-.confidential-gate-message p {
-  margin: 0;
-}
-
-/* ── 열람 기록 표시 ────────────────────────────────────────────
-   깜빡이는 붉은 점 — 지금 이 순간이 기록되고 있다는 표시 */
-.confidential-gate-log {
-  display: flex;
-  align-items: center;
-  gap: 0.42rem;
-  margin: 0 0 1.1rem;
-  color: rgba(160, 160, 166, 0.5);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.52rem;
-  letter-spacing: 0.16em;
-}
-
-.confidential-gate-log-jp {
-  color: rgba(200, 200, 208, 0.62);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-}
-
-.confidential-gate-log-led {
-  display: block;
-  width: 0.36rem;
-  height: 0.36rem;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--gate-ink) 18%, transparent) !important;
-  transition: background 0.24s ease;
-}
-
-.confidential-gate-log-led.is-lit {
-  background: var(--gate-ink) !important;
-}
-
-/* ── 결재 ──────────────────────────────────────────────────────*/
-.confidential-gate-actions {
-  display: flex;
-  gap: 0.7rem;
-}
-
-.confidential-gate-retreat,
-.confidential-gate-breach {
-  flex: 1;
-  padding: 0.8rem 0.5rem;
-  border-radius: 0;
-  background: transparent;
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  transition:
-    border-color 160ms ease,
-    background 160ms ease,
-    color 160ms ease;
-}
-
-.confidential-gate-retreat {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(170, 170, 176, 0.72);
-}
-
-.confidential-gate-retreat:hover,
-.confidential-gate-retreat:focus-visible {
-  border-color: rgba(255, 255, 255, 0.48);
-  color: rgba(238, 238, 242, 0.92);
-  outline: none;
-}
-
-.confidential-gate-breach {
-  border: 1px solid color-mix(in srgb, var(--gate-ink) 45%, transparent);
-  color: rgba(238, 238, 242, 0.92);
-}
-
-.confidential-gate-breach:hover,
-.confidential-gate-breach:focus-visible {
-  border-color: var(--gate-ink);
-  background: color-mix(in srgb, var(--gate-ink) 14%, transparent);
-  outline: none;
-}
-
-.confidential-gate-breach:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-@keyframes cg-veil-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* 서류가 책상에 놓입니다 */
-@keyframes cg-panel-in {
-  from {
-    opacity: 0;
-    transform: translate3d(0, -10px, 0) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes cg-panel-in-final {
-  from {
-    opacity: 0;
-    transform: translate3d(0, -10px, 0) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes cg-stamp-pending-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* 나무 도장을 손으로 눌러 찍습니다.
-
-   예전에는 접촉에서 scale(1.16, 0.82) 로 눌렸다가 scale(0.94, 1.06) 으로
-   되튀었습니다. 그건 고무 물리라 아무리 빨라도 「쫀득하게」 읽힙니다.
-   나무는 눌리지도 튀지도 않습니다 — 떨어지고, 닿고, 그 자리에서 죽습니다.
-
-   그래서 변형은 전부 걷어내고 두 가지만 남깁니다:
-   앞 58% 를 자유낙하에 몰아 준 급가속, 그리고 접촉 뒤 steps(1) 로 만든
-   완전한 정지. 무게는 흐릿한 잔상과 충격 테와 소리가 냅니다. */
-@keyframes cg-stamp-slam {
-  0% {
-    opacity: 0;
-    transform: rotate(-22deg) scale(3.1);
-    filter: blur(5px);
-    /* 끝 기울기가 수직에 가까워 접촉 직전 속도가 가장 빠릅니다 */
-    animation-timing-function: cubic-bezier(0.72, 0, 1, 0.58);
-  }
-  10% {
-    opacity: 0.4;
-  }
-  58% {
-    opacity: 1;
-    transform: rotate(-11deg) scale(1);
-    filter: blur(0);
-    /* 여기서 죽습니다 — 되튐도, 잔진동도 없습니다 */
-    animation-timing-function: steps(1, end);
-  }
-  100% {
-    /* 남은 구간은 움직임이 아니라 잉크가 앉는 시간입니다 */
-    opacity: 0.94;
-    transform: rotate(-11deg) scale(1);
-    filter: blur(0);
-  }
-}
-
-/* 테는 짧고 좁게 — 크고 느리게 퍼지면 충격이 아니라 파문이 됩니다 */
-@keyframes cg-stamp-ring {
-  0% {
-    opacity: 0.65;
-    transform: scale(0.94);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.26);
-  }
-}
-
-@keyframes cg-tape-wipe {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes cg-row-in {
-  from {
-    opacity: 0;
-    transform: translate3d(-6px, 0, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (max-width: 460px) {
-  .confidential-gate-panel {
-    padding: 1.8rem 1.2rem 1.35rem;
-  }
-
-  .confidential-gate-head {
-    padding-right: 0;
-  }
-
-  /* 좁은 화면에서는 도장이 표제를 덮으므로 아래쪽 여백으로 내립니다 */
-  .confidential-gate-stamp {
-    top: auto !important;
-    right: 1rem !important;
-    bottom: 1.1rem !important;
-    width: 4.6rem;
-  }
-
-  .confidential-gate-actions {
-    flex-direction: column;
-  }
-
-  .confidential-gate-meta-row {
-    grid-template-columns: 4.6rem 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .confidential-gate {
-    animation: none;
-  }
-
-  .confidential-gate-panel {
-    opacity: 1;
-  }
-
-  .confidential-gate-panel.is-ready,
-  .confidential-gate-panel.is-ready.is-final,
-  .confidential-gate-tape,
-  .confidential-gate-meta-row {
-    animation: none;
-  }
-
-  /* 도장은 연출 없이 이미 찍혀 있는 상태로 둡니다 */
-  .confidential-gate-stamp--pending {
-    animation: none;
-    opacity: 1;
-  }
-
-  .confidential-gate-stamp--approved {
-    animation: none;
-    opacity: 0.94;
-    transform: rotate(-11deg);
-  }
-
-  .confidential-gate-stamp-hit {
-    animation: none;
-    opacity: 0;
-  }
-
-  .confidential-gate-log-led {
-    background: var(--gate-ink) !important;
-    transition: none;
-  }
-}
-
 .dossier-viewer {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(100, 100, 100, 0.3);
   background: #000000;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.96);
 }
 
 .dossier-body {
-  position: relative;
   background: #000000;
 }
 
-/* 종이 질감 — 배경색은 overrides 가 !important 로 잡고 있어 의사요소에 그립니다.
-   옅은 모눈만 깝니다. */
-.dossier-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 34px),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 34px);
-}
-
-/* 본문은 종이 질감·워터마크 위에 올립니다 */
-.dossier-header,
-.dossier-tabs-layout,
-.dossier-approval,
-.pair-member-switcher {
-  position: relative;
-  z-index: 1;
-}
-
-/* ── 극비 문서 장치 ────────────────────────────────────────────── */
-
-/* 도장 두 벌을 한 묶음으로 서류 우상단에 찍습니다.
-   장식이므로 클릭을 통과시키고, 각 도장은 서로 다른 각도로 어긋나게 둡니다. */
-.dossier-body .dossier-stamp-cluster {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.7rem;
-  z-index: 3;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.3rem;
-  pointer-events: none;
-}
-
-/* 등급 도장 — 두 겹 테두리에 잉크가 번진 고무도장 */
-.dossier-body .dossier-stamp {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
-  padding: 0.5rem 0.9rem 0.45rem;
-  border: 2px solid rgba(200, 200, 200, 0.34);
-  border-radius: var(--app-radius-sm);
-  color: rgba(210, 210, 210, 0.42);
-  opacity: 0.82;
-  transform: rotate(-11deg);
-  /* 잉크가 고르게 먹지 않은 자국 — 미세한 얼룩을 겹칩니다 */
-  -webkit-mask-image: radial-gradient(
-    ellipse 130% 120% at 30% 20%,
-    #000 55%,
-    rgba(0, 0, 0, 0.82) 78%,
-    rgba(0, 0, 0, 0.62) 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 130% 120% at 30% 20%,
-    #000 55%,
-    rgba(0, 0, 0, 0.82) 78%,
-    rgba(0, 0, 0, 0.62) 100%
-  );
-}
-
-/* 안쪽 괘선 — 관공서 도장의 이중 테두리 */
-.dossier-body .dossier-stamp::before {
-  content: "";
-  position: absolute;
-  inset: 2px;
-  border: 1px solid currentColor;
-  border-radius: 1px;
-  opacity: 0.5;
-}
-
-/* 등급별 도장 색 — lib/clearance.ts 의 tone 과 짝입니다 */
-/* 숨은 등급(封印) — 붉은 등급표 밖이라 잉크가 탈색돼 있습니다 */
-.dossier-body .dossier-stamp--void {
-  border-color: rgba(248, 248, 248, 0.62);
-  color: rgba(252, 252, 252, 0.82);
-}
-
-.dossier-body .dossier-stamp--crimson {
-  border-color: rgba(220, 38, 38, 0.5);
-  color: rgba(230, 60, 60, 0.62);
-}
-
-.dossier-body .dossier-stamp--amber {
-  border-color: rgba(217, 149, 45, 0.48);
-  color: rgba(226, 163, 62, 0.6);
-}
-
-.dossier-body .dossier-stamp--muted {
-  border-color: rgba(200, 200, 200, 0.34);
-  color: rgba(210, 210, 210, 0.42);
-}
-
-.dossier-body .dossier-stamp--plain {
-  border-color: rgba(235, 235, 235, 0.4);
-  color: rgba(240, 240, 240, 0.5);
-}
-
-.dossier-stamp-main {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1;
-}
-
-.dossier-stamp-sub {
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.44rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-}
-
-/* 취급 도장 — 등급 도장 옆에 반대로 기울여 찍은 둥근 인장 */
-.dossier-body .dossier-chop {
-  position: relative;
-  display: grid;
-  place-content: center;
-  gap: 0.1rem;
-  width: 4.05rem;
-  height: 4.05rem;
-  margin-top: 0.7rem;
-  border: 2px solid rgba(206, 206, 206, 0.34);
-  border-radius: 9999px;
-  color: rgba(222, 222, 222, 0.5);
-  text-align: center;
-  opacity: 0.78;
-  transform: rotate(9deg);
-  /* 잉크가 고르게 먹지 않은 자국 — 테두리가 끊겨 보이지 않을 만큼만 흐립니다 */
-  -webkit-mask-image: radial-gradient(circle at 46% 38%, #000 72%, rgba(0, 0, 0, 0.72) 100%);
-  mask-image: radial-gradient(circle at 46% 38%, #000 72%, rgba(0, 0, 0, 0.72) 100%);
-}
-
-.dossier-body .dossier-chop::before {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  border: 1px solid currentColor;
-  border-radius: 9999px;
-  opacity: 0.5;
-}
-
-.dossier-chop-main {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.15;
-  /* 「取扱 / 注意」 두 줄로 접습니다 */
-  display: block;
-  width: 1.9rem;
-  margin: 0 auto;
-}
-
-.dossier-chop-sub {
-  display: block;
-  font-size: 0.46rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-
-@media (max-width: 640px) {
-  .dossier-body .dossier-stamp-cluster {
-    top: 0.8rem;
-    right: 0.8rem;
-    gap: 0.15rem;
-    transform: scale(0.74);
-    transform-origin: top right;
-  }
-}
-
-/* ── 열람등급란 ─────────────────────────────────────────────────
-   등급을 하나만 찍어 두면 그게 높은 쪽인지 낮은 쪽인지 읽는 사람은 알 수 없습니다.
-   네 등급을 전부 인쇄해 두고 해당하는 칸에만 붉은 ○ 를 치는 該当欄 방식입니다.
-   칸 구성은 기재란과 같아, 서식 안에서 같은 표로 읽힙니다. */
-.dossier-clearance {
-  position: relative;
-  display: flex;
-  width: auto;
-  max-width: none;
-  align-items: stretch;
-  gap: 0;
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-}
-
-/* 서식 테두리가 바깥 괘선을 맡으므로 안쪽 이중선은 내려놓습니다 */
-.dossier-clearance::before {
-  content: none;
-}
-
-/* 숨은 등급 — 붉은 등급표 밖이라 잉크 자체가 다릅니다 (탈색된 흰 잉크) */
-.dossier-clearance--void {
-  --clearance-ink: rgba(250, 250, 250, 0.96);
-}
-
-.dossier-clearance--crimson {
-  --clearance-ink: rgba(228, 66, 66, 0.92);
-}
-
-.dossier-clearance--amber {
-  --clearance-ink: rgba(226, 163, 62, 0.9);
-}
-
-.dossier-clearance--muted {
-  --clearance-ink: rgba(224, 224, 224, 0.84);
-}
-
-.dossier-clearance--plain {
-  --clearance-ink: rgba(242, 242, 242, 0.86);
-}
-
-/* 인쇄된 항목명 칸 — 기재란의 라벨칸과 같은 칸입니다 */
-.dossier-clearance-caption {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  padding: var(--form-cell-y) var(--form-label-x);
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.035);
-  color: rgba(168, 168, 168, 0.72);
-  font-size: 0.64rem;
-  letter-spacing: 0.16em;
-  text-indent: 0.16em;
-  white-space: nowrap;
-}
-
-/* 該当欄 — 네 등급이 나란히 인쇄된 칸 */
-.dossier-clearance-scale {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: stretch;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.dossier-clearance-cell {
-  position: relative;
-  display: grid;
-  width: 2.15rem;
-  place-items: center;
-  color: rgba(146, 146, 146, 0.5);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.84rem;
-  font-weight: 700;
-  /* 한 글자뿐이라 자간이 붙으면 글자가 칸 안에서 한쪽으로 밀립니다 */
-  letter-spacing: normal;
-  line-height: 1;
-}
-
-.dossier-clearance-cell + .dossier-clearance-cell {
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* 해당 등급 */
-.dossier-clearance-cell.is-marked {
-  color: var(--clearance-ink);
-}
-
-/* 손으로 두른 ○ — 획 두께는 고르게 두고, 가로로만 살짝 긴 타원에 기울기를 줍니다.
-   (변마다 두께를 달리했더니 원이 찌그러져 보였습니다) */
-.dossier-clearance-cell.is-marked::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1.62rem;
-  height: 1.44rem;
-  border: 1.5px solid var(--clearance-ink);
-  border-radius: 9999px;
-  opacity: 0.94;
-  transform: translate(-50%, -50%) rotate(-5deg);
-  pointer-events: none;
-}
-
-/* 숨은 등급만은 ○ 가 아니라 二重丸(◎) 로 칩니다 — 등급표 밖이라는 표시 */
-.dossier-clearance--void .dossier-clearance-cell.is-marked::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1.06rem;
-  height: 0.94rem;
-  border: 1.5px solid var(--clearance-ink);
-  border-radius: 9999px;
-  opacity: 0.84;
-  transform: translate(-50%, -50%) rotate(-5deg);
-  pointer-events: none;
-}
-
-/* 등급명 + 취급 지침 */
-.dossier-clearance-text {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-self: stretch;
-  justify-content: center;
-  gap: 0.16rem;
-  margin: 0;
-  padding: var(--form-cell-y) var(--form-cell-x);
-  border-left: none;
-}
-
-/* 서식 안의 글자 크기 차례: 표제 > 기입칸(0.78) > 지침 > 항목명(0.64).
-   전에는 표제가 0.9 라 혼자 본문처럼 커서 서식 밖으로 튀어 보였습니다. */
-.dossier-clearance-label {
-  color: var(--clearance-ink);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.83rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  line-height: 1.35;
-}
-
-.dossier-clearance-note {
-  color: rgba(190, 190, 190, 0.7);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  line-height: 1.35;
-}
-
-@media (max-width: 560px) {
-  .dossier-clearance-caption {
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    text-indent: 0.1em;
-  }
-
-  .dossier-clearance-cell {
-    width: 1.8rem;
-    font-size: 0.78rem;
-  }
-
-  .dossier-clearance-cell.is-marked::before {
-    width: 1.42rem;
-    height: 1.28rem;
-  }
-
-  .dossier-clearance--void .dossier-clearance-cell.is-marked::after {
-    width: 0.92rem;
-    height: 0.82rem;
-  }
-
-  .dossier-clearance-label {
-    font-size: 0.78rem;
-    letter-spacing: 0.05em;
-  }
-
-  .dossier-clearance-note {
-    font-size: 0.64rem;
-    letter-spacing: 0.05em;
-  }
-}
-
-/* 該当欄이 폭을 다 가져가는 좁은 화면에서는, 등급명이 한 줄에 두 글자씩 끊깁니다.
-   등급표와 등급명을 위아래 두 단으로 접습니다. */
-@media (max-width: 480px) {
-  .dossier-clearance {
-    flex-wrap: wrap;
-  }
-
-  .dossier-clearance-text {
-    flex: 1 0 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-  }
-}
-
-/* ── 취급 경고 줄 ───────────────────────────────────────────────
-   서류 여백에 붉은 잉크로 덧찍은 주의 문구입니다.
-   (사선 테이프는 현대 안전표지 쪽이라, 활자와 이중 괘선으로 바꿨습니다) */
-.dossier-hazard {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin: 0;
-  /* 등급 띠 바로 아래 붙는 행이라, 옅은 붉은 바탕으로 한 덩어리처럼 읽히게 둡니다 */
-  background: linear-gradient(
-    90deg,
-    rgba(206, 62, 62, 0.1),
-    rgba(206, 62, 62, 0.02) 52%,
-    rgba(206, 62, 62, 0.1)
-  );
-  color: rgba(232, 118, 118, 0.86);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-}
-
-/* 이중 괘선 — 문구 양옆을 얇게 잇습니다 */
-.dossier-hazard-tape {
-  flex: 1 1 auto;
-  min-width: 1.5rem;
-  height: 3px;
-  opacity: 0.55;
-  border-top: 1px solid rgba(206, 62, 62, 0.75);
-  border-bottom: 1px solid rgba(206, 62, 62, 0.45);
-}
-
-.dossier-hazard-text {
-  flex: 0 1 auto;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-@media (max-width: 560px) {
-  .dossier-hazard {
-    gap: 0.45rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.06em;
-  }
-}
-
-/* 문서 관리 정보 줄 — 일련번호 / 바코드 / 열람 기록 표시 */
-/* 행을 가르는 괘선은 서식(.dossier-header)이 갖고 있어 자기 밑줄은 두지 않습니다 */
-.dossier-docmeta {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.16em;
-}
-
-/* 일련번호는 도장 자리를 비운 좁은 폭에서도 쪼개지면 안 됩니다 */
-.dossier-docmeta-serial {
-  flex: 0 0 auto;
-  color: rgba(215, 215, 215, 0.7);
-  white-space: nowrap;
-}
-
-/* 바코드는 이미지 없이 반복 그라디언트로 그립니다 */
-.dossier-docmeta-barcode {
-  flex: 1 1 auto;
-  min-width: 3rem;
-  max-width: 9rem;
-  height: 1.1rem;
-  opacity: 0.5;
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgba(235, 235, 235, 0.85) 0 1px,
-    transparent 1px 3px,
-    rgba(235, 235, 235, 0.85) 3px 5px,
-    transparent 5px 6px,
-    rgba(235, 235, 235, 0.85) 6px 7px,
-    transparent 7px 10px
-  );
-}
-
-/* 열람 기록 표시 — 서류 귀에 붙인 붉은 부전지(附箋).
-   모서리 하나를 잘라내 종이쪽지로 읽히게 합니다. */
-.dossier-docmeta-flag {
-  flex: 0 0 auto;
-  margin-left: auto;
-  padding: 0.2rem 0.55rem 0.18rem;
-  border: 1px solid rgba(206, 62, 62, 0.5);
-  border-radius: 0;
-  clip-path: polygon(0 0, 100% 0, 100% 62%, calc(100% - 0.45rem) 100%, 0 100%);
-  color: rgba(228, 104, 104, 0.84);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.18em;
-  white-space: nowrap;
-}
-
-/* 사본 번호 — 일련번호 옆에 붙는 관리 표시 */
-.dossier-docmeta-copy {
-  flex: 0 0 auto;
-  padding: 0.14rem 0.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(190, 190, 190, 0.62);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-
-/* 배포 제한 줄 — 「어디까지 나갈 수 있는 문서인가」.
-   경고 띠(무단 복제 금지)와는 다른 층위라 문구가 겹치지 않습니다. */
-.dossier-dist {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.7rem;
-  margin: 0;
-  padding: 0.4rem 0;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.14);
-}
-
-.dossier-dist-mark {
-  flex: 0 0 auto;
-  padding: 0.16rem 0.42rem;
-  border: 1px solid rgba(206, 62, 62, 0.42);
-  background: rgba(206, 62, 62, 0.09);
-  color: rgba(226, 118, 118, 0.82);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  margin-right: -0.16em;
-  white-space: nowrap;
-}
-
-.dossier-dist-text {
-  min-width: 0;
-  color: rgba(178, 178, 178, 0.66);
-  font-size: 0.68rem;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-}
-
-.dossier-dist-text b {
-  color: rgba(214, 214, 214, 0.82);
-  font-weight: 600;
-}
-
-/* 마이크로프린트 — 위조 방지 인쇄처럼 아주 작은 글자를 줄 끝까지 흘립니다.
-   읽으라고 두는 글자가 아니라 종이의 질감입니다. */
-.dossier-dist-serial {
-  flex: 1 1 6rem;
-  min-width: 0;
-  overflow: hidden;
-  color: rgba(255, 255, 255, 0.14);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.42rem;
-  letter-spacing: 0.32em;
-  text-align: right;
-  text-transform: uppercase;
-  white-space: nowrap;
-  user-select: none;
-}
-
-/* ── 등급 사다리 ───────────────────────────────────────────────
-   장치를 등급마다 「쌓아」 올립니다. 낮은 등급을 민무늬로 비워 둬야
-   높은 등급의 종이가 특별해 보입니다.
-
-     C 公開    민무늬 — 경고 띠·배포 제한·사본 번호 전부 없음
-     B 閲覧可  기본 — 일련번호·바코드·등급표·결재란
-     A 厳重    + 사본 번호 + 배포 제한 + 옅은 워터마크
-     S 極秘    + 마이크로프린트 + 진한 워터마크 + 가장자리 이중 괘선
-     X 封印    + 봉인 띠 + 일련번호 먹칠 + 탈색된 종이 + 격자 워터마크
-   ============================================================== */
-
-/* C — 가장 낮은 등급은 경고 장치를 벗깁니다 */
-.dossier-body[data-clearance="C"] .dossier-hazard,
-.dossier-body[data-clearance="C"] .dossier-dist,
-.dossier-body[data-clearance="C"] .dossier-docmeta-flag {
-  display: none;
-}
-
-/* B 이하 — 사본 번호·배포 제한은 「관리되는 문서」 부터 */
-.dossier-body[data-clearance="C"] .dossier-docmeta-copy,
-.dossier-body[data-clearance="B"] .dossier-docmeta-copy,
-.dossier-body[data-clearance="B"] .dossier-dist {
-  display: none;
-}
-
-/* 마이크로프린트 — 위조 방지 인쇄는 極秘 부터 */
-.dossier-body[data-clearance="A"] .dossier-dist-serial {
-  visibility: hidden;
-}
-
-/* 대각선 워터마크 — 기밀 문서의 사본 표시. 등급이 올라갈수록 짙어집니다.
-   ::before 는 이미 모눈이 쓰고 있어 ::after 로 겹칩니다. */
-.dossier-body::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: none;
-}
-
-.dossier-body[data-clearance="A"]::after {
-  background-image: repeating-linear-gradient(
-    -34deg,
-    transparent 0 7.5rem,
-    rgba(255, 255, 255, 0.012) 7.5rem 7.6rem,
-    transparent 7.6rem 15rem
-  );
-}
-
-.dossier-body[data-clearance="S"]::after {
-  background-image: repeating-linear-gradient(
-    -34deg,
-    transparent 0 5.5rem,
-    rgba(255, 255, 255, 0.02) 5.5rem 5.62rem,
-    transparent 5.62rem 11rem
-  );
-}
-
-/* X — 사선이 격자로 겹쳐 종이가 통째로 봉인된 것처럼 보입니다 */
-.dossier-body[data-clearance="X"]::after {
-  background-image:
-    repeating-linear-gradient(
-      -34deg,
-      transparent 0 4.6rem,
-      rgba(255, 255, 255, 0.026) 4.6rem 4.74rem,
-      transparent 4.74rem 9.2rem
-    ),
-    repeating-linear-gradient(
-      34deg,
-      transparent 0 4.6rem,
-      rgba(255, 255, 255, 0.02) 4.6rem 4.74rem,
-      transparent 4.74rem 9.2rem
-    );
-}
-
-/* S — 종이 가장자리에 이중 괘선 */
-.dossier-body[data-clearance="S"] {
-  box-shadow: inset 0 0 0 1px rgba(206, 62, 62, 0.16);
-}
-
-/* X — 등급표 밖이라 잉크가 탈색돼 있습니다 (도장 색과 같은 규칙) */
-.dossier-body[data-clearance="X"] {
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-    inset 0 0 0 4px rgba(0, 0, 0, 0.75);
-}
-
-/* X — 일련번호 가운데가 먹칠돼 있습니다. 정보를 「더 주는」 게 아니라
-   「빼앗는」 장치라 가장 높은 등급에만 씁니다. */
-.dossier-body[data-clearance="X"] .dossier-docmeta-serial {
-  position: relative;
-}
-
-.dossier-body[data-clearance="X"] .dossier-docmeta-serial::after {
-  content: "";
-  position: absolute;
-  top: 0.05em;
-  bottom: 0.05em;
-  left: 38%;
-  right: 6%;
-  background: #0b0b0d;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
-  pointer-events: none;
-}
-
-/* X — 문서를 가로지르는 봉인 띠 */
-.dossier-seal-band {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  margin: 0 0 1.1rem;
-  padding: 0.42rem 0.7rem;
-  border-top: 1px solid rgba(248, 248, 248, 0.42);
-  border-bottom: 1px solid rgba(248, 248, 248, 0.42);
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.07) 0 8px,
-    transparent 8px 16px
-  );
-  color: rgba(244, 244, 244, 0.78);
-  text-align: center;
-}
-
-.dossier-seal-band-mark {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 1px solid rgba(248, 248, 248, 0.55);
-  border-radius: 999px;
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.dossier-seal-band-text {
-  min-width: 0;
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  line-height: 1.5;
-}
-
-@media (max-width: 640px) {
-  .dossier-seal-band-text {
-    letter-spacing: 0.06em;
-    font-size: 0.64rem;
-  }
-}
-
-/* 결재란 — 마지막 칸에는 붉은 도장이 이미 찍혀 있습니다 */
-.dossier-approval {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-top: 2rem;
-  padding-top: 1.1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-.dossier-approval-label {
-  color: rgba(150, 150, 150, 0.6);
-  font-size: 0.6rem;
-  letter-spacing: 0.24em;
-}
-
-.dossier-approval-cells {
-  display: flex;
-  gap: 0.4rem;
-  margin-left: auto;
-}
-
-.dossier-approval-cell {
-  position: relative;
-  display: grid;
-  place-items: center;
-  gap: 0.1rem;
-  width: 3.1rem;
-  height: 3.1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--app-radius-sm);
-  color: rgba(160, 160, 160, 0.45);
-  letter-spacing: 0.08em;
-}
-
-.dossier-approval-cell-ko {
-  font-size: 0.66rem;
-}
-
-.dossier-approval-cell-jp {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.5rem;
-  letter-spacing: 0.14em;
-  opacity: 0.55;
-}
-
-/* 이미 승인된 칸 — 붉은 원인이 글자를 덮고 비스듬히 앉습니다 */
-.dossier-approval-cell.is-stamped .dossier-approval-chop {
-  position: absolute;
-  inset: 0.3rem;
-  display: grid;
-  place-items: center;
-  border: 2px solid rgba(220, 38, 38, 0.55);
-  border-radius: 9999px;
-  color: rgba(232, 74, 74, 0.72);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  transform: rotate(-13deg);
-  -webkit-mask-image: radial-gradient(circle at 40% 30%, #000 55%, rgba(0, 0, 0, 0.5) 100%);
-  mask-image: radial-gradient(circle at 40% 30%, #000 55%, rgba(0, 0, 0, 0.5) 100%);
-}
-
-/* 식별 정보 + 한마디를 한 장의 서식으로 묶습니다.
-   행마다 간격을 두면 제각기 떠 있는 조각으로 읽혀, 괘선 하나를 나눠 쓰며 맞물리게 합니다.
-   구분선은 서식이 소유하므로 안쪽 행들은 자기 선을 전부 내려놓습니다. */
-.dossier-header {
-  /* 칸 여백은 한 곳에서 잡습니다 — 행마다 따로 주면 위아래·좌우가 어긋납니다 */
-  --form-cell-y: 0.55rem;
-  --form-cell-x: 0.85rem;
-  --form-label-x: 0.7rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-bottom: 1.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(0, 0, 0, 0.34);
-}
-
-/* 서식의 한 행 */
-.dossier-header > * {
-  padding: var(--form-cell-y) var(--form-cell-x);
-}
-
-.dossier-header > * + * {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-/* 첫 행에는 도장 두 벌이 걸쳐 찍히므로 그만큼 자리를 비웁니다 */
-.dossier-header > .dossier-docmeta {
-  padding-right: 10.5rem;
-}
-
-@media (max-width: 640px) {
-  .dossier-header > .dossier-docmeta {
-    padding-right: 7.5rem;
-  }
-}
-
-/* 등급란·기재란·발언란은 칸이 곧 행의 조판이라 행 여백을 갖지 않습니다. */
-.dossier-header > .dossier-clearance,
-.dossier-header > .dossier-meta-strip,
-.dossier-header > .dossier-voice {
-  padding: 0;
-}
-
-/* 칸의 아래 괘선과 다음 행의 위 괘선이 겹쳐 두 줄로 보이지 않도록 1px 끌어올립니다 */
-.dossier-header > .dossier-meta-strip {
-  margin-bottom: -1px;
-}
-
-/* 도씨에 요약 — 서식의 기재란(記載欄).
-   가운뎃점으로 이어 붙인 한 줄은 웹 어휘라, 항목마다 칸을 가진 서식으로 바꿨습니다.
-   칸은 각자 상자를 두르지 않고 세로 괘선으로만 끊습니다 — 서식 안의 상자는 이중 액자가 됩니다. */
-.dossier-meta-strip {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: 0;
-  margin: 0;
-  color: rgba(200, 200, 200, 0.78);
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
-/* 좁은 화면에서는 관리 정보 줄이 두 단으로 접힙니다 */
-@media (max-width: 560px) {
-  .dossier-docmeta {
-    flex-wrap: wrap;
-    gap: 0.5rem 0.7rem;
-  }
-
-  .dossier-docmeta-flag {
-    margin-left: 0;
-  }
-}
-
-/* 탭 레일 + 본문. 넓은 화면에서만 좌측 세로 목록으로 갈라집니다. */
-/* 견출지는 본문 종이에 물려 있어야 합니다 —
-   사이를 띄우면 붙을 데 없는 책갈피가 되므로 간격을 두지 않습니다. */
-.dossier-tabs-layout {
-  display: grid;
-  gap: 0;
-  min-width: 0;
-}
-
-@media (min-width: 1024px) {
-  .dossier-tabs-layout {
-    grid-template-columns: 10.5rem minmax(0, 1fr);
-    /* 종이는 항상 견출지 기둥만큼은 내려와야 합니다 — start 로 두면 탭이 다섯 장일 때
-       기둥이 종이 아랫변 밖으로 삐져나와 허공에 뜬 상자가 됩니다.
-       레일만 start 로 되돌려 sticky 를 살립니다(.file-tab-rail 참고). */
-    align-items: stretch;
-  }
-}
-
-/* 기재란 한 칸 = 「라벨칸 | 기입칸」. 칸끼리는 세로 괘선으로 끊습니다.
-   칸이 접히면 아랫줄과도 끊어야 표로 읽히므로 가로 괘선도 함께 갖습니다 —
-   맨 아랫줄의 괘선은 서식이 이미 긋고 있어, 기재란을 1px 겹쳐 한 줄로 포갭니다. */
-.dossier-meta-item {
-  display: inline-flex;
-  min-width: 0;
-  align-items: stretch;
-  border-right: 1px solid rgba(255, 255, 255, 0.13);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-}
-
-.dossier-meta-item:last-child {
-  border-right: none;
-}
-
-/* 칸 테두리가 구분자 노릇을 하므로 가운뎃점은 걷어냅니다 */
-.dossier-meta-item + .dossier-meta-item::before {
-  content: none;
-}
-
-/* 라벨칸 — 서식에서 미리 인쇄돼 있는 쪽이라 한 톤 눌러 둡니다.
-   자간은 글자 오른쪽에만 붙으므로, 그만큼 왼쪽으로 들여써야 칸 안에서 가운데에 섭니다. */
-.dossier-meta-quiet {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  margin: 0;
-  padding: var(--form-cell-y) var(--form-label-x);
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.035);
-  color: rgba(168, 168, 168, 0.72);
-  font-size: 0.64rem;
-  letter-spacing: 0.16em;
-  text-indent: 0.16em;
-  white-space: nowrap;
-}
-
-/* 기입칸 — 손으로 적어 넣은 쪽 */
-.dossier-meta-value {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  padding: var(--form-cell-y) var(--form-cell-x);
-  color: rgba(226, 226, 226, 0.92);
-  font-size: 0.78rem;
-}
-
-.dossier-meta-item--id .dossier-meta-quiet {
-  letter-spacing: 0.1em;
-}
-
-.dossier-meta-item--id .dossier-meta-value {
-  font-size: 0.74rem;
-  letter-spacing: 0.12em;
-  text-transform: lowercase;
-}
-
-@media (max-width: 560px) {
-  .dossier-meta-quiet {
-    padding: 0.42rem 0.5rem 0.38rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-  }
-
-  .dossier-meta-value {
-    padding: 0.42rem 0.6rem 0.38rem;
-    font-size: 0.74rem;
-  }
-}
-
-.dossier-header .dossier-voice {
-  margin: 0;
-}
-
-/* ── 발언란(一言) ───────────────────────────────────────────────
-   붉은 세로 막대에 점선을 단 인용은 서식 안에서 혼자 다른 물건이었습니다.
-   기재란·등급란과 같은 「항목명 칸 | 기입칸」 구성으로 맞춰, 같은 표의 마지막 항으로 둡니다. */
-.dossier-voice {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  margin: 0;
-  background: transparent;
-}
-
-/* 항목명 칸 — 기재란의 라벨칸과 같은 칸입니다 (한자·한글 두 줄) */
-.dossier-voice-label {
-  display: flex;
-  flex: 0 0 auto;
-  min-width: 4.4rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  margin: 0;
-  padding: var(--form-cell-y) var(--form-label-x);
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.035);
-}
-
-.dossier-voice-label-mark {
-  color: rgba(214, 214, 214, 0.8);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  /* 자간이 오른쪽에만 붙어 두 글자가 칸 안에서 왼쪽으로 밀립니다 */
-  text-indent: 0.2em;
-}
-
-.dossier-voice-label-ko {
-  color: rgba(152, 152, 152, 0.62);
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-
-.dossier-voice-text {
-  flex: 1 1 auto;
-  min-width: 0;
-  align-self: center;
-  margin: 0;
-  padding: var(--form-cell-y) var(--form-cell-x);
-  border: none;
-  color: rgba(234, 234, 234, 0.94);
-  font-size: 0.95rem;
-  line-height: 1.75;
-  letter-spacing: 0.01em;
-  white-space: pre-line;
-}
-
-/* 인용 부호는 서식이 붙입니다 — 데이터에는 문장만 들어 있습니다 */
-.dossier-voice-text::before {
-  content: "「";
-}
-
-.dossier-voice-text::after {
-  content: "」";
-}
-
-.dossier-voice-text::before,
-.dossier-voice-text::after {
-  color: rgba(184, 184, 190, 0.55);
-}
-
-/* ── 케이스 파일 표지 ─────────────────────────────────────────
-   왼쪽에 표제, 오른쪽에 붙인 사진판. 높이는 사진판이 정하므로
-   min-height 로 띠를 억지로 벌리지 않습니다 — 예전 21/28rem 고정 높이가
-   세로 그림을 2:1 가까운 가로 띠에 욱여넣어 그림 절반을 잘라냈습니다. */
-/* overflow 를 열어 둡니다 — 붙인 사진이 종이 아랫변 밖으로 삐져나와야 합니다.
-   바탕·그늘·편철 구멍은 전부 inset:0 이라 밖으로 새지 않고,
-   바깥 액자(.dossier-viewer)가 최종 경계를 잡아 줍니다. */
 .case-file-hero {
   position: relative;
-  z-index: 2;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+  min-height: 21rem;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(111, 143, 215, 0.42);
   background: transparent;
-}
-
-/* 표지 바탕 — 인물 팔레트를 날것으로 두면 밝은 팔레트에서 표제가 묻힙니다.
-   그림은 이제 사진판 안에 있으니, 바탕만 고르게 눌러도 그림은 상하지 않습니다.
-   (예전 그늘은 그림 위 글자를 살리려고 왼쪽만 97% 까지 덮어야 했습니다) */
-/* 표지 바탕 — 고른 그늘 + 본문(.dossier-body)과 같은 눈금이라 표지와 속지가 한 장으로 이어집니다.
-   인물 팔레트를 날것으로 두면 밝은 팔레트에서 표제가 묻힙니다. */
-.case-file-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 34px),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 34px),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.9) 100%);
-}
-
-/* 편철 구멍 — 왼쪽 여백에 뚫린 바인더 구멍 한 줄.
-   자식 결합자로 특정도를 올립니다 — overrides 의
-   `main :where(…span…):not(.auth-input *)` 가 (0,1,1) 이라 홑클래스로는 집니다. */
-.case-file-hero > .case-file-punch {
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  bottom: 0;
-  left: clamp(0.55rem, 1.4vw, 0.95rem);
-  width: 0.8rem;
-  pointer-events: none;
-  /* 구멍 자체는 종이 뒤의 어둠, 테두리는 잘린 종이 단면입니다 —
-     대비를 낮추면 니어블랙 위에서 통째로 사라집니다 */
-  background-image: radial-gradient(
-    circle,
-    #000000 0 3.9px,
-    rgba(255, 255, 255, 0.3) 3.9px 5px,
-    rgba(255, 255, 255, 0.07) 5px 5.8px,
-    transparent 6px
-  );
-  background-position: center 1.6rem;
-  background-size: 0.8rem 2.6rem;
-  background-repeat: repeat-y;
-}
-
-@media (max-width: 767px) {
-  .case-file-hero > .case-file-punch {
-    display: none;
-  }
-}
-
-/* 같은 이유로 「목록으로」 단추도 특정도를 올립니다 — 홑클래스로는 position 이 relative 로
-   덮여 흐름에 남고, 그만큼 표지가 아래로 밀려 있었습니다 */
-.case-file-hero > .case-back-button {
-  position: absolute;
-}
-
-.case-file-cover {
-  position: relative;
-  z-index: 4;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(1.35rem, 3vw, 2.25rem);
-  /* 표제 칸은 사진 높이만큼 늘어나 머리말을 위로 올려 붙입니다 —
-     둘 다 바닥에 맞추면 왼쪽 위가 통째로 빕니다 */
-  align-items: stretch;
-  /* 위 여백은 테이프가 액자 밖으로 삐져나온 만큼만. 「목록으로」 단추는 왼쪽 칸에만
-     걸리므로 표제 칸이 따로 비켜 갑니다 — 예전에는 표지 전체를 단추 높이만큼 내려서
-     사진 위가 통째로 비어 있었습니다. */
-  padding: clamp(1.6rem, 2.6vw, 2.1rem) clamp(1.15rem, 3.2vw, 2rem) clamp(0.7rem, 1.6vw, 1rem);
-}
-
-/* 단추를 피하는 건 표제 칸뿐입니다 */
-.case-file-title-block {
-  padding-top: clamp(2.6rem, 4.4vw, 3.3rem);
-}
-
-@media (min-width: 768px) {
-  .case-file-cover {
-    grid-template-columns: minmax(0, 1fr) auto;
-    /* 편철 구멍 줄을 비켜 갑니다 */
-    padding-left: clamp(2.1rem, 4vw, 2.9rem);
-  }
-
-  /* 단추도 구멍 줄을 넘어 표제 칸 왼쪽 변에 맞춥니다 */
-  .case-file-hero > .case-back-button {
-    left: clamp(2.1rem, 4vw, 2.9rem);
-  }
-}
-
-/* 기재란 머리 — 「件名 건명 ──────」 */
-.case-file-fieldmark {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  margin: 0 0 0.5rem;
-  color: rgba(190, 202, 222, 0.52);
-}
-
-.case-file-fieldmark-jp {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.26em;
-  line-height: 1;
-}
-
-.case-file-fieldmark-ko {
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.54rem;
-  letter-spacing: 0.2em;
-  line-height: 1;
-  opacity: 0.72;
-}
-
-.case-file-fieldmark-rule {
-  flex: 1 1 auto;
-  height: 1px;
-  min-width: 1.5rem;
-  background: currentColor;
-  opacity: 0.34;
-}
-
-/* 붙인 사진 — 세로 그림을 3:4 로 받아 거의 자르지 않습니다 */
-/* 붙인 사진 — 대지에 테이프로 붙인 자료 사진.
-   비스듬히 붙어 있다가 마우스를 올리면 반듯하게 펴지면서 한 뼘 떠오릅니다. */
-.case-file-plate {
-  position: relative;
-  /* 종이 위에 얹힌 물건이라 아래 서류보다 앞에 옵니다 */
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: clamp(11rem, 36vw, 23rem);
-  /* 아랫변 밖으로 삐져나오게 — 나중에 붙인 사진이라 종이 경계를 넘습니다.
-     음수 마진만으로는 표제 칸 높이에 막혀 24px 밖에 안 나오므로,
-     레이아웃을 건드리지 않는 translate 로 나머지를 밀어냅니다. */
-  margin: 0 0 clamp(-3.4rem, -6vw, -2rem);
-  transform: translate(clamp(-1.5rem, -1.8vw, -0.7rem), clamp(0.2rem, 0.9vw, 0.7rem));
-  justify-self: start;
-  /* 비율이 걸린 액자라 늘리면 안 됩니다 */
-  align-self: start;
-}
-
-@media (min-width: 768px) {
-  .case-file-plate {
-    justify-self: end;
-  }
-}
-
-.case-file-plate-frame {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  /* overflow 를 막지 않습니다 — 테이프가 액자 위로 삐져나와 붙는 물건이라
-     여기서 자르면 사진 위에 걸친 부분만 남습니다.
-     사진 자체는 .case-file-plate-image 가 자기 안에서 잘라냅니다. */
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 2px;
-  background: #000000;
-  /* 사진이 칸에 꼭 맞습니다 — 여백을 두면 뒤의 대지가 테두리처럼 드러납니다 */
-  padding: 0;
-  /* 눌러서 원본을 여는 단추 */
-  appearance: none;
-  cursor: zoom-in;
-  transform: rotate(-4.6deg);
-  transform-origin: 50% 8%;
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.8),
-    0 14px 30px rgba(0, 0, 0, 0.5);
-  transition:
-    transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    box-shadow 260ms ease,
-    border-color 260ms ease;
-}
-
-/* 테이프 한 조각 — 위쪽 한가운데를 큼직하게 눌러 붙입니다 */
-.case-file-plate-frame::before {
-  content: "";
-  position: absolute;
-  top: -1rem;
-  left: 50%;
-  z-index: 3;
-  width: clamp(5rem, 13vw, 8.5rem);
-  height: 2.1rem;
-  background: linear-gradient(
-    180deg,
-    rgba(238, 238, 232, 0.22),
-    rgba(238, 238, 232, 0.13) 45%,
-    rgba(238, 238, 232, 0.22)
-  );
-  /* 손으로 뜯은 테이프라 양 끝이 톱니입니다 */
-  border-left: 1px dashed rgba(255, 255, 255, 0.3);
-  border-right: 1px dashed rgba(255, 255, 255, 0.3);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
-  transform: translateX(-50%) rotate(-2.2deg);
-  pointer-events: none;
-  transition: opacity 260ms ease;
-}
-
-/* 사진 자체 — 대지를 뚫고 오른쪽·아래로 삐져나온 인화지.
-   액자(.case-file-plate-frame)는 overflow 를 막지 않으므로 그대로 넘어갑니다. */
-/* 사진은 칸을 꽉 채웁니다 */
-.case-file-plate-image {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: #000000;
-}
-
-/* 마우스를 올리면 반듯하게 펴지며 떠오릅니다 */
-.case-file-plate:hover .case-file-plate-frame,
-.case-file-plate:focus-within .case-file-plate-frame {
-  transform: rotate(0deg) translateY(-0.5rem) scale(1.035);
-  border-color: rgba(255, 255, 255, 0.55);
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.8),
-    0 26px 52px rgba(0, 0, 0, 0.62);
-}
-
-/* 펴질 때 테이프는 살짝 떨어진 것처럼 옅어집니다 */
-.case-file-plate:hover .case-file-plate-frame::before {
-  opacity: 0.55;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .case-file-plate-frame,
-  .case-file-plate-frame::before {
-    transition: none;
-  }
-
-  .case-file-plate:hover .case-file-plate-frame,
-  .case-file-plate:focus-within .case-file-plate-frame {
-    transform: rotate(-4.6deg);
-  }
-}
-
-/* 사진 밑 슬러그 — 「寫眞」 표시와 서명 */
-.case-file-plate-slug {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
-.case-file-plate-slug-jp {
-  flex: 0 0 auto;
-  color: rgba(200, 210, 226, 0.42);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  margin-right: -0.24em;
-}
-
-.case-file-plate-sign {
-  display: block;
-  min-width: 0;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.22);
-  font-size: clamp(1.3rem, 3.6vw, 2.1rem);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.1;
-  overflow: hidden;
-  text-align: right;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  user-select: none;
 }
 
 .case-file-hero .character-palette-backdrop {
@@ -3195,170 +256,99 @@ html body main .character-index-panel .archive-character-card:hover {
   );
 }
 
-/* 머리말은 칸 위, 도장·이름·한 줄 소개는 사진 밑변에 맞춰 바닥으로.
-   남던 위쪽 여백은 도장이 받아 갑니다. */
-/* 예전에는 44rem 으로 묶어 뒀는데, 넓은 화면에서 표제 칸이 그보다 넓어지면
-   남는 폭이 사진과의 사이에서 그대로 죽었습니다(1510px 에서 124px).
-   칸을 다 쓰고, 대신 표제가 지나치게 길어지지 않게 기입칸만 따로 잡습니다. */
+.case-file-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.97) 0%,
+    rgba(0, 0, 0, 0.9) 34%,
+    rgba(0, 0, 0, 0.62) 50%,
+    rgba(0, 0, 0, 0.24) 58%,
+    transparent 64%
+  );
+}
+
+.case-file-hero::after {
+  content: none;
+  display: none;
+}
+
+.case-file-hero-mark {
+  position: absolute;
+  left: auto;
+  right: 0.85rem;
+  bottom: -0.75rem;
+  top: auto;
+  z-index: 3;
+  display: block;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: calc(100% - 1.7rem);
+  margin: 0;
+  padding: 0 0.9rem 0 0;
+  color: rgba(190, 205, 230, 0.09);
+  font-size: clamp(3.8rem, 10vw, 8rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.case-file-hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.case-file-hero-image img {
+  opacity: 0.96;
+  filter: none;
+}
+
+.case-file-hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(111, 143, 215, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(111, 143, 215, 0.065) 1px, transparent 1px);
+  background-size: 2.6rem 2.6rem;
+  opacity: 0.22;
+  mask-image: linear-gradient(90deg, #000 0 50%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0 50%, transparent 100%);
+}
+
+.case-file-hero-content {
+  position: relative;
+  z-index: 4;
+  display: block;
+  min-height: 21rem;
+  padding: 0;
+}
+
 .case-file-title-block {
-  /* 기재란이 표지로 올라오면서 서식 칸 여백도 같이 필요해졌습니다 —
-     .dossier-header 에만 있던 값이라 여기에도 둡니다 */
-  --form-cell-y: 0.5rem;
-  --form-cell-x: 0.8rem;
-  --form-label-x: 0.66rem;
+  position: absolute;
+  top: auto;
+  right: auto;
+  left: clamp(1.15rem, 3.2vw, 1.85rem);
+  bottom: clamp(1.15rem, 3.5vw, 1.9rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  align-self: stretch;
-  min-width: 0;
+  max-width: min(44rem, calc(100% - 2.8rem));
+  padding-right: clamp(0.5rem, 2vw, 1.25rem);
   text-align: left;
-}
-
-/* 예전에는 여기에 margin-top:auto 로 아래쪽에 밀어붙였습니다. 사진이 커지면서
-   그 자동 여백이 머리말과 봉인 띠 사이의 죽은 공간이 돼서 걷어냈습니다. */
-.case-file-title-block .case-file-seal {
-  margin-top: clamp(1.1rem, 2.4vw, 1.7rem);
-}
-
-/* ── 봉인 띠(封緘帯) ───────────────────────────────────────────
-   표지에 가로로 붙인 등급 라벨. 본문 우상단의 사각 고무도장(.dossier-stamp)·
-   둥근 인장(.dossier-chop)과 겹치지 않도록 다른 장치로 짰습니다 —
-   왼쪽에 등급 조각, 가운데 한자, 오른쪽에 영문과 천공 자국이 한 줄로 앉고
-   위아래 변에는 보안 봉투의 빗금이 지나갑니다. */
-.case-file-seal {
-  --seal-ink: rgba(214, 214, 214, 0.66);
-  position: relative;
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(0.5rem, 1.2vw, 0.8rem);
-  max-width: 100%;
-  /* 머리줄 안에서는 아래 여백을 머리줄이 대신 잡습니다 */
-  margin-bottom: 0;
-  padding: 0.34rem 0.72rem 0.34rem 0.34rem;
-  border: 1px solid color-mix(in srgb, var(--seal-ink) 62%, transparent);
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.55);
-  color: var(--seal-ink);
-  /* 붙인 라벨이라 종이에서 아주 조금 들려 있습니다 */
-  transform: rotate(-1.4deg);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-}
-
-/* 위아래 빗금 — 보안 봉투 테두리 */
-.case-file-seal::before,
-.case-file-seal::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3px;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    -45deg,
-    color-mix(in srgb, var(--seal-ink) 55%, transparent) 0 3px,
-    transparent 3px 7px
-  );
-}
-
-.case-file-seal::before {
-  top: 0;
-}
-
-.case-file-seal::after {
-  bottom: 0;
-}
-
-/* 등급 조각 — 잉크를 뒤집어 찍은 한 칸 */
-.case-file-seal-grade {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.6rem;
-  align-self: stretch;
-  padding: 0.28rem 0.4rem;
-  background: color-mix(in srgb, var(--seal-ink) 86%, transparent);
-  color: #08080a;
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: clamp(0.72rem, 1.5vw, 0.9rem);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-
-.case-file-seal-main {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: clamp(1.05rem, 2.3vw, 1.45rem);
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  /* letter-spacing 이 마지막 글자 뒤에도 붙어 오른쪽이 떠 보입니다 */
-  margin-right: -0.3em;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.case-file-seal-rule {
-  width: clamp(1rem, 3vw, 2.4rem);
-  height: 1px;
-  background: color-mix(in srgb, var(--seal-ink) 55%, transparent);
-}
-
-.case-file-seal-sub {
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: clamp(0.46rem, 0.95vw, 0.56rem);
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-/* 천공 자국 — 라벨 오른쪽 끝을 뚫어 둔 자리 */
-.case-file-seal-perf {
-  width: 2.1rem;
-  height: 3px;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--seal-ink) 70%, transparent) 0 1.2px,
-    transparent 1.4px
-  );
-  background-size: 5px 3px;
-}
-
-/* 등급별 잉크 — lib/clearance.ts 의 tone 과 짝입니다 */
-.case-file-seal--void {
-  --seal-ink: rgba(250, 250, 250, 0.82);
-}
-
-.case-file-seal--crimson {
-  --seal-ink: rgba(228, 72, 72, 0.78);
-}
-
-.case-file-seal--amber {
-  --seal-ink: rgba(226, 163, 62, 0.76);
-}
-
-.case-file-seal--muted {
-  --seal-ink: rgba(206, 206, 206, 0.6);
-}
-
-.case-file-seal--plain {
-  --seal-ink: rgba(238, 238, 238, 0.66);
-}
-
-/* 하위 페이지는 표제가 작으므로 띠도 함께 줄이고 천공은 접습니다 */
-.case-file-seal.is-compact {
-  gap: 0.45rem;
-  padding: 0.26rem 0.55rem 0.26rem 0.26rem;
-}
-
-.case-file-seal.is-compact .case-file-seal-main {
-  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-  letter-spacing: 0.22em;
-  margin-right: -0.22em;
-}
-
-.case-file-seal.is-compact .case-file-seal-perf {
-  display: none;
+  z-index: 8;
 }
 
 .case-file-kicker,
@@ -3369,137 +359,31 @@ html body main .character-index-panel .archive-character-card:hover {
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
 }
 
-/* 머리줄 — 분류 표시(왼쪽)와 등급 라벨(오른쪽)을 한 줄에 물립니다.
-   둘 다 짧아서 위아래로 쌓으면 오른쪽이 통째로 빕니다. */
-.case-file-topline {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(0.7rem, 1.8vw, 1.4rem);
-  width: 100%;
-  margin-bottom: clamp(0.9rem, 2.2vw, 1.35rem);
-}
-
 .case-file-kicker {
   display: block;
-  margin-bottom: 0;
+  margin-bottom: 0.8rem;
   color: rgba(168, 184, 214, 0.6);
   font-size: 0.72rem;
   letter-spacing: 0.34em;
   text-transform: uppercase;
 }
 
-/* 표제가 이제 사진 옆 한 칸을 쓰므로 예전 8vw/6rem 은 칸을 넘칩니다 */
 .case-file-name {
   margin-top: 0.3rem;
-  max-width: 100%;
   color: rgba(238, 242, 248, 0.96);
-  font-size: clamp(2.4rem, 5.6vw, 4.4rem);
+  font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 900;
-  letter-spacing: -0.06em;
-  line-height: 0.95;
-  overflow-wrap: anywhere;
+  letter-spacing: -0.08em;
+  line-height: 0.88;
+  text-shadow:
+    2px 0 rgba(111, 143, 215, 0.48),
+    -2px 0 rgba(255, 255, 255, 0.18),
+    0 14px 35px rgba(0, 0, 0, 0.9);
 }
 
 .case-file-intro {
   margin-top: 1rem;
   max-width: min(38rem, 100%);
-}
-
-/* ── 摘要란 — 표지의 한 줄 소개 ────────────────────────────────
-   테두리만 두른 상자는 표지에서 그냥 지나쳐지는 자리였습니다.
-   본문 기재란과 같은 「라벨칸 | 기입칸」 두 칸으로 앉히고, 기입칸에는
-   타자기 한 줄이 놓이는 괘선을 깔아 서식에 적힌 문장으로 읽히게 했습니다. */
-
-/* ── 摘要란(한 줄 소개) ────────────────────────────────────────
-   테두리만 두른 상자는 표지에서 그냥 지나쳐지는 자리였습니다.
-   본문 기재란과 같은 「라벨칸 | 기입칸」 두 칸으로 앉히고, 기입칸에는
-   타자기 한 줄이 놓이는 괘선을 깔아 서식에 적힌 문장으로 읽히게 했습니다. */
-.case-file-brief {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  width: 100%;
-  margin-top: clamp(1rem, 2.4vw, 1.5rem);
-  overflow: hidden;
-  border: 1px solid var(--case-intro-border, rgba(255, 255, 255, 0.3));
-  border-radius: var(--app-radius-sm);
-  background: var(--case-intro-bg, rgba(0, 0, 0, 0.66));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 14px 30px rgba(0, 0, 0, 0.46);
-}
-
-/* 라벨칸 — 서식에 미리 인쇄돼 있는 칸 이름 */
-.case-file-brief-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.24rem;
-  margin: 0;
-  padding: 0.55rem 0.6rem;
-  border-right: 1px solid var(--case-intro-border, rgba(255, 255, 255, 0.24));
-  background: rgba(255, 255, 255, 0.045);
-  color: var(--case-intro-label, rgba(198, 210, 230, 0.74));
-  text-align: center;
-  white-space: nowrap;
-}
-
-.case-file-brief-label-jp {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  margin-right: -0.16em;
-}
-
-.case-file-brief-label-ko {
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.46rem;
-  letter-spacing: 0.14em;
-  line-height: 1;
-  opacity: 0.72;
-}
-
-/* 기입칸 — 밑줄 괘선 위에 문장이 앉습니다.
-   괘선 간격·시작 위치는 line-height 와 padding-top 에 맞춰야 글자가 줄에 얹힙니다. */
-.case-file-brief-text {
-  margin: 0;
-  padding: 0.68rem 0.9rem 0.72rem;
-  background-image: repeating-linear-gradient(
-    180deg,
-    transparent 0 calc(1.6em - 1px),
-    rgba(255, 255, 255, 0.06) calc(1.6em - 1px) 1.6em
-  );
-  background-position: 0 0.68rem;
-  color: var(--case-intro-text, rgba(248, 248, 248, 0.95));
-  font-family: var(--font-ui-stack), var(--font-emoji-stack);
-  font-size: clamp(0.82rem, 1.15vw, 0.92rem);
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-  white-space: pre-line;
-}
-
-.case-file-brief-text :where(span:not(.glitch-zone-mark), em, strong) {
-  color: inherit;
-  font-family: inherit;
-}
-
-@media (max-width: 480px) {
-  .case-file-brief {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .case-file-brief-label {
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 0.5rem;
-    padding: 0.42rem 0.7rem;
-    border-right: none;
-    border-bottom: 1px solid var(--case-intro-border, rgba(255, 255, 255, 0.24));
-  }
 }
 
 .case-file-intro-label {
@@ -3531,7 +415,7 @@ html body main .character-index-panel .archive-character-card:hover {
   padding: 0.62rem 0.85rem 0.65rem;
   border: 1px solid var(--case-intro-border, rgba(255, 255, 255, 0.09));
   background: var(--case-intro-bg, rgba(0, 0, 0, 0.38));
-  color: var(--case-intro-text, rgba(238, 238, 238, 0.86));
+  color: var(--case-intro-text, rgba(236, 240, 245, 0.86));
   font-family: var(--font-ui-stack), var(--font-emoji-stack);
   font-size: 0.82rem;
   line-height: 1.6;
@@ -3556,28 +440,25 @@ html body main .character-index-panel .archive-character-card:hover {
   top: -1px;
   left: -1px;
   border-top: 1px solid
-    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 85%, #eeeeee);
+    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 85%, #6f8fd7);
   border-left: 1px solid
-    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 85%, #eeeeee);
+    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 85%, #6f8fd7);
 }
 
 .case-file-intro-text::after {
   right: -1px;
   bottom: -1px;
   border-right: 1px solid
-    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 65%, #eeeeee);
+    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 65%, #6f8fd7);
   border-bottom: 1px solid
-    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 65%, #eeeeee);
+    color-mix(in srgb, var(--case-intro-border, rgba(255, 255, 255, 0.09)) 65%, #6f8fd7);
 }
 
-.case-file-intro-text
-  .glitch-zone-mark:not([style*="color"]):not(.glitch-zone-has-custom-color):not(
-    .glitch-zone-has-custom-font
-  ) {
-  color: color-mix(in srgb, var(--case-intro-text, rgba(238, 238, 238, 0.86)) 92%, #fff);
+.case-file-intro-text .glitch-zone-mark:not([style*="color"]):not(.glitch-zone-has-custom-color):not(.glitch-zone-has-custom-font) {
+  color: color-mix(in srgb, var(--case-intro-text, rgba(236, 240, 245, 0.86)) 92%, #fff);
   font-family: var(--font-ui-stack), var(--font-emoji-stack);
   text-shadow:
-    0 0 10px rgba(255, 255, 255, 0.18),
+    0 0 10px rgba(111, 143, 215, 0.18),
     0 1px 14px rgba(0, 0, 0, 0.86);
 }
 
@@ -3591,20 +472,20 @@ html body main .character-index-panel .archive-character-card:hover {
 }
 
 .case-file-voice .case-file-intro-text {
-  border-color: var(--case-voice-border, var(--case-intro-border, rgba(255, 255, 255, 0.22)));
+  border-color: var(--case-voice-border, var(--case-intro-border, rgba(111, 143, 215, 0.22)));
   background: var(--case-voice-bg, var(--case-intro-bg, rgba(0, 0, 0, 0.35)));
-  color: var(--case-voice-text, var(--case-intro-text, rgba(238, 238, 238, 0.86)));
+  color: var(--case-voice-text, var(--case-intro-text, rgba(236, 240, 245, 0.86)));
 }
 
 .case-file-voice .case-file-intro-text::before {
   border-top-color: color-mix(
     in srgb,
-    var(--case-voice-border, var(--case-intro-border, rgba(255, 255, 255, 0.22))) 85%,
+    var(--case-voice-border, var(--case-intro-border, rgba(111, 143, 215, 0.22))) 85%,
     transparent
   );
   border-left-color: color-mix(
     in srgb,
-    var(--case-voice-border, var(--case-intro-border, rgba(255, 255, 255, 0.22))) 85%,
+    var(--case-voice-border, var(--case-intro-border, rgba(111, 143, 215, 0.22))) 85%,
     transparent
   );
 }
@@ -3612,22 +493,20 @@ html body main .character-index-panel .archive-character-card:hover {
 .case-file-voice .case-file-intro-text::after {
   border-right-color: color-mix(
     in srgb,
-    var(--case-voice-border, var(--case-intro-border, rgba(255, 255, 255, 0.22))) 65%,
+    var(--case-voice-border, var(--case-intro-border, rgba(111, 143, 215, 0.22))) 65%,
     transparent
   );
   border-bottom-color: color-mix(
     in srgb,
-    var(--case-voice-border, var(--case-intro-border, rgba(255, 255, 255, 0.22))) 65%,
+    var(--case-voice-border, var(--case-intro-border, rgba(111, 143, 215, 0.22))) 65%,
     transparent
   );
 }
 
-.case-file-voice
-  .case-file-intro-text
-  .glitch-zone-mark:not([style*="color"]):not(.glitch-zone-has-custom-color) {
+.case-file-voice .case-file-intro-text .glitch-zone-mark:not([style*="color"]):not(.glitch-zone-has-custom-color) {
   color: color-mix(
     in srgb,
-    var(--case-voice-text, var(--case-intro-text, rgba(238, 238, 238, 0.86))) 92%,
+    var(--case-voice-text, var(--case-intro-text, rgba(236, 240, 245, 0.86))) 92%,
     #fff
   );
 }
@@ -3686,8 +565,8 @@ html body main .character-index-panel .archive-character-card:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  background: rgba(8, 8, 8, 0.9);
+  border: 1px solid rgba(111, 143, 215, 0.32);
+  background: rgba(5, 6, 11, 0.9);
   padding: 0.52rem 0.9rem;
   color: rgba(200, 208, 220, 0.88);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
@@ -3708,9 +587,9 @@ html body main .character-index-panel .archive-character-card:hover {
 }
 
 .case-back-button:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(111, 143, 215, 0.5);
   background: var(--surface-raised);
-  color: rgba(238, 238, 238, 0.96);
+  color: rgba(236, 240, 245, 0.96);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.78),
     0 12px 28px rgba(0, 0, 0, 0.45);
@@ -3722,7 +601,7 @@ html body main .character-index-panel .archive-character-card:hover {
 }
 
 .case-back-button:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.45);
+  outline: 1px solid rgba(111, 143, 215, 0.45);
   outline-offset: 2px;
 }
 
@@ -3730,12 +609,12 @@ html body main .character-index-panel .archive-character-card:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(111, 143, 215, 0.16);
   padding-bottom: 0.9rem;
 }
 
 .case-file-meta-line {
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(111, 143, 215, 0.3);
   background: rgba(0, 0, 0, 0.42);
   padding: 0.38rem 0.55rem;
   color: rgba(200, 212, 232, 0.72);
@@ -3755,7 +634,7 @@ html body main .character-index-panel .archive-character-card:hover {
   position: relative;
   margin-top: 1.15rem;
   padding: 0.9rem 0.95rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(111, 143, 215, 0.2);
   background: rgba(0, 0, 0, 0.38);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
@@ -3772,15 +651,15 @@ html body main .character-index-panel .archive-character-card:hover {
 .case-profile-panel::before {
   top: -1px;
   left: -1px;
-  border-top: 1px solid rgba(255, 255, 255, 0.34);
-  border-left: 1px solid rgba(255, 255, 255, 0.34);
+  border-top: 1px solid rgba(111, 143, 215, 0.34);
+  border-left: 1px solid rgba(111, 143, 215, 0.34);
 }
 
 .case-profile-panel::after {
   right: -1px;
   bottom: -1px;
-  border-right: 1px solid rgba(255, 255, 255, 0.26);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+  border-right: 1px solid rgba(111, 143, 215, 0.26);
+  border-bottom: 1px solid rgba(111, 143, 215, 0.26);
 }
 
 .case-profile-kicker {
@@ -3795,7 +674,7 @@ html body main .character-index-panel .archive-character-card:hover {
 .case-profile-kicker::before {
   content: "◆";
   margin-right: 0.4rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(111, 143, 215, 0.45);
   font-size: 0.48rem;
 }
 
@@ -3818,7 +697,7 @@ html body main .character-index-panel .archive-character-card:hover {
   justify-content: center;
   gap: 0.38rem;
   padding: 0.68rem 0.72rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(111, 143, 215, 0.14);
   background: rgba(0, 0, 0, 0.46);
 }
 
@@ -3834,7 +713,7 @@ html body main .character-index-panel .archive-character-card:hover {
 .case-profile-chip-value {
   display: flex;
   align-items: center;
-  color: rgba(238, 238, 238, 0.92);
+  color: rgba(236, 240, 245, 0.92);
   font-size: 0.9rem;
   line-height: 1.3;
 }
@@ -3843,269 +722,98 @@ html body main .character-index-panel .archive-character-card:hover {
   vertical-align: baseline;
 }
 
-/* ── 편철 견출지(見出し) — 서류철에서 삐져나온 색인 탭 ─────────────
-   비활성 탭의 바깥 괘선이 이어져 한 줄의 책장 모서리를 이루고,
-   지금 펼친 탭만 그 선이 끊겨 본문으로 그대로 이어집니다.
-   (예전 좌측 레일은 배경을 채우고 액센트 바를 세운 앱 사이드바 어휘였습니다) */
-.file-tab-rail {
-  /* 견출지가 다섯 장이라 좁은 화면에서는 줄이 넘어갑니다.
-     flex 로 두면 마지막 줄에 남은 한 장이 레일 폭 전체로 늘어나 견출지가 아니라
-     빈 띠로 보이므로, 줄이 넘어가도 폭이 유지되는 grid 로 깝니다. */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(4.6rem, 1fr));
-  align-items: stretch;
-  gap: 0;
-  min-width: 0;
-  /* 모서리는 종이(.case-tab-panel)가 그립니다 — 여기서 또 그으면 선이 겹칩니다 */
-}
-
-.file-tab {
-  position: relative;
-  z-index: 1;
+.case-tab-strip {
   display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.08rem;
-  /* 안 펼친 견출지는 종이 속으로 조금 들어가 있습니다 */
-  margin-top: 0.4rem;
-  /* 자기 아래 괘선으로 레일의 모서리를 덮어씁니다 */
-  margin-bottom: -1px;
-  padding: 0.55rem 0.7rem 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  /* 종이와 맞닿는 변은 종이가 그립니다 */
-  border-bottom: none;
-  /* 바깥쪽 모서리만 둥글고, 본문과 맞닿는 변은 각지게 */
-  border-radius: var(--app-radius-sm) var(--app-radius-sm) 0 0 !important;
-  background: transparent;
-  color: rgba(170, 170, 170, 0.7);
-  text-align: left;
-  cursor: pointer;
-  transition:
-    color 160ms ease,
-    border-color 160ms ease;
-}
-
-.file-tab + .file-tab {
-  margin-left: -1px;
-}
-
-.file-tab-index {
-  display: block;
-  color: rgba(140, 140, 140, 0.5);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.58rem;
-  letter-spacing: 0.2em;
-  line-height: 1.3;
-}
-
-.file-tab-main {
-  display: block;
-  color: rgba(190, 190, 190, 0.78);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.94rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1.35;
-}
-
-.file-tab-ko {
-  display: block;
-  color: rgba(140, 140, 140, 0.58);
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  line-height: 1.4;
-}
-
-/* 좁은 화면 — 다섯 장이 한 줄에 들어가야 견출지 아랫변이 종이로 그대로 이어집니다.
-   줄이 넘어가면 윗줄 탭은 종이가 아니라 아랫줄 탭 위에 얹혀 보입니다. */
-@media (max-width: 639px) {
-  .file-tab-rail {
-    grid-template-columns: repeat(auto-fit, minmax(3.4rem, 1fr));
-  }
-
-  .file-tab {
-    padding: 0.5rem 0.4rem 0.45rem;
-  }
-
-  .file-tab-index {
-    font-size: 0.52rem;
-    letter-spacing: 0.12em;
-  }
-
-  .file-tab-main {
-    font-size: 0.86rem;
-    letter-spacing: 0.06em;
-  }
-
-  .file-tab-ko {
-    font-size: 0.56rem;
-    letter-spacing: 0.02em;
-  }
-}
-
-.file-tab:hover:not(.is-active) {
-  border-color: rgba(255, 255, 255, 0.3);
-  color: rgba(230, 230, 230, 0.9);
-}
-
-.file-tab:hover:not(.is-active) .file-tab-main {
-  color: rgba(232, 232, 232, 0.92);
-}
-
-.file-tab:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.6);
-  outline-offset: -2px;
-}
-
-/* 지금 펼친 견출지 — 위로 더 나오고, 본문 쪽 괘선이 끊겨 종이가 이어집니다 */
-.file-tab.is-active {
-  z-index: 2;
-  margin-top: 0;
-  border-color: rgba(255, 255, 255, 0.42);
-  /* 종이(.case-tab-panel) 와 같은 색이라 모서리 선이 여기서 끊어져 보입니다 */
-  background: #000000;
-  color: rgba(246, 246, 246, 0.96);
-}
-
-.file-tab.is-active .file-tab-index {
-  color: rgba(196, 196, 196, 0.7);
-}
-
-.file-tab.is-active .file-tab-main {
-  color: rgba(250, 250, 250, 0.97);
-}
-
-.file-tab.is-active .file-tab-ko {
-  color: rgba(196, 196, 196, 0.72);
-}
-
-/* 넓은 화면 — 견출지를 좌측에 세로로 물립니다.
-   이때 종이 모서리는 아래가 아니라 오른쪽 변입니다. */
-@media (min-width: 1024px) {
-  /* 페이지 모서리는 본문 왼쪽 변(.case-tab-panel)이 갖습니다 —
-     레일에 걸면 탭 네 장 높이에서 선이 끊겨 종이가 아니라 조각으로 보입니다. */
-  .dossier-tabs-layout .file-tab-rail {
-    /* 종이가 길 때 견출지가 따라 내려오도록 — 늘어나면 sticky 가 움직일 여지를 잃습니다 */
-    align-self: start;
-    position: sticky;
-    top: 1rem;
-    z-index: 2;
-    /* 세로 레일에서는 한 장씩 아래로 쌓입니다 */
-    grid-template-columns: 1fr;
-    /* 본문 왼쪽 괘선 위로 1px 물려 견출지가 종이에 꽂힌 것처럼 겹칩니다 */
-    margin-right: -1px;
-    border-bottom: none;
-    border-right: none;
-  }
-
-  .dossier-tabs-layout .file-tab {
-    /* width:100% 로 고정하면 아래 margin 이 폭을 줄이는 대신 탭을 통째로
-       오른쪽으로 밀어 종이 위를 덮습니다. stretch 라야 오른쪽 변이 고정됩니다. */
-    align-self: stretch;
-    min-width: 0;
-    /* 안 펼친 견출지는 종이 속으로 조금 들어가 있습니다 */
-    margin-left: 0.5rem;
-    /* 0.4rem 은 가로 레일에서 종이 위로 얹히는 값입니다 —
-       세로 레일에서 남겨두면 첫 장만 종이 윗변보다 내려앉습니다 */
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0.6rem 0.85rem 0.55rem;
-    border-radius: var(--app-radius-sm) 0 0 var(--app-radius-sm) !important;
-  }
-
-  /* 종이와 맞닿는 변은 오른쪽입니다 — 그쪽만 종이에 넘기고 아랫변은 되찾아옵니다.
-     아랫변이 없으면 기둥 맨 끝 견출지가 아래로 뚫린 상자가 됩니다. */
-  .dossier-tabs-layout .file-tab {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-  }
-
-  /* 종이 왼쪽 변은 각지게 (윗변이 아니라 왼쪽에 붙으므로) */
-  .dossier-tabs-layout .case-tab-panel {
-    border-radius: 0 var(--app-radius-md) var(--app-radius-md) 0;
-  }
-
-  .dossier-tabs-layout .file-tab + .file-tab {
-    margin-top: -1px;
-  }
-
-  /* 펼친 견출지만 왼쪽으로 더 나오고, 본문 쪽 괘선이 끊깁니다 */
-  .dossier-tabs-layout .file-tab.is-active {
-    margin-left: 0;
-    border-bottom-color: rgba(255, 255, 255, 0.42);
-  }
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.3rem;
+  margin-top: 1.35rem;
+  padding-top: 0.42rem;
 }
 
 .case-tab-button {
   position: relative;
-  flex: 1 1 0;
-  min-width: 5.5rem;
+  flex: 1 1 7.25rem;
+  min-width: 7.25rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.18rem;
+  gap: 0.12rem;
   margin-bottom: 0;
-  padding: 0.7rem 0.75rem 0.65rem;
-  border: none;
-  border-radius: var(--app-radius-sm);
-  background: transparent;
-  color: rgba(170, 170, 170, 0.7);
+  padding: 0.72rem 0.85rem 0.58rem;
+  border: 1px solid rgba(111, 143, 215, 0.2);
+  border-bottom: 1px solid rgba(111, 143, 215, 0.16);
+  border-radius: 0.55rem 0.55rem 0 0;
+  background: rgba(0, 0, 0, 0.48);
+  color: rgba(200, 208, 220, 0.72);
   text-align: left;
   z-index: 1;
   transition:
+    border-color 160ms ease,
     color 160ms ease,
-    background 160ms ease;
+    background 160ms ease,
+    padding 160ms ease;
 }
 
 .case-tab-button::before {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0.7rem;
+  width: 2.15rem;
+  height: 0.4rem;
+  border: 1px solid rgba(111, 143, 215, 0.2);
+  border-bottom: none;
+  border-radius: 0.35rem 0.35rem 0 0;
+  background: rgba(0, 0, 0, 0.48);
+  content: "";
+  pointer-events: none;
+  transform: translateY(-100%);
 }
 
 .case-tab-button span {
   display: block;
-  color: rgba(130, 130, 130, 0.72);
+  color: rgba(140, 155, 180, 0.78);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.56rem;
+  font-size: 0.6rem;
   letter-spacing: 0.16em;
   line-height: 1.2;
 }
 
 .case-tab-button.is-active {
-  margin-bottom: 0;
-  padding-bottom: 0.65rem;
-  border: none;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(245, 245, 245, 0.98);
+  margin-bottom: -1px;
+  padding-bottom: 0.7rem;
+  border-color: rgba(111, 143, 215, 0.3);
+  border-bottom-color: rgba(0, 0, 0, 0.88);
+  background: rgba(0, 0, 0, 0.88);
+  color: rgba(236, 240, 245, 0.96);
   box-shadow: none;
-  z-index: 2;
+  z-index: 3;
 }
 
 .case-tab-button.is-active::before {
-  display: none;
+  border-color: rgba(111, 143, 215, 0.3);
+  background: rgba(0, 0, 0, 0.88);
 }
 
 .case-tab-button:hover:not(.is-active) {
-  border-color: transparent;
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(230, 230, 230, 0.9);
+  border-color: rgba(111, 143, 215, 0.26);
+  background: rgba(8, 8, 8, 0.72);
+  color: rgba(232, 236, 241, 0.88);
 }
 
 .case-tab-button:hover:not(.is-active)::before {
-  display: none;
+  border-color: rgba(111, 143, 215, 0.26);
+  background: rgba(8, 8, 8, 0.72);
 }
 
 .case-tab-panel {
   margin-top: 0;
   min-width: 0;
   max-width: 100%;
-  padding: 1.1rem 0 0.35rem;
-  border: none;
-  /* 견출지가 붙는 변(좁은 화면은 윗변)은 각지게 — 둥근 모서리는 탭의 직선 변과
-     맞물릴 수 없어 이가 벌어져 보입니다 */
-  border-radius: 0 0 var(--app-radius-md) var(--app-radius-md);
-  background: transparent;
+  padding: 1.15rem 1rem 1.25rem;
+  border: 1px solid rgba(111, 143, 215, 0.22);
+  border-radius: 0 0.35rem 0.35rem 0.35rem;
+  background: rgba(0, 0, 0, 0.28);
   animation: none;
 }
 
@@ -4137,1042 +845,6 @@ html body main .character-index-panel .archive-character-card:hover {
   }
 }
 
-/* RECORD BOX: 바깥 프레임 하나 + 안쪽은 펼침 목록 (중첩 카드 제거) */
-.record-settings-layout {
-  display: grid;
-  gap: 1rem;
-  min-width: 0;
-}
-
-.record-settings-pair {
-  display: grid;
-  gap: 1rem;
-  min-width: 0;
-  grid-template-columns: 1fr;
-}
-
-/* 인물 사진은 身上 항 안으로 들어갔습니다 (.dossier-figure) —
-   조서 본문은 언제나 한 단 전체 폭을 씁니다. */
-
-/* ── 기록 열람대(閲覧台) ────────────────────────────────────────
-   항을 세로로 전부 쌓던 조서를 「색인 + 열람판」 구조로 바꿨습니다.
-   왼쪽 索引 이 전체 항을 붙잡아 두고, 오른쪽 열람판에 고른 항만 올라옵니다.
-   색인이 서랍이 되지 않도록 通読(전문 이어보기) 모드를 항상 함께 둡니다. */
-/* 종이(.case-tab-panel) 위에 인쇄된 내용 — 자기 상자는 그리지 않습니다 */
-.record-console {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-/* 상단 슬러그 — 장비 전면 패널처럼 괘선 하나로 눌러 둡니다 */
-.record-console-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 0.6rem 0.85rem;
-  border-bottom: 3px double rgba(255, 255, 255, 0.22);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
-}
-
-/* 표제와 열람 방식 사이를 잇는 괘선. space-between 으로 양끝에 밀어 두면
-   가운데가 통째로 비어서, 인쇄된 머리띠가 아니라 얹어 둔 조각 둘로 보입니다. */
-.record-console-rule {
-  flex: 1 1 auto;
-  min-width: 1rem;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.24),
-    rgba(255, 255, 255, 0.07) 65%,
-    transparent
-  );
-}
-
-.record-console-serial {
-  flex: none;
-  color: rgba(150, 150, 156, 0.5);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.52rem;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-
-@media (max-width: 620px) {
-  /* 좁아지면 일련번호가 열람 방식 버튼을 밀어냅니다 — 괘선만 남깁니다 */
-  .record-console-serial {
-    display: none;
-  }
-}
-
-.record-console-brand {
-  display: flex;
-  align-items: baseline;
-  gap: 0.55rem;
-  margin: 0;
-  color: rgba(246, 246, 246, 0.92);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-}
-
-.record-console-brand-ko {
-  color: rgba(150, 150, 150, 0.58);
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-}
-
-/* 모서리 반경은 바깥 테두리만 갖고, 안쪽 칸은 각지게 둡니다.
-   안쪽이 둥글면(전역 규칙이 button 에 radius 를 !important 로 먹입니다)
-   활성 칸의 칠이 네 귀에 닿지 못해 테두리와 사이에 모서리가 남습니다. */
-.record-console-modes {
-  display: flex;
-  flex: 0 0 auto;
-  gap: 0;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--app-radius-sm);
-}
-
-.record-console-mode {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  padding: 0.3rem 0.65rem;
-  border: none;
-  border-radius: 0 !important;
-  background: transparent;
-  color: rgba(160, 160, 160, 0.64);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  cursor: pointer;
-}
-
-.record-console-mode + .record-console-mode {
-  border-left: 1px solid rgba(255, 255, 255, 0.16);
-}
-
-.record-console-mode-ko {
-  font-size: 0.56rem;
-  letter-spacing: 0.1em;
-  opacity: 0.66;
-}
-
-.record-console-mode:hover {
-  color: rgba(232, 232, 232, 0.9);
-}
-
-.record-console-mode.is-active {
-  background: rgba(255, 255, 255, 0.09);
-  color: rgba(250, 250, 250, 0.98);
-}
-
-.record-console-body {
-  --record-index-col: 12.5rem;
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  min-width: 0;
-}
-
-/* 색인은 열람판을 좁히지 않을 만큼만 가져갑니다 — 본문이 읽기 폭을 먼저 챙깁니다 */
-@media (min-width: 900px) {
-  .record-console-body {
-    grid-template-columns: var(--record-index-col) minmax(0, 1fr);
-  }
-
-  /* 索引 칸의 바탕과 칸막이는 항 수와 무관하게 칸 전체 높이로 깔립니다.
-     .record-index 자신에게 붙이면 항이 적은 인물에서 바탕이 목록 끝에서 끊겨
-     열람대 왼쪽 아래가 뚫린 것처럼 보입니다. */
-  .record-console-body::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: var(--record-index-col);
-    border-right: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(0, 0, 0, 0.4);
-    pointer-events: none;
-  }
-
-  /* 칸 바탕 위에 얹힙니다 — 절대배치 가상요소가 나중에 그려지므로 자리를 잡아 줍니다 */
-  .record-console-body > * {
-    position: relative;
-    z-index: 1;
-  }
-}
-
-@media (min-width: 1400px) {
-  .record-console-body {
-    --record-index-col: 14.5rem;
-  }
-}
-
-/* ── 索引 — 항 전체를 한눈에 잡아 두는 쪽 ─────────────────── */
-.record-index {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: 0.55rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(0, 0, 0, 0.4);
-}
-
-@media (min-width: 900px) {
-  .record-index {
-    /* 바탕과 칸막이는 .record-console-body::before 가 칸 높이만큼 깔아 둡니다 */
-    border-bottom: none;
-    background: transparent;
-    /* 항이 많아도 열람판이 밀리지 않게 색인만 따로 흘립니다 */
-    max-height: 34rem;
-    overflow-y: auto;
-  }
-}
-
-.record-index-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin: 0 0 0.5rem;
-  padding: 0 0.3rem 0.4rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  color: rgba(200, 200, 200, 0.72);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.24em;
-}
-
-.record-index-count {
-  color: rgba(140, 140, 140, 0.6);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-}
-
-/* 항 하나 = 색인표 한 줄. 번호·제목·종류·분량을 한 줄에 겹쳐 둡니다. */
-.record-index-item {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.5rem 0.55rem 0.4rem;
-  border: 1px solid transparent;
-  border-left: 2px solid rgba(255, 255, 255, 0.14);
-  background: transparent;
-  color: rgba(196, 196, 196, 0.78);
-  text-align: left;
-  cursor: pointer;
-}
-
-.record-index-item + .record-index-item {
-  margin-top: 0.15rem;
-}
-
-.record-index-item:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  border-left-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(238, 238, 238, 0.94);
-}
-
-.record-index-item.is-active {
-  border-color: rgba(255, 255, 255, 0.3);
-  border-left-color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(252, 252, 252, 0.98);
-}
-
-.record-index-item:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.6);
-  outline-offset: 1px;
-}
-
-.record-index-no {
-  color: rgba(150, 150, 150, 0.66);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-}
-
-.record-index-item.is-active .record-index-no {
-  color: rgba(240, 240, 240, 0.9);
-}
-
-.record-index-name {
-  min-width: 0;
-  overflow: hidden;
-  font-size: 0.82rem;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.record-index-mark {
-  color: rgba(140, 140, 140, 0.5);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-}
-
-/* 分量 — 본문이 얼마나 긴 항인지 미리 알려 줍니다 */
-.record-index-gauge {
-  grid-column: 1 / -1;
-  display: block;
-  height: 2px;
-  margin-top: 0.35rem;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.record-index-gauge-fill {
-  display: block;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.28);
-}
-
-.record-index-item.is-active .record-index-gauge-fill {
-  background: rgba(255, 255, 255, 0.72);
-}
-
-/* 모바일 — 색인은 가로 띠로 눕히고 분량 막대는 접습니다 */
-@media (max-width: 899px) {
-  .record-index {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 0.3rem;
-    overflow-x: auto;
-    scrollbar-width: thin;
-  }
-
-  .record-index-head {
-    display: none;
-  }
-
-  .record-index-item {
-    flex: 0 0 auto;
-    width: auto;
-    grid-template-columns: auto auto;
-    border-left-width: 2px;
-  }
-
-  .record-index-item + .record-index-item {
-    margin-top: 0;
-  }
-
-  .record-index-name {
-    max-width: 8rem;
-  }
-
-  .record-index-mark,
-  .record-index-gauge {
-    display: none;
-  }
-}
-
-/* ── 열람판 — 고른 항이 올라오는 자리 ─────────────────────────
-   색인이 옆자리를 가져가므로 본문이 쓸 폭은 화면 폭과 다릅니다.
-   안쪽 조판은 뷰포트가 아니라 이 판의 실제 폭을 보고 갈라져야 합니다. */
-.record-plate {
-  position: relative;
-  min-width: 0;
-  container: record-plate / inline-size;
-  padding: 1.1rem 1.15rem 1.3rem;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.022), transparent 30%),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 3px);
-}
-
-@media (min-width: 900px) {
-  .record-plate {
-    padding: 1.35rem 1.6rem 1.6rem;
-  }
-}
-
-/* 판 네 귀에 물리는 압지 클립 */
-.record-plate::before,
-.record-plate::after {
-  content: "";
-  position: absolute;
-  width: 0.7rem;
-  height: 0.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  pointer-events: none;
-}
-
-.record-plate::before {
-  top: 0.45rem;
-  left: 0.45rem;
-  border-right: none;
-  border-bottom: none;
-}
-
-.record-plate::after {
-  right: 0.45rem;
-  bottom: 0.45rem;
-  border-top: none;
-  border-left: none;
-}
-
-.record-console[data-mode="roll"] .record-plate {
-  max-height: 44rem;
-  overflow-y: auto;
-}
-
-.record-roll {
-  display: flex;
-  flex-direction: column;
-  gap: 1.9rem;
-}
-
-.record-roll > .record-sheet + .record-sheet {
-  padding-top: 1.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.record-sheet {
-  min-width: 0;
-  color: rgba(232, 232, 232, 0.92);
-}
-
-.record-sheet:focus {
-  outline: none;
-}
-
-/* 항을 갈아 끼울 때 종이가 밀려 들어오는 짧은 쓸림 */
-@keyframes record-sheet-in-next {
-  from {
-    opacity: 0;
-    clip-path: inset(0 0 0 12%);
-    transform: translate3d(14px, 0, 0);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes record-sheet-in-prev {
-  from {
-    opacity: 0;
-    clip-path: inset(0 12% 0 0);
-    transform: translate3d(-14px, 0, 0);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.record-sheet[data-dir="next"] {
-  animation: record-sheet-in-next 260ms cubic-bezier(0, 0.55, 0.45, 1) both;
-}
-
-.record-sheet[data-dir="prev"] {
-  animation: record-sheet-in-prev 260ms cubic-bezier(0, 0.55, 0.45, 1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .record-sheet[data-dir] {
-    animation: none;
-  }
-}
-
-/* 장 머리 슬러그 — NO.03 ─ 叙述 ───────────── ARC-XXXX-00000 */
-.record-sheet-slug {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin-bottom: 0.7rem;
-  color: rgba(150, 150, 150, 0.62);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-}
-
-.record-sheet-slug-mark {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  letter-spacing: 0.2em;
-}
-
-.record-sheet-slug-rule {
-  flex: 1 1 auto;
-  min-width: 1.5rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
-}
-
-.record-sheet-slug-serial {
-  flex: 0 0 auto;
-  color: rgba(130, 130, 130, 0.5);
-  font-size: 0.56rem;
-}
-
-/* 부모를 붙여 (0,2,0) 으로 올립니다 — shell.css 의 `main :where(h1..h4)` 가
-   (0,1,1) 로 display:inline-block; width:fit-content 를 걸고 있습니다. */
-.record-console .record-sheet-title {
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  align-items: baseline;
-  gap: 0.8rem;
-  margin: 0 0 1rem;
-  padding-bottom: 0.55rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
-}
-
-.record-sheet-title-num {
-  flex: 0 0 auto;
-  color: rgba(200, 200, 200, 0.82);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-
-.record-sheet-title-name {
-  min-width: 0;
-  color: rgba(248, 248, 248, 0.96);
-  font-size: 1.08rem;
-  font-weight: 650;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-  white-space: pre-line;
-}
-
-.record-sheet-title-kanji {
-  flex: 0 0 auto;
-  margin-left: auto;
-  color: rgba(150, 150, 150, 0.55);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-}
-
-.record-sheet-body {
-  min-width: 0;
-}
-
-/* 별지 참조 — 밑줄 링크 + ↗ 는 웹 어휘라, 목차 점선 + 편철표로 바꿨습니다.
-   본문 끝에서 점선이 오른쪽 여백까지 이어지고 그 끝에 「別紙」 표가 붙습니다. */
-.record-sheet-expand {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: rgba(186, 186, 186, 0.68);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-align: left;
-  cursor: pointer;
-}
-
-/* 목차처럼 이어지는 점선 */
-.record-sheet-expand-rule {
-  flex: 1 1 auto;
-  min-width: 1.5rem;
-  height: 0;
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.22);
-}
-
-/* 편철표 — 결재칸과 같은 괘선 상자 */
-.record-sheet-expand-mark {
-  flex: 0 0 auto;
-  padding: 0.12rem 0.4rem 0.1rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 0;
-  color: rgba(206, 206, 206, 0.72);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-}
-
-.record-sheet-expand-label {
-  flex: 0 0 auto;
-}
-
-/* 별지로 넘어간 분량 */
-.record-sheet-expand-note {
-  flex: 0 0 auto;
-  color: rgba(150, 150, 150, 0.6);
-  font-size: 0.64rem;
-  letter-spacing: 0.12em;
-}
-
-/* ── 別紙 — 전문 열람 창 ─────────────────────────────────────────
-   열람판과 같은 조판(슬러그·第N項·괘선·발판)을 쓰되, 판이 커진 것뿐입니다.
-   창을 닫지 않고도 항을 넘길 수 있고, 어디까지 읽었는지 눈금으로 보입니다. */
-.record-annex {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 58rem;
-  height: min(88vh, 52rem);
-  background: #000000;
-}
-
-.record-annex-head {
-  flex: 0 0 auto;
-  padding: 1rem 1.3rem 0.85rem;
-  border-bottom: 3px double rgba(255, 255, 255, 0.24);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent);
-}
-
-.record-annex-slug {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  color: rgba(150, 150, 150, 0.62);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-}
-
-.record-annex-slug-mark {
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  letter-spacing: 0.2em;
-}
-
-.record-annex-slug-rule {
-  flex: 1 1 auto;
-  min-width: 1.5rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
-}
-
-.record-annex-slug-name {
-  flex: 0 0 auto;
-  color: rgba(180, 180, 180, 0.7);
-}
-
-.record-annex-title-row {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 0.7rem;
-}
-
-/* 부모를 붙여 (0,2,0) 으로 올립니다 — main :where(h1..h4) 대응 */
-.record-annex .record-annex-title {
-  display: flex;
-  min-width: 0;
-  flex: 1 1 auto;
-  align-items: baseline;
-  gap: 0.85rem;
-  margin: 0;
-}
-
-.record-annex-title-num {
-  flex: 0 0 auto;
-  color: rgba(200, 200, 200, 0.82);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.86rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-
-.record-annex-title-name {
-  min-width: 0;
-  color: rgba(250, 250, 250, 0.97);
-  font-size: 1.4rem;
-  font-weight: 650;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  white-space: pre-line;
-}
-
-.record-annex-close {
-  flex: 0 0 auto;
-  padding: 0.35rem 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: transparent;
-  color: rgba(206, 206, 206, 0.8);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  cursor: pointer;
-}
-
-.record-annex-close-ko {
-  margin-left: 0.35rem;
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  opacity: 0.6;
-}
-
-.record-annex-close:hover,
-.record-annex-close:focus-visible {
-  border-color: rgba(255, 255, 255, 0.55);
-  color: rgba(250, 250, 250, 0.97);
-  outline: none;
-}
-
-.record-annex-body {
-  min-height: 0;
-  flex: 1 1 auto;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 24%),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px);
-}
-
-.record-annex-body:focus {
-  outline: none;
-}
-
-.record-annex-content {
-  padding: 1.8rem 1.6rem 2.2rem;
-}
-
-@media (min-width: 768px) {
-  .record-annex-content {
-    padding: 2.4rem 3rem 3rem;
-  }
-}
-
-.record-annex-prose {
-  margin: 0;
-  /* 별지는 전문을 펼쳐 읽는 자리라 읽기 폭을 따로 묶지 않습니다 —
-     42rem 로 잘라 두니 종이 오른쪽에 196px 가 비었습니다 */
-  max-width: none;
-  color: rgba(226, 226, 226, 0.92);
-  font-size: 0.98rem;
-  line-height: 1.95;
-  white-space: pre-line;
-  text-indent: 1em;
-}
-
-.record-annex-prose + .record-annex-prose {
-  margin-top: 1rem;
-}
-
-/* 문서 끝 표시 — 종이 오른쪽 끝에 「以上」.
-   본문과 같은 폭이어야 오른쪽 정렬이 진짜 오른쪽 끝에 붙습니다. */
-.record-annex-end {
-  margin: 2.2rem 0 0;
-  max-width: none;
-  color: rgba(140, 140, 140, 0.5);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.3em;
-  text-align: right;
-}
-
-.record-annex-foot {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.9rem;
-  padding: 0.6rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.45);
-}
-
-.record-annex-step {
-  flex: 0 0 auto;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: transparent;
-  color: rgba(206, 206, 206, 0.8);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  cursor: pointer;
-}
-
-.record-annex-step:hover:not(:disabled) {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: rgba(250, 250, 250, 0.96);
-}
-
-.record-annex-step:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.record-annex-pos {
-  display: flex;
-  min-width: 0;
-  flex: 1 1 auto;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.record-annex-pos-text {
-  color: rgba(190, 190, 190, 0.75);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  white-space: nowrap;
-}
-
-/* 판독 눈금 — 이 항을 어디까지 읽었는지 */
-.record-annex-gauge {
-  display: block;
-  width: min(100%, 14rem);
-  height: 2px;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.record-annex-gauge-fill {
-  display: block;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.68);
-  transition: width 120ms linear;
-}
-
-@media (max-width: 560px) {
-  .record-annex {
-    height: min(92vh, 46rem);
-  }
-
-  .record-annex-title-name {
-    font-size: 1.15rem;
-  }
-
-  .record-annex-prose {
-    font-size: 0.92rem;
-    line-height: 1.85;
-  }
-}
-
-.record-sheet-expand:hover,
-.record-sheet-expand:focus-visible {
-  color: rgba(246, 246, 246, 0.96);
-  outline: none;
-}
-
-/* 짚으면 편철표 괘선이 진해지고 점선이 실선으로 이어집니다.
-   (칸을 흰색으로 채우면 버튼 어휘가 되고, overrides.css 의
-    「본문 span 에는 배경 금지」 규칙에도 걸립니다) */
-.record-sheet-expand:hover .record-sheet-expand-mark,
-.record-sheet-expand:focus-visible .record-sheet-expand-mark {
-  border-color: rgba(255, 255, 255, 0.72);
-  color: rgba(248, 248, 248, 0.96);
-}
-
-.record-sheet-expand:hover .record-sheet-expand-rule,
-.record-sheet-expand:focus-visible .record-sheet-expand-rule {
-  border-bottom-style: solid;
-  border-bottom-color: rgba(255, 255, 255, 0.4);
-}
-
-/* ── 발 — 항 사이 이동 ──────────────────────────────────────── */
-.record-console-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.9rem;
-  padding: 0.55rem 0.85rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.record-console-step {
-  flex: 0 0 auto;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: transparent;
-  color: rgba(206, 206, 206, 0.8);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  cursor: pointer;
-}
-
-.record-console-step:hover:not(:disabled) {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(250, 250, 250, 0.96);
-}
-
-.record-console-step:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.record-console-pos {
-  display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.record-console-pos-text {
-  color: rgba(190, 190, 190, 0.75);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  white-space: nowrap;
-}
-
-/* 지금 몇 번째 항을 보고 있는지 — 필름 이송 눈금처럼 */
-.record-console-pos-rail {
-  position: relative;
-  display: block;
-  width: min(100%, 12rem);
-  height: 1px;
-  background: rgba(255, 255, 255, 0.16);
-}
-
-/* 부모를 붙여 (0,2,0) 으로 올립니다 — span 에 position:relative 를 거는
-   (0,1,1) 규칙이 있어 그냥 두면 inline 으로 남아 폭·높이가 먹지 않습니다. */
-.record-console-pos-rail .record-console-pos-mark {
-  position: absolute;
-  top: 50%;
-  display: block;
-  width: 0.75rem;
-  height: 3px;
-  margin-left: -0.375rem;
-  background: rgba(255, 255, 255, 0.8);
-  transform: translateY(-50%);
-  transition: left 200ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* 身上 항 — 항목표와 인물 사진을 나란히. 신분 서류의 첫 장 형태입니다. */
-.dossier-identity {
-  display: grid;
-  gap: 1.1rem;
-  align-items: start;
-  min-width: 0;
-}
-
-/* 열람판이 실제로 넓을 때만 항목표와 사진을 나란히 놓습니다.
-   (뷰포트 기준으로 갈랐더니 좁은 판에서 항목표가 한 글자씩 접혔습니다) */
-@container record-plate (min-width: 30rem) {
-  .dossier-identity {
-    grid-template-columns: minmax(0, 1fr) 11.5rem;
-    gap: 1.4rem;
-  }
-}
-
-.dossier-figure {
-  margin: 0;
-  min-width: 0;
-  /* 1단으로 떨어졌을 때 사진이 전폭을 먹고 문서를 압도하지 않도록 묶어둡니다 */
-  max-width: 14rem;
-}
-
-/* 사진칸 — 증명사진처럼 좁고 세로로 깁니다 */
-.dossier-identity .dossier-figure-frame {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  aspect-ratio: 3 / 4;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 0;
-  background: rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-}
-
-.dossier-identity .dossier-figure-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-}
-
-.dossier-figure-caption {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-top: 0.45rem;
-  color: rgba(150, 150, 150, 0.66);
-  font-family: "Zen Old Mincho", "Yu Mincho", serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-}
-
-.dossier-figure-credit {
-  color: rgba(130, 130, 130, 0.55);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.56rem;
-  letter-spacing: 0.06em;
-}
-
-/* 괘선 항목표 — 身上 */
-.dossier-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 0.85rem;
-}
-
-.dossier-table th,
-.dossier-table td {
-  padding: 0.5rem 0.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  text-align: left;
-  vertical-align: top;
-}
-
-/* 라벨 칸은 내용만큼만 — 값 칸이 한 글자씩 접히지 않게 폭을 양보합니다 */
-.dossier-table th {
-  width: 1%;
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(165, 165, 165, 0.78);
-  font-size: 0.74rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-}
-
-.dossier-table td {
-  color: rgba(240, 240, 240, 0.94);
-  line-height: 1.5;
-  word-break: break-word;
-}
-
-.record-sheet-body img,
-.record-sheet-body picture,
-.record-sheet-body video,
-.record-sheet-body canvas,
-.record-sheet-body .thumbnail-image,
-.record-sheet-body [class*="thumbnail"] {
-  display: block;
-  max-width: 100%;
-  width: auto !important;
-  max-height: 16rem;
-  height: auto !important;
-  object-fit: contain;
-  object-position: center top;
-  margin: 0.5rem 0;
-}
-
-/* 열람판 본문 — 한 줄이 너무 길어지지 않게 가독 폭을 묶어 둡니다 */
-.record-prose {
-  margin: 0;
-  max-width: 46rem;
-  color: rgba(220, 220, 220, 0.9);
-  font-size: 0.92rem;
-  line-height: 1.8;
-  white-space: pre-line;
-  text-indent: 1em;
-}
-
-.record-prose + .record-prose {
-  margin-top: 0.8rem;
-}
-
-.record-prose img {
-  max-height: 16rem;
-}
-
 .case-setting-list {
   display: grid;
   gap: 0.75rem;
@@ -5183,7 +855,7 @@ html body main .character-index-panel .archive-character-card:hover {
 .case-empty-note,
 .case-side-record,
 .case-evidence-preview {
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(111, 143, 215, 0.24);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 22%), rgba(0, 0, 0, 0.46);
   box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.72);
@@ -5199,7 +871,7 @@ html body main .character-index-panel .archive-character-card:hover {
 .case-setting-note span:not(.archive-submit-button) {
   display: block;
   margin-bottom: 0.45rem;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(111, 143, 215, 0.72);
   font-size: 0.66rem;
   letter-spacing: 0.16em;
 }
@@ -5227,7 +899,7 @@ html body main .character-index-panel .archive-character-card:hover {
 }
 
 .case-evidence-preview:hover {
-  border-color: rgba(255, 255, 255, 0.82);
+  border-color: rgba(111, 143, 215, 0.82);
   filter: contrast(1.08);
 }
 
@@ -5235,7 +907,7 @@ html body main .character-index-panel .archive-character-card:hover {
   position: absolute;
   left: 0.85rem;
   top: 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(111, 143, 215, 0.52);
   background: rgba(0, 0, 0, 0.62);
   padding: 0.32rem 0.48rem;
   color: rgba(200, 212, 232, 0.72);
@@ -5256,12 +928,14 @@ html body main .character-index-panel .archive-character-card:hover {
   min-width: 4.4rem;
   max-width: calc(100% - 1.1rem);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  background: rgba(8, 8, 8, 0.88);
+  border: 1px solid rgba(111, 143, 215, 0.42);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.78), rgba(35, 0, 6, 0.58)), rgba(0, 0, 0, 0.68);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.65),
-    0 0 8px rgba(0, 0, 0, 0.75);
-  color: #f0f0f0;
+    0 0 10px rgba(0, 0, 0, 0.82),
+    0 0 5px rgba(111, 143, 215, 0.16);
+  color: #f7eeee;
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.01em;
@@ -5269,7 +943,10 @@ html body main .character-index-panel .archive-character-card:hover {
   padding: 0.34rem 0.54rem;
   text-align: center;
   text-overflow: ellipsis;
-  text-shadow: 0 1px 2px #000;
+  text-shadow:
+    0 1px 3px #000,
+    0 0 7px #000,
+    0 0 6px rgba(255, 255, 255, 0.6);
   white-space: nowrap;
   pointer-events: none;
 }
@@ -5342,12 +1019,12 @@ label {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+  border-bottom: 1px solid rgba(111, 143, 215, 0.34);
   padding-bottom: 0.9rem;
 }
 
 .world-index-note {
-  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  border-left: 1px solid rgba(111, 143, 215, 0.22);
   padding-left: 0.85rem;
 }
 
@@ -5380,9 +1057,10 @@ label {
   flex-direction: column;
   margin-top: 0.55rem;
   overflow: visible;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(111, 143, 215, 0.4);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 14%), rgba(3, 4, 10, 0.92);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 14%),
+    rgba(3, 4, 10, 0.92);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.84),
     inset 0 0 30px rgba(0, 0, 0, 0.88),
@@ -5406,11 +1084,11 @@ label {
   align-items: center;
   justify-content: center;
   padding: 0.2rem 0.42rem 0.16rem;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(111, 143, 215, 0.4);
   border-bottom: none;
-  border-radius: var(--app-radius-md) var(--app-radius-md) 0 0;
-  background: linear-gradient(180deg, rgba(28, 28, 28, 0.98), rgba(8, 8, 8, 0.98));
-  color: rgba(200, 200, 200, 0.82);
+  border-radius: 0.28rem 0.28rem 0 0;
+  background: linear-gradient(180deg, rgba(18, 26, 50, 0.98), rgba(4, 5, 12, 0.98));
+  color: rgba(168, 184, 220, 0.82);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
   font-size: 0.54rem;
   font-weight: 500;
@@ -5428,28 +1106,28 @@ label {
   position: absolute;
   inset: 0.32rem;
   z-index: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(111, 143, 215, 0.1);
   pointer-events: none;
 }
 
 .world-file-card:hover {
-  border-color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(111, 143, 215, 0.85);
   transform: translateY(-2px);
 }
 
 .world-file-card.is-active {
-  border-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(111, 143, 215, 0.95);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.9),
     inset 0 0 36px rgba(0, 0, 0, 0.88),
-    0 0 26px rgba(255, 255, 255, 0.12),
+    0 0 26px rgba(111, 143, 215, 0.12),
     0 24px 52px rgba(0, 0, 0, 0.7);
 }
 
 .world-file-card.is-active .world-file-card-tab {
-  border-color: rgba(255, 255, 255, 0.85);
-  background: linear-gradient(180deg, rgba(36, 36, 36, 0.98), rgba(10, 10, 10, 0.98));
-  color: rgba(236, 236, 236, 0.95);
+  border-color: rgba(111, 143, 215, 0.85);
+  background: linear-gradient(180deg, rgba(22, 32, 62, 0.98), rgba(6, 8, 16, 0.98));
+  color: rgba(214, 226, 248, 0.95);
 }
 
 /* 카드 헤더: 파일 코드 + 분류 스탬프 */
@@ -5461,14 +1139,14 @@ label {
   justify-content: space-between;
   gap: 0.6rem;
   padding: 0.72rem 0.9rem 0.7rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.26);
+  border-bottom: 1px dashed rgba(111, 143, 215, 0.26);
   background:
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 5px),
     rgba(2, 3, 8, 0.7);
 }
 
 .world-file-card-code {
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(111, 143, 215, 0.78);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
   font-size: 0.62rem;
   letter-spacing: 0.2em;
@@ -5477,7 +1155,7 @@ label {
 
 .world-file-card-stamp {
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(111, 143, 215, 0.4);
   background: rgba(0, 0, 0, 0.55);
   padding: 0.2rem 0.42rem;
   color: rgba(170, 184, 214, 0.85);
@@ -5488,7 +1166,7 @@ label {
 }
 
 .world-file-card[data-state="classified"] .world-file-card-stamp {
-  border-color: rgba(255, 255, 255, 0.38);
+  border-color: rgba(111, 143, 215, 0.38);
   color: rgba(168, 184, 214, 0.82);
 }
 
@@ -5521,7 +1199,7 @@ label {
 
 .world-file-card-title {
   margin: 0;
-  color: rgba(238, 238, 238, 0.96);
+  color: rgba(236, 240, 245, 0.96);
   font-size: 1.32rem;
   font-weight: 900;
   letter-spacing: -0.04em;
@@ -5552,7 +1230,7 @@ label {
   align-items: center;
   justify-content: space-between;
   padding: 0.6rem 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(111, 143, 215, 0.18);
   background: rgba(2, 3, 8, 0.72);
   color: rgba(168, 176, 188, 0.6);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
@@ -5577,10 +1255,10 @@ label {
   overflow: hidden;
   min-height: 13rem;
   padding: clamp(1.4rem, 3vw, 2.1rem) clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 2.6vw, 1.8rem);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  border-bottom: 1px solid rgba(111, 143, 215, 0.42);
   background:
-    linear-gradient(90deg, rgba(18, 18, 18, 0.75), transparent 60%),
-    linear-gradient(180deg, #101010 0%, #050505 100%);
+    linear-gradient(90deg, rgba(10, 14, 28, 0.6), transparent 60%),
+    linear-gradient(180deg, rgba(6, 8, 16, 0.96), rgba(0, 0, 0, 0.98));
 }
 
 .world-file-doc-grid {
@@ -5589,10 +1267,10 @@ label {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(111, 143, 215, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(111, 143, 215, 0.065) 1px, transparent 1px);
   background-size: 2.6rem 2.6rem;
-  opacity: 0.18;
+  opacity: 0.2;
   mask-image: linear-gradient(90deg, #000 0 55%, transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, #000 0 55%, transparent 100%);
 }
@@ -5604,7 +1282,7 @@ label {
   z-index: 1;
   max-width: calc(100% - 1.8rem);
   margin: 0;
-  color: rgba(255, 255, 255, 0.05);
+  color: rgba(168, 184, 220, 0.06);
   font-size: clamp(3.4rem, 9vw, 7rem);
   line-height: 1;
   text-align: right;
@@ -5638,24 +1316,24 @@ label {
 }
 
 .world-file-tag {
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(111, 143, 215, 0.3);
+  background: rgba(0, 0, 0, 0.46);
   padding: 0.36rem 0.55rem;
-  color: rgba(200, 200, 200, 0.82);
+  color: rgba(206, 214, 228, 0.78);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
   font-size: 0.66rem;
   letter-spacing: 0.1em;
 }
 
 .world-file-tag[data-state="classified"] {
-  border-color: rgba(255, 255, 255, 0.38);
-  color: rgba(210, 210, 210, 0.88);
+  border-color: rgba(111, 143, 215, 0.38);
+  color: rgba(168, 184, 214, 0.82);
 }
 
 .world-file-tag[data-state="decrypted"],
 .world-file-tag[data-state="open"] {
-  border-color: rgba(180, 180, 180, 0.45);
-  color: rgba(220, 220, 220, 0.9);
+  border-color: rgba(120, 190, 150, 0.45);
+  color: rgba(168, 214, 184, 0.88);
 }
 
 .world-file-doc-body {
@@ -5703,9 +1381,7 @@ label {
   line-height: inherit;
 }
 
-.world-file-doc-body
-  .case-file-intro-text
-  .glitch-zone-mark:not(.glitch-zone-has-custom-font-size):not([style*="--glitch-font-size"]) {
+.world-file-doc-body .case-file-intro-text .glitch-zone-mark {
   font-size: inherit;
   line-height: inherit;
 }
@@ -5719,11 +1395,11 @@ label {
   display: grid;
   gap: 0.85rem;
   padding: 1rem 1.1rem 1.1rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(111, 143, 215, 0.28);
   background:
     repeating-linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.045) 0 0.6rem,
+      rgba(111, 143, 215, 0.045) 0 0.6rem,
       transparent 0.6rem 1.2rem
     ),
     rgba(0, 0, 0, 0.46);
@@ -5736,7 +1412,7 @@ label {
   justify-content: space-between;
   gap: 0.75rem;
   padding-bottom: 0.65rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.22);
+  border-bottom: 1px dashed rgba(111, 143, 215, 0.22);
 }
 
 .world-file-lock-head .case-file-intro-label {
@@ -5745,7 +1421,7 @@ label {
 
 .world-file-lock-stamp {
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(111, 143, 215, 0.42);
   background: rgba(0, 0, 0, 0.55);
   padding: 0.22rem 0.48rem;
   color: rgba(170, 192, 232, 0.88);
@@ -5793,7 +1469,7 @@ label {
   flex-direction: column;
   gap: 0.95rem;
   padding: 1.1rem;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(111, 143, 215, 0.24);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.022), transparent 18%), rgba(0, 0, 0, 0.42);
   box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.68);
@@ -5804,11 +1480,11 @@ label {
   flex-direction: column;
   gap: 0.4rem;
   padding-bottom: 0.85rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.22);
+  border-bottom: 1px dashed rgba(111, 143, 215, 0.22);
 }
 
 .world-file-record-code {
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(111, 143, 215, 0.68);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
@@ -5825,7 +1501,7 @@ label {
 
 .world-file-record-name {
   margin: 0;
-  color: rgba(238, 238, 238, 0.96);
+  color: rgba(236, 240, 245, 0.96);
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -0.04em;
@@ -5833,7 +1509,7 @@ label {
 }
 
 .world-file-record-id {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(111, 143, 215, 0.72);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
   font-size: 0.62rem;
   letter-spacing: 0.2em;
@@ -5891,32 +1567,26 @@ label {
   }
 }
 
-/* 관계 기록 — 견출지 「関係」 를 펼쳤을 때의 종이 내용입니다.
-   종이(.case-tab-panel)가 이미 테두리를 그리므로 여기서 또 상자를 그리지 않습니다 —
-   그리면 종이 안에 상자, 그 사이에 빈 띠가 생깁니다. */
+/* 관계 기록 — world-file 도시어 스타일 */
 .relation-map-panel {
   display: flex;
   flex-direction: column;
   gap: 1.15rem;
-  min-width: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  box-shadow: none;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid rgba(111, 143, 215, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), transparent 18%), rgba(0, 0, 0, 0.42);
+  box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.68);
 }
 
 .relation-map-head {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 0.6rem 0.75rem;
+  gap: 0.75rem;
   padding-bottom: 0.85rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.22);
-}
-
-.relation-map-head > div {
-  min-width: 0;
+  border-bottom: 1px dashed rgba(111, 143, 215, 0.22);
 }
 
 .relation-map-head .case-file-intro-label {
@@ -5925,109 +1595,117 @@ label {
   letter-spacing: 0.24em;
 }
 
-.relation-map-head .world-file-tag {
-  flex: 0 0 auto;
-  /* 줄이 넘어가도 오른쪽에 붙어 있게 — space-between 은 한 줄일 때만 듣습니다 */
-  margin-left: auto;
-  border-radius: var(--app-radius-sm);
-  white-space: nowrap;
-}
-
 .relation-map-subtitle {
-  margin: 0.3rem 0 0;
-  color: rgba(200, 200, 200, 0.72);
+  margin: 0.35rem 0 0;
+  color: rgba(214, 222, 238, 0.72);
   font-size: 0.88rem;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .relation-link-list {
   display: grid;
-  gap: 0.55rem;
-  /* min(100%, …) 로 좁은 화면에서 카드가 컨테이너를 밀고 나가지 않게 합니다 */
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  align-items: stretch;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  align-items: start;
 }
 
 .relation-link-file {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  /* 그리드 한 줄 안에서 카드 높이를 맞추고, 링크 버튼은 항상 바닥에 붙입니다 */
-  height: 100%;
-  padding: 0.55rem 0.7rem 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: var(--app-radius-sm);
-  background: rgba(0, 0, 0, 0.4);
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem 0.65rem;
+  border: 1px solid rgba(111, 143, 215, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), transparent 18%), rgba(0, 0, 0, 0.46);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.7);
   transition:
     border-color 160ms ease,
-    background-color 160ms ease;
+    box-shadow 160ms ease;
 }
 
 .relation-link-file:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(14, 14, 14, 0.72);
+  border-color: rgba(111, 143, 215, 0.42);
+  box-shadow:
+    inset 0 0 24px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(111, 143, 215, 0.08);
 }
 
-/* 이름·관계표·번호가 한 줄에 앉습니다 — 견출지 안이라 카드 머리에 또 제목을 쌓지 않습니다 */
 .relation-link-file-head {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.4rem 0.6rem;
-  min-width: 0;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dashed rgba(111, 143, 215, 0.18);
 }
 
-.relation-link-file-code {
-  flex: 0 0 auto;
-  color: rgba(255, 255, 255, 0.4);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.56rem;
-  letter-spacing: 0.16em;
-  white-space: nowrap;
-}
-
-.relation-link-file-name-row {
+.relation-link-file-meta {
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.2rem 0.4rem;
-  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
-.relation-link-file-name {
-  margin: 0;
-  min-width: 0;
-  color: rgba(238, 238, 238, 0.96);
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-}
-
-.relation-link-file-badge {
+.relation-link-file-tab {
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  border-radius: var(--app-radius-sm);
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(205, 205, 205, 0.85);
+  justify-content: center;
+  padding: 0.14rem 0.36rem;
+  border: 1px solid rgba(111, 143, 215, 0.38);
+  border-radius: 0.2rem;
+  background: rgba(7, 10, 20, 0.92);
+  color: rgba(168, 184, 220, 0.82);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.52rem;
-  letter-spacing: 0.12em;
+  font-size: 0.54rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   line-height: 1;
-  padding: 0.2rem 0.34rem;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
+.relation-link-file-code {
+  color: rgba(111, 143, 215, 0.68);
+  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.relation-link-file-name-row {
+  display: inline-flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  max-width: 100%;
+}
+
+.relation-link-file-name {
+  margin: 0;
+  color: rgba(236, 240, 245, 0.96);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.relation-link-file-badge {
+  border: 1px solid rgba(111, 143, 215, 0.32);
+  background: rgba(111, 143, 215, 0.1);
+  color: rgba(200, 212, 232, 0.88);
+  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  padding: 0.28rem 0.45rem;
+  text-transform: uppercase;
+  transform: translateY(-0.08em);
+}
+
 .relation-link-file-body {
-  /* 본문이 있는 카드는 남는 높이를 본문이 먹고, 없는 카드는 버튼이 auto 마진으로 내려갑니다 */
-  flex: 1 1 auto;
-  color: rgba(205, 205, 205, 0.86);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  color: rgba(214, 222, 238, 0.86);
+  font-size: 0.88rem;
+  line-height: 1.55;
   white-space: pre-line;
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -6038,40 +1716,38 @@ label {
   line-height: inherit;
 }
 
-/* 링크는 칸을 가로지르는 띠가 아니라 이름 아래 붙는 작은 표입니다 */
 .relation-link-file-action {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  align-self: flex-start;
-  gap: 0.3rem;
-  max-width: 100%;
-  margin: auto 0 0;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: var(--app-radius-sm);
-  background: rgba(0, 0, 0, 0.5);
-  color: rgba(210, 210, 210, 0.86);
-  font-size: 0.64rem;
-  line-height: 1.2;
-  letter-spacing: 0.04em;
-  padding: 0.28rem 0.45rem;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0.15rem 0 0;
+  border: 1px solid rgba(111, 143, 215, 0.28);
+  background: rgba(0, 0, 0, 0.42);
+  color: rgba(226, 236, 255, 0.9);
+  font-size: 0.72rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  padding: 0.48rem 0.65rem;
   text-align: left;
+  text-transform: uppercase;
   transition:
     border-color 160ms ease,
-    background-color 160ms ease,
-    color 160ms ease;
+    background-color 160ms ease;
 }
 
 .relation-link-file-action:hover,
 .relation-link-file-action:focus-visible {
-  border-color: rgba(180, 180, 180, 0.45);
-  background: rgba(20, 20, 20, 0.95);
-  color: #eeeeee;
+  border-color: rgba(140, 155, 180, 0.45);
+  background: rgba(18, 18, 18, 0.95);
+  color: #eceff4;
 }
 
 .relation-link-file-action-label {
+  flex: 1 1 auto;
   min-width: 0;
   text-align: left;
-  overflow-wrap: anywhere;
 }
 
 .relation-link-file-action-icon {
@@ -6079,305 +1755,7 @@ label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
-  line-height: 1;
-}
-
-@media (max-width: 640px) {
-  .relation-link-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ================================================================
-   Home Entrance — 사이트 본문과 같은 중립 니어블랙 입구.
-   ================================================================ */
-
-.home-stage {
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  /* 히어로 아래에 진입 카드와 최근 목록이 붙으므로 카드 전체 높이는 낮추고,
-     대신 히어로(.home-stage-main)가 자기 높이를 확보하게 했습니다 */
-  min-height: min(64vh, 38rem);
-  padding: 1.75rem 1.5rem 2.5rem;
-  overflow: hidden;
-  border: 1px solid var(--archive-line, rgba(255, 255, 255, 0.22));
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 28%),
-    linear-gradient(180deg, #050505 0%, #000000 55%, #000000 100%);
-}
-
-.home-stage-index {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: rgba(180, 180, 180, 0.7);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.64rem;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.home-stage-index-dot {
-  width: 0.28rem;
-  height: 0.28rem;
-  border-radius: var(--app-radius-sm);
-  background: rgba(238, 238, 238, 0.55);
-}
-
-.home-stage-index-num {
-  margin-left: auto;
-  color: rgba(245, 245, 245, 0.88);
-}
-
-.home-stage-main {
-  display: grid;
-  flex: 1;
-  gap: 2.75rem;
-  align-items: end;
-  min-height: min(38vh, 22rem);
-}
-
-@media (min-width: 900px) {
-  .home-stage-main {
-    grid-template-columns: minmax(0, 1.35fr) minmax(13rem, 0.75fr);
-    gap: clamp(2rem, 5vw, 4.5rem);
-    align-items: end;
-  }
-}
-
-.home-stage-brand {
-  min-width: 0;
-  padding-bottom: 0.15rem;
-}
-
-.home-stage-kicker {
-  margin: 0;
-  color: rgba(180, 180, 180, 0.78);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-}
-
-.home-stage-mark {
-  display: block;
-  margin: 1.1rem 0 0;
-  color: rgba(245, 245, 245, 0.96);
-  font-family: var(--font-yuji-mai), "Yuji Mai", "Yu Mincho", serif;
-  font-size: clamp(4.2rem, 15vw, 8rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 0.88;
-}
-
-.home-stage-aside {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-  min-width: 0;
-  max-width: 22rem;
-}
-
-@media (min-width: 900px) {
-  .home-stage-aside {
-    justify-self: end;
-    width: 100%;
-    padding-bottom: 0.35rem;
-  }
-}
-
-.home-stage-body {
-  margin: 0;
-  color: rgba(210, 210, 210, 0.72);
-  font-size: 0.92rem;
-  line-height: 1.9;
-  letter-spacing: 0.01em;
-  white-space: pre-line;
-}
-
-.home-stage-notice {
-  padding: 1.1rem 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.home-stage-notice-label {
-  margin: 0;
-  color: rgba(180, 180, 180, 0.78);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.home-stage-notice-body {
-  margin: 0.65rem 0 0;
-  color: rgba(232, 232, 232, 0.82);
-  font-size: 0.86rem;
-  line-height: 1.75;
-  white-space: pre-line;
-}
-
-/* 홈 하단 블록 — 섹션 진입 카드(Index) / 최근 업데이트(Recent) 공통 껍데기 */
-.home-stage-block {
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-.home-stage-block-label {
-  margin: 0 0 1rem;
-  color: rgba(180, 180, 180, 0.72);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.home-stage-nav {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-  gap: 0.75rem;
-}
-
-.home-stage-nav-card {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  width: 100%;
-  padding: 0.9rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: var(--app-radius-md);
-  background: rgba(255, 255, 255, 0.015);
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition:
-    border-color 180ms ease,
-    background-color 180ms ease,
-    transform 180ms ease;
-}
-
-.home-stage-nav-card:hover,
-.home-stage-nav-card:focus-visible {
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-1px);
-}
-
-.home-stage-nav-num {
-  color: rgba(200, 200, 200, 0.5);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-}
-
-.home-stage-nav-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-}
-
-.home-stage-nav-kicker {
-  color: rgba(170, 170, 170, 0.6);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.56rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.home-stage-nav-label {
-  color: rgba(240, 240, 240, 0.94);
-  font-size: 1rem;
-  letter-spacing: 0.02em;
-}
-
-.home-stage-nav-count {
-  display: flex;
-  align-items: baseline;
-  gap: 0.15rem;
-  margin-left: auto;
-  color: rgba(238, 238, 238, 0.85);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
+  width: 1rem;
   font-size: 0.95rem;
-}
-
-.home-stage-nav-unit {
-  color: rgba(170, 170, 170, 0.55);
-  font-size: 0.58rem;
-}
-
-.home-stage-updates {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.home-stage-update {
-  display: grid;
-  grid-template-columns: 4.2rem 7rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.7rem 0.85rem;
-  border: 1px solid transparent;
-  border-radius: var(--app-radius-sm);
-  background: transparent;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition:
-    border-color 180ms ease,
-    background-color 180ms ease;
-}
-
-.home-stage-update:hover,
-.home-stage-update:focus-visible {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.home-stage-update-kind {
-  color: rgba(180, 180, 180, 0.7);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.56rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.home-stage-update-meta {
-  overflow: hidden;
-  color: rgba(180, 180, 180, 0.62);
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.home-stage-update-title {
-  overflow: hidden;
-  color: rgba(232, 232, 232, 0.86);
-  font-size: 0.86rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* 좁은 화면에서는 날짜/작성자를 제목 위로 접어 올립니다 */
-@media (max-width: 640px) {
-  .home-stage-update {
-    grid-template-columns: 4.2rem minmax(0, 1fr);
-    row-gap: 0.25rem;
-  }
-
-  .home-stage-update-meta,
-  .home-stage-update-title {
-    grid-column: 2;
-  }
+  line-height: 1;
 }

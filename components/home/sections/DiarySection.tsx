@@ -28,14 +28,16 @@ export function DiarySection({ entries, className }: DiarySectionProps) {
           entries.map((entry) => (
             <article key={entry.id} className="archive-panel p-5">
               <p className="archive-kicker">{entry.date}</p>
-              <h4 className="mt-2 text-xl font-semibold text-white/90">{entry.title}</h4>
-              <p className="mt-4 text-sm leading-8 whitespace-pre-line text-white/75">
+              <h4 className="mt-2 text-xl font-semibold text-emerald-50">{entry.title}</h4>
+              <p className="mt-4 text-sm leading-8 whitespace-pre-line text-emerald-50/78">
                 {entry.body}
               </p>
             </article>
           ))
         ) : (
-          <p className="archive-panel p-5 text-sm text-white/60">아직 저장된 일기가 없어요.</p>
+          <p className="archive-panel p-5 text-sm text-emerald-100/60">
+            아직 저장된 일기가 없어요.
+          </p>
         )}
       </ArchiveMotion>
     </ArchiveMotion>

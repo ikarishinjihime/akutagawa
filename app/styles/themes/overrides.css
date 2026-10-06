@@ -1,30 +1,30 @@
 /* themes/overrides.css — 테마 보정·레이아웃·모션. Surface tone pass가 최종 면/배경 톤을 덮어씁니다. */
 [class*="text-emerald-50"] {
-  color: rgba(238, 238, 238, var(--tw-text-opacity, 1)) !important;
+  color: rgba(236, 240, 245, var(--tw-text-opacity, 1)) !important;
 }
 
 [class*="text-emerald-100"] {
-  color: rgba(180, 180, 180, var(--tw-text-opacity, 1)) !important;
+  color: rgba(200, 205, 212, var(--tw-text-opacity, 1)) !important;
 }
 
 [class*="text-emerald-200"] {
-  color: rgba(255, 255, 255, var(--tw-text-opacity, 1)) !important;
+  color: rgba(111, 143, 215, var(--tw-text-opacity, 1)) !important;
 }
 
 [class*="text-emerald-950"] {
-  color: #e8e8e8 !important;
+  color: #f4eecf !important;
 }
 
 [class*="bg-emerald-100"] {
-  background-color: rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(244, 238, 207, 0.08) !important;
 }
 
 [class*="bg-emerald-200"] {
-  background: linear-gradient(180deg, #0d0d0d, #000000) !important;
-  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  background: linear-gradient(180deg, #101a32, #03050c) !important;
+  border: 1px solid rgba(111, 143, 215, 0.45) !important;
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.55),
-    0 0 12px rgba(200, 200, 200, 0.08) !important;
+    0 0 12px rgba(53, 95, 189, 0.08) !important;
 }
 
 [class*="bg-emerald-950"] {
@@ -49,7 +49,7 @@
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  border-top: 1px solid rgba(111, 143, 215, 0.24);
   background: var(--surface-deep);
   padding: 0.85rem 1rem;
   color: #f4e6dc;
@@ -60,7 +60,7 @@
 }
 
 .world-profile-banner span:last-child {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(111, 143, 215, 0.72);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
@@ -256,24 +256,10 @@
   }
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   .theme-raw — 테마 일괄 규칙 탈출구
-
-   이 테마에는 main 아래 모든 텍스트/컨트롤을 한꺼번에 덮는 규칙이 몇 개 있습니다
-   (아래 performance mode, text cleanup, 그리고 components/shell.css 의
-   position/display/border-radius 일괄 규칙). 이것들은 특정도가 높아서
-   새 컴포넌트에서 position·display·background·animation 이 안 먹는 원인이 됩니다.
-
-   해결: 요소나 조상에 class="theme-raw" 를 주면 그 6개 규칙에서 전부 빠집니다.
-   예외는 :not(:where(...)) 로 달아 두어 특정도가 0 이므로,
-   기존 화면의 캐스케이드는 바뀌지 않습니다.
-   ══════════════════════════════════════════════════════════════════════ */
-
-/* Performance mode: 자료가 많아져도 스크롤/탭 전환이 버벅이지 않게 무거운 효과를 정적 질감으로 낮춥니다.
-   단 .page-sheet 는 제외 — 페이지 넘김 전환은 여기서 죽으면 통째로 사라졌다 나타나 보입니다. */
+/* Performance mode: 자료가 많아져도 스크롤/탭 전환이 버벅이지 않게 무거운 효과를 정적 질감으로 낮춥니다. */
 .noise-layer,
 .noise-layer::after,
-main *:not(.page-sheet):not(:where(.theme-raw, .theme-raw *)),
+main *,
 main *::before,
 main *::after {
   animation-duration: 0.001ms !important;
@@ -302,7 +288,7 @@ main *::after {
 
 .archive-character-card-image img,
 .gallery-tile img,
-.case-file-plate-image,
+.case-file-hero-image,
 .case-evidence-preview img,
 .world-profile-card img {
   filter: none !important;
@@ -335,15 +321,15 @@ main *::after {
 
 /* Browser chrome/input guard: 스크롤바, 선택 영역, placeholder, caret도 붉은색을 쓰지 않습니다. */
 * {
-  scrollbar-color: rgba(255, 255, 255, 0.45) rgba(0, 0, 0, 0.9) !important;
+  scrollbar-color: rgba(111, 143, 215, 0.45) rgba(0, 0, 0, 0.9) !important;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.42) !important;
+  background: rgba(111, 143, 215, 0.42) !important;
 }
 
 ::selection {
-  background: rgba(200, 200, 200, 0.42) !important;
+  background: rgba(53, 95, 189, 0.42) !important;
   color: #f4eecf !important;
 }
 
@@ -355,7 +341,7 @@ main select,
   border-color: rgba(150, 145, 126, 0.22) !important;
   background: rgba(2, 2, 3, 0.95) !important;
   color: #d6d0bc !important;
-  caret-color: #eeeeee !important;
+  caret-color: #6f8fd7 !important;
 }
 
 main input::placeholder,
@@ -371,14 +357,12 @@ main textarea:focus,
 main select:focus,
 .auth-input:focus,
 .archive-input:focus {
-  border-color: rgba(255, 255, 255, 0.48) !important;
-  outline: 1px solid rgba(255, 255, 255, 0.34) !important;
+  border-color: rgba(111, 143, 215, 0.48) !important;
+  outline: 1px solid rgba(111, 143, 215, 0.34) !important;
   box-shadow: none !important;
 }
 
-/* Text cleanup: 본문 텍스트 노드에만 박스 배경을 붙이지 않습니다.
-   글자가 아니라 잉크로 그린 괘선·눈금·바코드는 `.paper-ink` 로 빠져나갑니다 —
-   이 규칙이 !important 라 그 표시가 없으면 배경이 통째로 지워집니다. */
+/* Text cleanup: 본문 텍스트 노드에만 박스 배경을 붙이지 않습니다. */
 main
   :where(p, span, strong, em, small, b, i, dt, dd, li, h1, h2, h3, h4, h5, h6):not(
     .image-credit-label
@@ -388,9 +372,7 @@ main
     .case-side-record
   ):not(.case-evidence-preview):not(.plain-empty-note):not(.case-profile-chip):not(
     .story-record-card-badge
-  ):not(.case-file-intro-text):not(.character-index-blue-text):not(.paper-ink):not(
-    :where(.theme-raw, .theme-raw *)
-  ) {
+  ):not(.case-file-intro-text):not(.character-index-blue-text) {
   background: transparent !important;
 }
 
@@ -411,7 +393,7 @@ main
 }
 
 .world-archive-section .world-index-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+  border-bottom: 1px solid rgba(111, 143, 215, 0.34);
 }
 
 .world-archive-section .blue-emphasis {
@@ -424,7 +406,7 @@ main
 .world-archive-section
   .blue-emphasis
   .glitch-zone-mark:not([style*="color"]):not(.glitch-zone-has-custom-color) {
-  color: rgba(180, 180, 180, 0.88) !important;
+  color: rgba(150, 178, 236, 0.92) !important;
 }
 
 .world-file-doc-name .glitch-zone-mark,
@@ -461,13 +443,13 @@ main
 
 main,
 main :where(*) {
-  --tw-ring-color: rgba(255, 255, 255, 0.32) !important;
+  --tw-ring-color: rgba(111, 143, 215, 0.32) !important;
   --tw-ring-offset-color: #020202 !important;
   --tw-shadow-color: rgba(0, 0, 0, 0.92) !important;
-  --tw-gradient-from: #000000 !important;
-  --tw-gradient-via: #0d0d0d !important;
-  --tw-gradient-to: #000000 !important;
-  accent-color: #eeeeee !important;
+  --tw-gradient-from: #08080d !important;
+  --tw-gradient-via: #101a32 !important;
+  --tw-gradient-to: #020208 !important;
+  accent-color: #6f8fd7 !important;
 }
 
 [class*="red-"],
@@ -482,15 +464,15 @@ main :where(*) {
 [class*="to-red"],
 [class*="to-rose"],
 [class*="to-pink"] {
-  --tw-gradient-from: #000000 !important;
-  --tw-gradient-via: #0d0d0d !important;
-  --tw-gradient-to: #000000 !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
+  --tw-gradient-from: #08080d !important;
+  --tw-gradient-via: #101a32 !important;
+  --tw-gradient-to: #020208 !important;
+  border-color: rgba(111, 143, 215, 0.28) !important;
   color: rgba(214, 208, 188, 0.82) !important;
   background-color: #070708 !important;
   background-image: none !important;
-  outline-color: rgba(255, 255, 255, 0.34) !important;
-  text-decoration-color: rgba(255, 255, 255, 0.34) !important;
+  outline-color: rgba(111, 143, 215, 0.34) !important;
+  text-decoration-color: rgba(111, 143, 215, 0.34) !important;
 }
 
 .archive-kicker,
@@ -507,7 +489,7 @@ main [class*="text-rose"],
 main [class*="text-pink"],
 main [class*="text-stone"],
 main [class*="text-emerald-200"] {
-  color: #eeeeee !important;
+  color: #6f8fd7 !important;
 }
 
 main input,
@@ -515,10 +497,10 @@ main textarea,
 main select,
 .auth-input,
 .archive-input {
-  border-color: rgba(255, 255, 255, 0.28) !important;
+  border-color: rgba(111, 143, 215, 0.28) !important;
   background: rgba(2, 2, 5, 0.95) !important;
   color: #d6d0bc !important;
-  caret-color: #eeeeee !important;
+  caret-color: #6f8fd7 !important;
 }
 
 main input::placeholder,
@@ -534,8 +516,8 @@ main textarea:focus,
 main select:focus,
 .auth-input:focus,
 .archive-input:focus {
-  border-color: rgba(255, 255, 255, 0.52) !important;
-  outline: 1px solid rgba(255, 255, 255, 0.36) !important;
+  border-color: rgba(111, 143, 215, 0.52) !important;
+  outline: 1px solid rgba(111, 143, 215, 0.36) !important;
   box-shadow: none !important;
 }
 
@@ -546,7 +528,7 @@ main select:focus,
 
 main img,
 main video,
-.case-file-plate-image,
+.case-file-hero-image,
 .archive-character-card-image img,
 .gallery-tile img,
 .case-evidence-preview img,
@@ -554,27 +536,69 @@ main video,
   filter: none !important;
 }
 
-/* Border/pseudo guards (배경은 Surface pass가 담당) */
+/* Border/pseudo guards + hero mark (배경은 Surface pass가 담당) */
 
 .glass-card::before,
 .glass-card::after,
 .archive-row::before,
 .archive-character-card::before,
+.case-file-hero-grid,
+.case-file-hero::before,
+.case-file-hero::after,
 .noise-layer,
 .noise-layer::before,
 .noise-layer::after {
-  border-color: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(111, 143, 215, 0.16) !important;
   background-image: none !important;
   box-shadow: none !important;
+}
+
+.glass-card::before,
+.glass-card::after,
+.archive-row::before,
+.archive-character-card::before,
+.case-file-hero-grid,
+.noise-layer,
+.noise-layer::before,
+.noise-layer::after {
   opacity: 0 !important;
 }
 
-/* 사진 아래 서명 — 표지가 2단이 되면서, 히어로 전체를 덮던 워터마크를 대신합니다.
-   위치·크기는 character.css 가 잡고 여기서는 잉크만 고정합니다. */
-.case-file-plate-sign {
-  color: rgba(255, 255, 255, 0.2) !important;
+.case-file-hero::before {
+  opacity: 1 !important;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.97) 0%,
+    rgba(0, 0, 0, 0.9) 34%,
+    rgba(0, 0, 0, 0.62) 50%,
+    rgba(0, 0, 0, 0.24) 58%,
+    transparent 64%
+  ) !important;
+}
+
+.case-file-hero::after {
+  content: none !important;
+  display: none !important;
+}
+
+.case-file-hero-mark {
+  position: absolute !important;
+  left: auto !important;
+  right: 0.85rem !important;
+  bottom: -0.75rem !important;
+  top: auto !important;
+  z-index: 3 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  max-width: calc(100% - 1.7rem) !important;
+  padding-right: 0.9rem !important;
+  font-size: clamp(3.8rem, 10vw, 8rem) !important;
+  color: rgba(111, 143, 215, 0.18) !important;
   background: transparent !important;
   opacity: 1 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1 !important;
+  text-align: right !important;
   animation: current-heading-glitch 2.4s steps(1, end) infinite;
 }
 
@@ -593,7 +617,7 @@ main
     [class*="border-pink"],
     [class*="border-emerald"]
   ) {
-  border-color: rgba(255, 255, 255, 0.24) !important;
+  border-color: rgba(111, 143, 215, 0.24) !important;
 }
 
 main
@@ -606,17 +630,13 @@ main
   )
   > :not([hidden])
   ~ :not([hidden]) {
-  border-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(111, 143, 215, 0.2) !important;
 }
 
 html body main .image-credit-label {
-  border: 1px solid rgba(255, 255, 255, 0.42) !important;
-  background: rgba(8, 8, 8, 0.88) !important;
-  color: #f0f0f0 !important;
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.65),
-    0 0 8px rgba(0, 0, 0, 0.75) !important;
-  text-shadow: 0 1px 2px #000 !important;
+  border: 1px solid rgba(56, 189, 248, 0.46) !important;
+  background: rgba(7, 15, 32, 0.82) !important;
+  color: #f7f1dc !important;
 }
 
 html body main .character-palette-surface {
@@ -624,54 +644,37 @@ html body main .character-palette-surface {
   background-image: var(--character-palette-background) !important;
 }
 
-/* 열람대는 자기 프레임을 스스로 그립니다 — 테마가 배경을 덮어쓰지 못하게만 잡아 둡니다 */
-/* 열람대는 이제 종이(.case-tab-panel) 위에 인쇄된 내용입니다 —
-   자기 상자를 또 그리면 종이 안에 상자, 그 사이에 빈 띠가 생깁니다. */
-html body main .record-console,
-html body main .record-console:hover {
+html body main .static-record-panel,
+html body main .static-record-panel:hover {
   align-self: start;
+  display: block;
   min-width: 0;
   max-width: 100%;
   overflow-x: clip;
-  border: none !important;
-  background: transparent !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: rgba(111, 143, 215, 0.32) !important;
+  background: #070708 !important;
+  background-color: #070708 !important;
   background-image: none !important;
-  box-shadow: none !important;
+  outline-color: rgba(111, 143, 215, 0.24) !important;
+  padding: 1rem;
   transform: none !important;
 }
 
-/* 열람대 / 비주얼: 항을 갈아 끼워도 옆 일러가 따라 늘어나지 않게 고정 */
-html body main .record-settings-pair {
-  min-height: 0 !important;
-}
-
-@media (min-width: 900px) {
-  html body main .record-settings-pair {
-    align-items: start !important;
-  }
-}
-
-/* 본문에 삽입된 이미지는 원본 비율로 눕혀 담습니다 */
-html body main .record-sheet-body img {
-  max-width: 100% !important;
-  max-height: 16rem !important;
-  width: auto !important;
-  height: auto !important;
-  object-fit: contain !important;
-}
-
-/* 다만 身上 항의 인물 사진은 사진칸을 꽉 채워야 하므로 위 규칙에서 뺍니다 */
-html body main .dossier-identity .dossier-figure-frame img {
-  max-width: none !important;
-  max-height: none !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-}
-
-html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
+html body main .static-record-panel :where(p, dd, span, .glitch-zone-mark) {
   overflow-wrap: anywhere;
   word-break: break-word;
+}
+
+.story-record-card {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+}
+
+html body main .story-record-card.static-record-panel {
+  display: grid !important;
 }
 
 .story-record-card-head {
@@ -685,7 +688,7 @@ html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
 .story-record-card-kicker {
   flex: 1 1 auto;
   min-width: 0;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(111, 143, 215, 0.55);
   font-size: 0.75rem;
   line-height: 1.2;
   letter-spacing: 0.25em;
@@ -733,7 +736,7 @@ html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
   gap: 0.75rem;
   width: 100%;
   margin: 0;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(111, 143, 215, 0.28);
   background: rgba(0, 0, 0, 0.42);
   color: rgba(226, 236, 255, 0.9);
   font-size: 0.82rem;
@@ -793,19 +796,15 @@ html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
 }
 
 .story-viewer-content {
-  max-width: 56rem;
-  width: 100%;
+  max-width: 42rem;
   margin-inline: auto;
-  box-sizing: border-box;
 }
 
 .story-viewer-paragraph {
   margin: 0 0 1.35rem;
-  color: rgba(220, 220, 220, 0.9);
-  font-size: 1.05rem;
-  line-height: 1.9;
-  letter-spacing: 0.01em;
-  text-align: center;
+  color: rgba(200, 208, 220, 0.86);
+  font-size: 0.95rem;
+  line-height: 2.05;
   white-space: pre-line;
 }
 
@@ -816,7 +815,7 @@ html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
 .story-inline-quote {
   display: inline-block;
   margin-top: 0.15rem;
-  border-left: 2px solid rgba(255, 255, 255, 0.55);
+  border-left: 2px solid rgba(111, 143, 215, 0.55);
   font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
   letter-spacing: 0.04em;
   padding-left: 0.65rem;
@@ -825,7 +824,7 @@ html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
 .story-inline-quote:not(.glitch-zone-has-custom-color) {
   color: rgba(200, 210, 230, 0.92);
   font-weight: 600;
-  text-shadow: 0 0 18px rgba(255, 255, 255, 0.16);
+  text-shadow: 0 0 18px rgba(111, 143, 215, 0.16);
 }
 
 .glitch-zone-mark.glitch-zone-has-custom-color,
@@ -835,10 +834,8 @@ html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
 }
 
 .glitch-zone-mark.glitch-zone-has-custom-font-size,
-.glitch-zone-mark[style*="--glitch-font-size"],
 .admin-inline-zone.glitch-zone-has-custom-font-size {
   font-size: var(--glitch-font-size, inherit) !important;
-  line-height: var(--glitch-line-height, 1.75) !important;
 }
 
 .glitch-zone-mark.glitch-zone-has-custom-font,
@@ -850,9 +847,9 @@ html body main .record-console :where(p, dd, span, .glitch-zone-mark) {
    custom color로 저장된 데이터도 파란 톤으로 보이도록 덮어씁니다. */
 html body main .story-inline-quote,
 html body main .story-inline-quote.glitch-zone-has-custom-color {
-  color: rgba(200, 200, 200, 0.96) !important;
-  --glitch-text-color: rgba(200, 200, 200, 0.96) !important;
-  --glitch-decoration-color: rgba(200, 200, 200, 0.96) !important;
+  color: rgba(170, 192, 232, 0.96) !important;
+  --glitch-text-color: rgba(170, 192, 232, 0.96) !important;
+  --glitch-decoration-color: rgba(170, 192, 232, 0.96) !important;
 }
 
 /* OC / World interaction motion: WAAPI(ArchiveMotion) + 호버/클릭 피드백 */
@@ -871,12 +868,14 @@ html body main .world-archive-section .gallery-tile button,
 html body main .world-archive-section .archive-submit-button,
 html body main .world-archive-section .world-profile-banner {
   transition:
-    border-color 160ms ease,
-    background 160ms ease,
-    opacity 160ms ease,
-    box-shadow 160ms ease !important;
+    border-color 360ms ease,
+    background 360ms ease,
+    transform 340ms ease,
+    opacity 340ms ease,
+    box-shadow 340ms ease !important;
 }
 
+html body main .character-index-panel .archive-character-card:active,
 html body main .world-index-panel .world-file-card:active,
 html body main .dossier-viewer .case-tab-button:active,
 html body main .dossier-viewer .case-side-record:active,
@@ -888,15 +887,10 @@ html body main .world-archive-section .archive-submit-button:active {
   transform: translate3d(0, 1px, 0) scale(0.992) !important;
 }
 
-html body main .character-index-panel .archive-character-card:hover {
-  transform: none !important;
-  border-color: rgba(255, 255, 255, 0.55) !important;
-  background: #000000 !important;
-}
-
+html body main .character-index-panel .archive-character-card:hover,
 html body main .world-index-panel .world-file-card:hover {
   transform: translate3d(0, -3px, 0) !important;
-  border-color: rgba(255, 255, 255, 0.55) !important;
+  border-color: rgba(111, 143, 215, 0.55) !important;
 }
 
 html body main .dossier-viewer .gallery-tile img,
@@ -918,7 +912,7 @@ html body main .dossier-viewer .group:hover img {
 }
 
 html body main .dossier-viewer .case-tab-button.is-active {
-  box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.55) !important;
+  box-shadow: inset 0 -2px 0 rgba(111, 143, 215, 0.55) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -930,9 +924,7 @@ html body main .dossier-viewer .case-tab-button.is-active {
   }
 }
 
-.glitch-zone-mark:not(.admin-inline-zone):not(.glitch-zone-has-custom-font-size):not(
-    [style*="--glitch-font-size"]
-  ) {
+.glitch-zone-mark:not(.admin-inline-zone) {
   display: inline;
   padding: 0;
   margin: 0;
@@ -950,21 +942,13 @@ html body main .dossier-viewer .case-tab-button.is-active {
 }
 
 html body main .glitch-zone-mark.glitch-zone-has-custom-font-size:not(.admin-inline-zone),
-html body main .glitch-zone-mark[style*="--glitch-font-size"]:not(.admin-inline-zone),
 html
   body
   main
   .case-file-detail
   .case-profile-chip-value
-  .glitch-zone-mark.glitch-zone-has-custom-font-size,
-html
-  body
-  main
-  .case-file-detail
-  .case-profile-chip-value
-  .glitch-zone-mark[style*="--glitch-font-size"] {
-  font-size: var(--glitch-font-size, inherit) !important;
-  line-height: var(--glitch-line-height, 1.75) !important;
+  .glitch-zone-mark.glitch-zone-has-custom-font-size {
+  font-size: var(--glitch-font-size) !important;
 }
 
 .glitch-zone-mark.glitch-zone-has-bold {
@@ -1036,10 +1020,10 @@ html
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  background: rgba(7, 15, 32, 0.55);
   padding: 0.55rem 0.85rem;
-  color: rgba(230, 230, 230, 0.9);
+  color: rgba(191, 219, 254, 0.82);
   font-size: 0.82rem;
   transition:
     border-color 160ms ease,
@@ -1048,27 +1032,24 @@ html
 }
 
 .pair-member-switcher__button:hover {
-  border-color: rgba(255, 255, 255, 0.55);
-  background: rgba(12, 12, 12, 0.9);
-  transform: none;
+  border-color: rgba(125, 211, 252, 0.72);
+  transform: translateY(-1px);
 }
 
 .pair-member-switcher__button.is-active {
-  border-color: rgba(255, 255, 255, 0.55);
+  border-color: rgba(111, 143, 215, 0.55);
   background: var(--surface-raised);
-  color: rgba(238, 238, 238, 0.95);
+  color: rgba(236, 240, 245, 0.95);
 }
 
 .pair-member-switcher__index {
   font-size: 0.62rem;
   letter-spacing: 0.18em;
-  color: rgba(160, 160, 160, 0.7);
-  opacity: 1;
+  opacity: 0.72;
 }
 
 .pair-member-switcher__name {
   font-weight: 700;
-  color: rgba(245, 245, 245, 0.96);
 }
 
 .pair-member-switcher__button--link {
@@ -1081,8 +1062,8 @@ html
 .pair-member-switcher__hint {
   margin-left: 0.15rem;
   padding-left: 0.55rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.32);
-  color: rgba(255, 255, 255, 0.78);
+  border-left: 1px solid rgba(111, 143, 215, 0.32);
+  color: rgba(111, 143, 215, 0.78);
   font-size: 0.68rem;
   letter-spacing: 0.06em;
   white-space: nowrap;
@@ -1212,7 +1193,7 @@ html
     .archive-input,
     .pair-member-switcher__button
   ) {
-  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  border: 1px solid rgba(111, 143, 215, 0.24) !important;
   background: rgba(0, 0, 0, 0.46) !important;
   background-color: rgba(0, 0, 0, 0.46) !important;
   background-image: none !important;
@@ -1229,7 +1210,7 @@ html
   main
   .world-file-detail
   :is(.case-file-meta-line, .case-evidence-stamp, .case-profile-chip) {
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border: 1px solid rgba(111, 143, 215, 0.3) !important;
   background: rgba(0, 0, 0, 0.42) !important;
   background-color: rgba(0, 0, 0, 0.42) !important;
   background-image: none !important;
@@ -1254,176 +1235,113 @@ html
 
 html body main .case-file-detail .case-profile-panel {
   margin-top: 1.15rem !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(111, 143, 215, 0.2) !important;
   background: rgba(0, 0, 0, 0.38) !important;
   background-image: none !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
 }
 
 html body main .case-file-detail .case-profile-kicker {
-  color: rgba(180, 180, 180, 0.55) !important;
+  color: rgba(168, 176, 188, 0.55) !important;
 }
 
 html body main .case-file-detail .case-profile-chip {
-  border-color: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(111, 143, 215, 0.14) !important;
   background: rgba(0, 0, 0, 0.46) !important;
   background-image: none !important;
   box-shadow: none !important;
 }
 
 html body main .case-file-detail .case-profile-chip-label {
-  color: rgba(180, 180, 180, 0.58) !important;
+  color: rgba(168, 176, 188, 0.58) !important;
 }
 
 html body main .case-file-detail .case-profile-chip-value {
   display: flex !important;
   align-items: center !important;
-  color: rgba(238, 238, 238, 0.92) !important;
+  color: rgba(236, 240, 245, 0.92) !important;
   line-height: 1.3 !important;
 }
 
-/* 헤더는 한 장의 서식 — 테두리와 행 괘선은 서식이 갖습니다 */
-html body main .case-file-detail .dossier-header {
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  background: rgba(0, 0, 0, 0.34) !important;
-  box-shadow: none !important;
-}
-
-html body main .case-file-detail .dossier-header > * + * {
-  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
-}
-
-/* 기재란 — 칸끼리 세로 괘선으로만 끊습니다 */
-html body main .case-file-detail .dossier-meta-strip {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-html body main .case-file-detail .dossier-meta-item {
-  border: none !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.13) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.13) !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-html body main .case-file-detail .dossier-meta-item:last-child {
-  border-right: none !important;
-}
-
-html body main .case-file-detail .dossier-meta-quiet {
-  border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
-  background: rgba(255, 255, 255, 0.035) !important;
-  color: rgba(168, 168, 168, 0.72) !important;
-}
-
-/* 발언란 — 기재란과 같은 「항목명 칸 | 기입칸」이라 자기 상자는 두르지 않습니다 */
-html body main .case-file-detail .dossier-voice {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-html body main .case-file-detail .dossier-voice-label,
-html body main .case-file-detail .dossier-clearance-caption {
-  border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
-  background: rgba(255, 255, 255, 0.035) !important;
-}
-
-html body main .case-file-detail .dossier-clearance {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-html body main .case-file-detail .dossier-meta-value,
-html body main .case-file-detail .dossier-table td,
-html body main .case-file-detail .dossier-voice-text {
-  color: rgba(230, 230, 230, 0.93) !important;
-}
-
-html body main .case-file-detail .record-sheet-title-name {
-  color: rgba(248, 248, 248, 0.96) !important;
-}
-
-html body main .case-file-detail .record-sheet-title-num {
-  color: rgba(200, 200, 200, 0.82) !important;
+html body main .case-file-detail .case-tab-strip {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 0.3rem !important;
+  padding-top: 0.42rem !important;
+  grid-template-columns: unset !important;
+  border-bottom: none !important;
 }
 
 html body main .case-file-detail .case-tab-button {
   position: relative !important;
-  flex: 1 1 0 !important;
-  min-width: 5.5rem !important;
+  flex: 1 1 7.25rem !important;
+  min-width: 7.25rem !important;
   margin-bottom: 0 !important;
-  border: none !important;
-  border-radius: var(--app-radius-sm) !important;
-  background: transparent !important;
+  border-radius: 0.55rem 0.55rem 0 0 !important;
+  border-color: rgba(111, 143, 215, 0.2) !important;
+  border-bottom-color: rgba(111, 143, 215, 0.16) !important;
+  background: rgba(0, 0, 0, 0.48) !important;
   background-image: none !important;
-  color: rgba(170, 170, 170, 0.7) !important;
+  color: rgba(200, 208, 220, 0.72) !important;
   box-shadow: none !important;
 }
 
 html body main .case-file-detail .case-tab-button::before {
-  display: none !important;
-  content: none !important;
+  border-color: rgba(111, 143, 215, 0.2) !important;
+  background: rgba(0, 0, 0, 0.48) !important;
 }
 
 html body main .case-file-detail .case-tab-button span {
-  color: rgba(130, 130, 130, 0.72) !important;
+  color: rgba(140, 155, 180, 0.78) !important;
   text-shadow: none !important;
 }
 
 html body main .case-file-detail .case-tab-button.is-active {
-  margin-bottom: 0 !important;
-  border: none !important;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.85) !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-  color: rgba(245, 245, 245, 0.98) !important;
+  margin-bottom: -1px !important;
+  border-color: rgba(111, 143, 215, 0.3) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.88) !important;
+  background: rgba(0, 0, 0, 0.88) !important;
+  color: #eceff4 !important;
   box-shadow: none !important;
-  z-index: 2 !important;
+  z-index: 3 !important;
 }
 
 html body main .case-file-detail .case-tab-button.is-active::before {
-  display: none !important;
-  content: none !important;
+  border-color: rgba(111, 143, 215, 0.3) !important;
+  background: rgba(0, 0, 0, 0.88) !important;
 }
 
 html body main .case-file-detail .case-tab-button:hover:not(.is-active) {
-  border: none !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-  color: rgba(230, 230, 230, 0.9) !important;
+  border-color: rgba(111, 143, 215, 0.26) !important;
+  background: rgba(8, 8, 8, 0.72) !important;
+  color: #e8ecf1 !important;
 }
 
-/* 견출지가 물릴 종이 그 자체 — 탭이 무엇을 열든 뒤에는 같은 한 장이 있어야
-   합니다. 내용이 적은 탭에서 종이가 사라지면 견출지가 다시 허공에 뜹니다. */
 html body main .case-file-detail .case-tab-panel {
   margin-top: 0 !important;
-  padding: 1.2rem 1.3rem 1.5rem !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  background: #000000 !important;
+  padding: 1.15rem 1rem 1.25rem !important;
+  border-color: rgba(111, 143, 215, 0.22) !important;
+  background: rgba(0, 0, 0, 0.28) !important;
   background-image: none !important;
-  min-height: 18rem;
 }
 
 @media (min-width: 768px) {
   html body main .case-file-detail .case-tab-panel {
-    padding: 1.4rem 1.6rem 1.7rem !important;
+    padding: 1.25rem 1.35rem 1.5rem !important;
   }
 }
 
-/* 견출지 자체는 .file-tab 이 character.css 에서 스스로 그립니다 */
-
 html body main .case-file-detail .case-file-intro-label,
 html body main .world-file-detail .case-file-intro-label {
-  color: var(--case-intro-label, rgba(180, 180, 180, 0.62)) !important;
+  color: var(--case-intro-label, rgba(168, 176, 188, 0.62)) !important;
 }
 
 html body main .case-file-detail .case-file-intro-text,
 html body main .world-file-detail .case-file-intro-text {
-  border: 1px solid var(--case-intro-border, rgba(255, 255, 255, 0.22)) !important;
+  border: 1px solid var(--case-intro-border, rgba(111, 143, 215, 0.22)) !important;
   background: var(--case-intro-bg, rgba(0, 0, 0, 0.35)) !important;
-  color: var(--case-intro-text, rgba(238, 238, 238, 0.86)) !important;
+  color: var(--case-intro-text, rgba(236, 240, 245, 0.86)) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
 }
 
@@ -1441,13 +1359,13 @@ html body main .case-file-detail .case-file-intro-text::before,
 html body main .world-file-detail .case-file-intro-text::before {
   border-top-color: color-mix(
     in srgb,
-    var(--case-intro-border, rgba(255, 255, 255, 0.22)) 85%,
-    #eeeeee
+    var(--case-intro-border, rgba(111, 143, 215, 0.22)) 85%,
+    #6f8fd7
   ) !important;
   border-left-color: color-mix(
     in srgb,
-    var(--case-intro-border, rgba(255, 255, 255, 0.22)) 85%,
-    #eeeeee
+    var(--case-intro-border, rgba(111, 143, 215, 0.22)) 85%,
+    #6f8fd7
   ) !important;
 }
 
@@ -1455,24 +1373,24 @@ html body main .case-file-detail .case-file-intro-text::after,
 html body main .world-file-detail .case-file-intro-text::after {
   border-right-color: color-mix(
     in srgb,
-    var(--case-intro-border, rgba(255, 255, 255, 0.22)) 65%,
-    #eeeeee
+    var(--case-intro-border, rgba(111, 143, 215, 0.22)) 65%,
+    #6f8fd7
   ) !important;
   border-bottom-color: color-mix(
     in srgb,
-    var(--case-intro-border, rgba(255, 255, 255, 0.22)) 65%,
-    #eeeeee
+    var(--case-intro-border, rgba(111, 143, 215, 0.22)) 65%,
+    #6f8fd7
   ) !important;
 }
 
 html body main .case-file-detail .case-file-voice .case-file-intro-label {
-  color: var(--case-voice-label, var(--case-intro-label, rgba(180, 180, 180, 0.62))) !important;
+  color: var(--case-voice-label, var(--case-intro-label, rgba(168, 176, 188, 0.62))) !important;
 }
 
 html body main .case-file-detail .case-file-voice .case-file-intro-text {
-  border: 1px solid var(--case-voice-border, var(--case-intro-border, rgba(255, 255, 255, 0.22))) !important;
+  border: 1px solid var(--case-voice-border, var(--case-intro-border, rgba(111, 143, 215, 0.22))) !important;
   background: var(--case-voice-bg, var(--case-intro-bg, rgba(0, 0, 0, 0.35))) !important;
-  color: var(--case-voice-text, var(--case-intro-text, rgba(238, 238, 238, 0.86))) !important;
+  color: var(--case-voice-text, var(--case-intro-text, rgba(236, 240, 245, 0.86))) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
 }
 
@@ -1525,8 +1443,19 @@ html body main .character-palette-scope .dossier-body {
   background-image: none !important;
 }
 
+html body main .character-palette-scope .case-file-hero::before {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.97) 0%,
+    rgba(0, 0, 0, 0.9) 34%,
+    rgba(0, 0, 0, 0.62) 50%,
+    rgba(0, 0, 0, 0.24) 58%,
+    transparent 64%
+  ) !important;
+}
+
 html body main .character-palette-scope .archive-character-card-image .character-palette-backdrop {
-  border-radius: var(--app-radius-md);
+  border-radius: 0;
 }
 
 html body main .character-palette-scope .archive-character-card-image {
@@ -1535,15 +1464,14 @@ html body main .character-palette-scope .archive-character-card-image {
 }
 
 html body main .character-palette-scope .archive-character-card-body {
-  background: #000000 !important;
+  background: var(--surface-base) !important;
   background-image: none !important;
 }
 
 html body main .character-palette-scope.archive-character-card,
 html body main .character-palette-scope.archive-character-card:hover {
-  background: #000000 !important;
+  background: #000 !important;
   background-image: none !important;
-  box-shadow: none !important;
 }
 
 /* 이북·스토리 로그 뷰어 — 테마의 dossier-viewer !important 덮어쓰기 */
@@ -1578,7 +1506,7 @@ html body main .story-log-viewer .archive-submit-button {
   border-color: rgba(120, 120, 120, 0.35) !important;
   background: #0a0a0a !important;
   background-image: none !important;
-  color: #eeeeee !important;
+  color: #e8ecf1 !important;
   box-shadow: none !important;
 }
 
@@ -1606,18 +1534,18 @@ html body main .text-glitch {
 }
 
 html body main [class*="text-emerald-50"] {
-  color: rgba(238, 238, 238, var(--tw-text-opacity, 1)) !important;
+  color: rgba(236, 240, 245, var(--tw-text-opacity, 1)) !important;
 }
 
 html body main [class*="text-emerald-100"] {
-  color: rgba(180, 180, 180, var(--tw-text-opacity, 1)) !important;
+  color: rgba(184, 190, 200, var(--tw-text-opacity, 1)) !important;
 }
 
-/* === Neutral text lock: 카드·리스트 텍스트 최종 차단 === */
+/* === Neutral text lock: 카드·리스트 텍스트 붉은 기 최종 차단 === */
 html body main .archive-row,
 html body main .archive-row:hover,
 html body main .archive-row *:not(.story-inline-quote):not(.glitch-zone-mark) {
-  color: #eeeeee !important;
+  color: #e8ecf1 !important;
   text-shadow: none !important;
   filter: none !important;
 }
@@ -1636,7 +1564,7 @@ html body main .glass-card::after {
 }
 
 html body main {
-  color: #eeeeee !important;
+  color: #e8ecf1 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -1646,28 +1574,32 @@ html
   main
   :where(p, span, h1, h2, h3, h4, h5, h6, button, label, li, dt, dd, a):not(
     .story-inline-quote
-  ):not(.glitch-zone-mark):not(.image-credit-label):not(:where(.theme-raw, .theme-raw *)) {
+  ):not(.glitch-zone-mark):not(.image-credit-label) {
   text-shadow: none !important;
   filter: none !important;
 }
 
-/* Surface tone pass: 순수 니어블랙 (슬레이트/남색 제거) */
+/* Surface tone pass: 사이드 메뉴 버튼(#05060b)과 같은 어두운 슬레이트 톤으로 통일합니다. */
 body {
-  background: #000000 !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(111, 143, 215, 0.04), transparent 30%),
+    linear-gradient(180deg, #0a0c12 0%, var(--surface-base) 55%, #070910 100%) !important;
 }
 
 main > .fixed.inset-0 {
-  background: #000000 !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(111, 143, 215, 0.04), transparent 30%),
+    linear-gradient(180deg, #0a0c12 0%, var(--surface-base) 55%, #070910 100%) !important;
 }
 
 html body main::after {
   background: radial-gradient(
     ellipse at center,
     transparent 0 54%,
-    rgba(0, 0, 0, 0.2) 82%,
-    rgba(0, 0, 0, 0.35) 100%
+    rgba(8, 10, 16, 0.18) 82%,
+    rgba(5, 6, 11, 0.28) 100%
   ) !important;
-  opacity: 0.2 !important;
+  opacity: 0.22 !important;
 }
 
 html body main .glass-card,
@@ -1686,17 +1618,17 @@ html body main .story-record-card-open,
 html body main .story-record-card-open:hover,
 html body main .story-record-card-open:focus-visible,
 html body main .story-record-card-open:active {
-  background: #000000 !important;
+  background: var(--surface-card) !important;
   background-image: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow: none !important;
+  border: 1px solid var(--archive-line) !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.78) !important;
 }
 
 html body main .side-menu,
 html body main .side-menu-content {
-  background: #000000 !important;
+  background: var(--surface-deep) !important;
   background-image: none !important;
-  border-color: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(111, 143, 215, 0.18) !important;
   box-shadow: none !important;
 }
 
@@ -1704,9 +1636,9 @@ html body main .side-menu button,
 html body main .side-menu a,
 html body main .archive-row,
 html body main .archive-row:hover {
-  background: #000000 !important;
+  background: var(--surface-deep) !important;
   background-image: none !important;
-  border-color: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(111, 143, 215, 0.16) !important;
   box-shadow: none !important;
 }
 
@@ -1716,6 +1648,7 @@ html body main .auth-panel-trigger {
   background-image: none !important;
 }
 
+html body main .archive-character-card:hover,
 html body main .side-menu button:hover,
 html body main .side-menu a:hover,
 html body main .auth-panel-trigger:hover,
@@ -1724,42 +1657,32 @@ html body main .story-record-card-open:hover,
 html body main .story-record-card-open:focus-visible {
   background: var(--surface-raised) !important;
   background-image: none !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
-}
-
-/* OC 카드: 호버는 보더만 — surface-raised/scale 없음 */
-html body main .archive-character-card:hover {
-  background: #000000 !important;
-  background-image: none !important;
-  border-color: rgba(255, 255, 255, 0.55) !important;
-  transform: none !important;
+  border-color: rgba(111, 143, 215, 0.28) !important;
 }
 
 html body main .case-file-detail .case-tab-button {
-  background: transparent !important;
+  background: rgba(5, 6, 11, 0.88) !important;
 }
 
 html body main .case-file-detail .case-tab-button::before {
-  display: none !important;
-  content: none !important;
+  background: rgba(5, 6, 11, 0.88) !important;
 }
 
 html body main .case-file-detail .case-tab-button.is-active,
 html body main .case-file-detail .case-tab-button.is-active::before {
-  background: rgba(255, 255, 255, 0.04) !important;
+  background: var(--surface-card) !important;
 }
 
 html body main .case-file-detail .case-tab-button:hover:not(.is-active) {
-  background: rgba(255, 255, 255, 0.03) !important;
+  background: var(--surface-raised) !important;
 }
 
 html body main .case-file-detail .case-tab-panel {
-  background: #000000 !important;
+  background: rgba(8, 10, 16, 0.72) !important;
 }
 
 /* Character card divider: 이미지/본문 경계선은 반투명 border-color 덮어쓰기 없이 단색으로 고정 */
 html body main .archive-character-card .archive-character-card-image {
-  aspect-ratio: 3 / 4 !important;
   border-top: 0 !important;
   border-left: 0 !important;
   border-right: 0 !important;
@@ -1770,41 +1693,21 @@ html body main .archive-character-card .archive-character-card-image {
 }
 
 html body main .archive-character-card .archive-character-card-body {
-  min-height: 0 !important;
-  padding: 0.7rem 0.75rem !important;
   border-top: 0 !important;
   box-shadow: none !important;
-  background: #000000 !important;
-}
-
-html body main .archive-character-card .archive-character-card-id {
-  display: block !important;
-  margin: 0 0 0.28rem !important;
-  color: rgba(160, 160, 160, 0.72) !important;
-  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace !important;
-  font-size: 0.58rem !important;
-  letter-spacing: 0.16em !important;
-  text-transform: uppercase !important;
-}
-
-html body main .archive-character-card .archive-character-card-name {
-  margin-top: 0 !important;
-  font-size: 1.12rem !important;
-  font-weight: 800 !important;
-  line-height: 1.2 !important;
 }
 
 /* UI line restoration: 패널·칩·헤더 테두리/구분선 최종 복원 */
 html body main .character-index-header,
 html body main .world-index-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.34) !important;
+  border-bottom: 1px solid rgba(111, 143, 215, 0.34) !important;
 }
 
 html body main .character-index-header > p.character-index-blue-text,
 html body main .character-index-header > span.character-index-blue-text,
 html body main .world-index-header > p.character-index-blue-text,
 html body main .world-index-header > span.character-index-blue-text {
-  border: 1px solid rgba(255, 255, 255, 0.38) !important;
+  border: 1px solid rgba(111, 143, 215, 0.38) !important;
   background: rgba(0, 0, 0, 0.56) !important;
   padding: 0.28rem 0.48rem !important;
   box-shadow: none !important;
@@ -1828,25 +1731,13 @@ html body main .world-file-card-tab {
   line-height: 1 !important;
   white-space: nowrap !important;
   transform: translateY(-100%) !important;
-  border-radius: var(--app-radius-md) var(--app-radius-md) 0 0 !important;
+  border-radius: 0.28rem 0.28rem 0 0 !important;
   box-shadow: none !important;
-}
-
-/* world-file doc surface overrides */
-html body main .world-file-doc {
-  background:
-    linear-gradient(90deg, rgba(18, 18, 18, 0.75), transparent 60%),
-    linear-gradient(180deg, #050505 0%, #000000 100%) !important;
-  border-bottom-color: rgba(255, 255, 255, 0.28) !important;
-}
-
-html body main .world-file-doc-watermark {
-  color: rgba(255, 255, 255, 0.05) !important;
 }
 
 html body main .world-file-doc-body .case-file-intro {
   margin-top: 0 !important;
-  max-width: 100% !important;
+  max-width: none !important;
   width: 100% !important;
 }
 
@@ -1861,7 +1752,7 @@ html body main .world-file-doc-body .case-file-intro-text {
   padding: 1rem 1.15rem !important;
   font-size: 1rem !important;
   line-height: 1.8 !important;
-  color: rgba(220, 220, 220, 0.9) !important;
+  color: rgba(214, 222, 238, 0.9) !important;
 }
 
 html
@@ -1876,11 +1767,11 @@ html
 }
 
 html body main .world-file-lock {
-  border-color: rgba(255, 255, 255, 0.28) !important;
+  border-color: rgba(111, 143, 215, 0.28) !important;
   background:
     repeating-linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.045) 0 0.6rem,
+      rgba(111, 143, 215, 0.045) 0 0.6rem,
       transparent 0.6rem 1.2rem
     ),
     rgba(0, 0, 0, 0.46) !important;
@@ -1888,25 +1779,25 @@ html body main .world-file-lock {
 }
 
 html body main .world-file-lock-stamp {
-  border-color: rgba(255, 255, 255, 0.42) !important;
-  color: rgba(200, 200, 200, 0.88) !important;
+  border-color: rgba(111, 143, 215, 0.42) !important;
+  color: rgba(170, 192, 232, 0.88) !important;
   transform: none !important;
   opacity: 1 !important;
 }
 
 html body main .world-file-lock-message {
-  color: rgba(200, 200, 200, 0.78) !important;
+  color: rgba(198, 210, 232, 0.78) !important;
   font-size: 1rem !important;
   line-height: 1.8 !important;
 }
 
 html body main .case-file-meta {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-bottom: 1px solid rgba(111, 143, 215, 0.16) !important;
 }
 
 html body main .case-back-button {
-  border: 1px solid rgba(255, 255, 255, 0.32) !important;
-  background: rgba(8, 8, 8, 0.9) !important;
+  border: 1px solid rgba(111, 143, 215, 0.32) !important;
+  background: rgba(5, 6, 11, 0.9) !important;
   color: rgba(200, 208, 220, 0.88) !important;
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.72),
@@ -1914,25 +1805,25 @@ html body main .case-back-button {
 }
 
 html body main .case-back-button:hover {
-  border-color: rgba(255, 255, 255, 0.5) !important;
+  border-color: rgba(111, 143, 215, 0.5) !important;
   background: var(--surface-raised) !important;
-  color: rgba(238, 238, 238, 0.96) !important;
+  color: rgba(236, 240, 245, 0.96) !important;
 }
 
 html body main .case-setting-note .archive-submit-button {
   display: inline-flex !important;
   align-items: center !important;
   margin: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.32) !important;
-  background: rgba(8, 8, 8, 0.92) !important;
+  border: 1px solid rgba(111, 143, 215, 0.32) !important;
+  background: rgba(5, 6, 11, 0.92) !important;
   color: rgba(200, 208, 220, 0.9) !important;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.72) !important;
 }
 
 html body main .case-setting-note:hover .archive-submit-button {
-  border-color: rgba(255, 255, 255, 0.48) !important;
+  border-color: rgba(111, 143, 215, 0.48) !important;
   background: var(--surface-raised) !important;
-  color: rgba(238, 238, 238, 0.96) !important;
+  color: rgba(236, 240, 245, 0.96) !important;
 }
 
 html body main :is(.archive-row, .gallery-tile, .case-tab-button, .auth-input, .archive-input) {
@@ -1940,58 +1831,6 @@ html body main :is(.archive-row, .gallery-tile, .case-tab-button, .auth-input, .
 }
 
 html body main .case-profile-panel {
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(111, 143, 215, 0.2) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
-}
-
-/* Home stage — 사이트 흑백 archive 톤 */
-html body main .home-stage {
-  border-color: rgba(255, 255, 255, 0.22) !important;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 28%),
-    linear-gradient(180deg, #050505 0%, #000000 55%, #000000 100%) !important;
-  box-shadow: none !important;
-}
-
-html body main .home-stage-index,
-html body main .home-stage-index * {
-  color: rgba(180, 180, 180, 0.7) !important;
-}
-
-html body main .home-stage-index-dot {
-  background: rgba(238, 238, 238, 0.55) !important;
-}
-
-html body main .home-stage-index-num {
-  color: rgba(245, 245, 245, 0.88) !important;
-}
-
-html body main .home-stage-kicker,
-html body main .home-stage-kicker * {
-  color: rgba(180, 180, 180, 0.78) !important;
-}
-
-html body main .home-stage-mark,
-html body main .home-stage-mark * {
-  color: rgba(245, 245, 245, 0.96) !important;
-  text-shadow: none !important;
-}
-
-html body main .home-stage-body,
-html body main .home-stage-body * {
-  color: rgba(210, 210, 210, 0.72) !important;
-}
-
-html body main .home-stage-notice {
-  border-top-color: rgba(255, 255, 255, 0.18) !important;
-}
-
-html body main .home-stage-notice-label,
-html body main .home-stage-notice-label * {
-  color: rgba(180, 180, 180, 0.78) !important;
-}
-
-html body main .home-stage-notice-body,
-html body main .home-stage-notice-body * {
-  color: rgba(232, 232, 232, 0.82) !important;
 }

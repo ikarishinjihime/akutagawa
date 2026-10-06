@@ -9,13 +9,7 @@ import { TextGlitch } from "@/components/TextGlitch";
 import { characterPaletteStyle } from "@/lib/character-palette";
 import { ThumbnailImage } from "@/components/ThumbnailImage";
 import { normalizeWorldEntries } from "@/utils/normalizers";
-import type {
-  Character,
-  CharacterWorldEntry,
-  UploadedImage,
-  World,
-  ZoneLinkTarget,
-} from "@/lib/types";
+import type { Character, CharacterWorldEntry, UploadedImage, World, ZoneLinkTarget } from "@/lib/types";
 import type { ExpressionModalItem, GalleryModalItem, ReaderModalItem } from "@/types/home.types";
 
 const worldFileMarkFont = Explora({
@@ -175,7 +169,7 @@ export function WorldsSection({
                       </span>
                     )}
                   </div>
-                  <p className="truncate p-3 text-xs text-white/90">세계관 일러스트</p>
+                  <p className="truncate p-3 text-xs text-emerald-50">세계관 일러스트</p>
                 </button>
               </div>
             </div>
@@ -199,7 +193,7 @@ export function WorldsSection({
                         </div>
                       ))}
                     </div>
-                    <p className="mt-3 text-sm text-white/70">
+                    <p className="mt-3 text-sm text-emerald-50/75">
                       세계관 스탠딩 표정 {worldStandings.length}장 보기
                     </p>
                   </button>
@@ -213,7 +207,7 @@ export function WorldsSection({
                         onClick={() => onOpenReader({ character, work })}
                         className="case-setting-note text-left"
                       >
-                        <p className="text-xs text-white/45">
+                        <p className="text-xs text-emerald-100/45">
                           {work.kind} / {work.date}
                         </p>
                         <h5 className="mt-2 text-lg font-semibold">{work.title}</h5>
@@ -252,7 +246,7 @@ export function WorldsSection({
         );
       })}
       {activeWorldParticipants.length === 0 && (
-        <p className="archive-panel p-5 text-sm text-white/60">
+        <p className="archive-panel p-5 text-sm text-emerald-100/60">
           이 세계관에 연결된 자캐 자료가 아직 없어요.
         </p>
       )}
@@ -272,12 +266,12 @@ export function WorldsSection({
           />
         </div>
 
-        <p className="world-index-note mt-5 max-w-2xl text-sm leading-7 text-white/65">
+        <p className="world-index-note mt-5 max-w-2xl text-sm leading-7 text-emerald-100/65">
           어떤 세계가 있는지는 볼 수 있지만, 세계관 기록은 비밀번호를 입력해야 열립니다.
         </p>
 
         {worlds.length === 0 ? (
-          <div className="archive-panel mt-6 p-5 text-sm leading-7 text-white/65">
+          <div className="archive-panel mt-6 p-5 text-sm leading-7 text-emerald-100/65">
             아직 등록된 세계관이 없어요.
           </div>
         ) : (
@@ -364,16 +358,11 @@ export function WorldsSection({
               </h3>
               <div className="world-file-doc-tags">
                 <span className="world-file-tag">ID · {activeWorld.id}</span>
-                <span
-                  className="world-file-tag"
-                  data-state={activeClassification.code.toLowerCase()}
-                >
+                <span className="world-file-tag" data-state={activeClassification.code.toLowerCase()}>
                   {activeClassification.label}
                 </span>
                 {isActiveWorldUnlocked && (
-                  <span className="world-file-tag">
-                    참가 자캐 {activeWorldParticipants.length}명
-                  </span>
+                  <span className="world-file-tag">참가 자캐 {activeWorldParticipants.length}명</span>
                 )}
               </div>
             </div>

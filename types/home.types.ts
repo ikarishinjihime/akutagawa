@@ -23,10 +23,6 @@ export type ExpressionModalItem = {
 export type StoryModalItem = {
   character: Character;
   section: SettingSection;
-  /** 별지 안에서 앞뒤로 넘길 항 목록 (없으면 이 항만 단독 열람) */
-  sections?: SettingSection[];
-  /** 항 번호를 열람대와 맞추기 위한 오프셋 — 身上 항이 있으면 1 */
-  numberOffset?: number;
 };
 
 /**
@@ -40,7 +36,7 @@ export type ReaderModalItem = {
 /**
  * 자캐 상세 뷰의 탭 식별자입니다.
  */
-export type CharacterDetailTab = "settings" | "relations" | "images" | "works" | "worlds";
+export type CharacterDetailTab = "settings" | "images" | "works" | "worlds";
 
 /** 브라우저 history / URL과 동기화되는 SPA 화면 상태 */
 export type AppHistoryState = {
