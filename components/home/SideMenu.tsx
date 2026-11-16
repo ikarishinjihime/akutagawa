@@ -256,6 +256,14 @@ export function SideMenu({
                       수정 페이지로 이동
                     </a>
                   )}
+                  {isAdmin && (
+                    <a
+                      href="/yomi"
+                      className="block border border-stone-400/25 bg-stone-900/30 p-2 text-center text-stone-200"
+                    >
+                      가사 한글 발음
+                    </a>
+                  )}
                   <button
                     type="button"
                     onClick={logout}
