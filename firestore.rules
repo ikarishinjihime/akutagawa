@@ -50,8 +50,13 @@ service cloud.firestore {
       allow delete: if request.auth != null && request.auth.uid == userId;
     }
 
-    match /{document=**} {
-      allow read: if true;
+    match /users/{userId}/yomi/{entryId} {
+      allow read, write: if isAdmin() && request.auth.uid == userId;
+    }
+
+    // users 아래는 위의 개별 규칙으로만 읽습니다. 나머지 컬렉션은 공개 읽기입니다.
+    match /{collection}/{document=**} {
+      allow read: if collection != "users";
       allow write: if isAdmin();
     }
   }
